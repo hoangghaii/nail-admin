@@ -5,21 +5,31 @@ import type { Banner } from "@/types/banner.types";
 import { MOCK_BANNERS } from "@/data/mockBanners";
 
 type BannersState = {
-  banners: Banner[];
-  isInitialized: boolean;
-  initializeBanners: () => void;
-  setBanners: (banners: Banner[]) => void;
   addBanner: (banner: Banner) => void;
-  updateBanner: (id: string, data: Partial<Banner>) => void;
+  banners: Banner[];
   deleteBanner: (id: string) => void;
+  initializeBanners: () => void;
+  isInitialized: boolean;
   reorderBanners: (bannerIds: string[]) => void;
-  toggleBannerActive: (id: string) => void;
+  setBanners: (banners: Banner[]) => void;
   setPrimaryBanner: (id: string) => void;
+  toggleBannerActive: (id: string) => void;
+  updateBanner: (id: string, data: Partial<Banner>) => void;
 };
 
 export const useBannersStore = create<BannersState>((set, get) => ({
+  addBanner: (banner) => {
+    set((state) => ({
+      banners: [...state.banners, banner],
+    }));
+  },
   banners: [],
-  isInitialized: false,
+
+  deleteBanner: (id) => {
+    set((state) => ({
+      banners: state.banners.filter((banner) => banner.id !== id),
+    }));
+  },
 
   initializeBanners: () => {
     if (!get().isInitialized) {
@@ -27,29 +37,7 @@ export const useBannersStore = create<BannersState>((set, get) => ({
     }
   },
 
-  setBanners: (banners) => {
-    set({ banners });
-  },
-
-  addBanner: (banner) => {
-    set((state) => ({
-      banners: [...state.banners, banner],
-    }));
-  },
-
-  updateBanner: (id, data) => {
-    set((state) => ({
-      banners: state.banners.map((banner) =>
-        banner.id === id ? { ...banner, ...data, updatedAt: new Date() } : banner
-      ),
-    }));
-  },
-
-  deleteBanner: (id) => {
-    set((state) => ({
-      banners: state.banners.filter((banner) => banner.id !== id),
-    }));
-  },
+  isInitialized: false,
 
   reorderBanners: (bannerIds) => {
     set((state) => {
@@ -65,14 +53,8 @@ export const useBannersStore = create<BannersState>((set, get) => ({
     });
   },
 
-  toggleBannerActive: (id) => {
-    set((state) => ({
-      banners: state.banners.map((banner) =>
-        banner.id === id
-          ? { ...banner, active: !banner.active, updatedAt: new Date() }
-          : banner
-      ),
-    }));
+  setBanners: (banners) => {
+    set({ banners });
   },
 
   setPrimaryBanner: (id) => {
@@ -80,7 +62,27 @@ export const useBannersStore = create<BannersState>((set, get) => ({
       banners: state.banners.map((banner) =>
         banner.id === id
           ? { ...banner, isPrimary: true, updatedAt: new Date() }
-          : { ...banner, isPrimary: false, updatedAt: new Date() }
+          : { ...banner, isPrimary: false, updatedAt: new Date() },
+      ),
+    }));
+  },
+
+  toggleBannerActive: (id) => {
+    set((state) => ({
+      banners: state.banners.map((banner) =>
+        banner.id === id
+          ? { ...banner, active: !banner.active, updatedAt: new Date() }
+          : banner,
+      ),
+    }));
+  },
+
+  updateBanner: (id, data) => {
+    set((state) => ({
+      banners: state.banners.map((banner) =>
+        banner.id === id
+          ? { ...banner, ...data, updatedAt: new Date() }
+          : banner,
       ),
     }));
   },

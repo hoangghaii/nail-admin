@@ -7,7 +7,12 @@ import { cn } from "@/lib/utils";
 import { imageUploadService } from "@/services/imageUpload.service";
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
-const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
+const ACCEPTED_IMAGE_TYPES = [
+  "image/jpeg",
+  "image/jpg",
+  "image/png",
+  "image/webp",
+];
 
 export type ImageUploadProps = {
   className?: string;

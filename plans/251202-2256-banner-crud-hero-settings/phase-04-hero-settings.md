@@ -8,6 +8,7 @@
 ## Context
 
 **Related Files**:
+
 - `src/pages/BannersPage.tsx` (Phase 3)
 - `src/services/heroSettings.service.ts` (Phase 1)
 - `src/types/heroSettings.types.ts` (Phase 1)
@@ -72,6 +73,7 @@ Build hero display settings component that controls how banners appear on the cl
 **Location**: Top of Banners page (above data table)
 
 **Components**:
+
 - Radio button group (3 options)
 - Description text for each mode
 - Primary banner preview (when mode is Image/Video)
@@ -84,6 +86,7 @@ Build hero display settings component that controls how banners appear on the cl
 
 **Decision**: Embed in BannersPage as sticky card
 **Rationale**:
+
 - Settings and banners are tightly coupled
 - Avoid navigation overhead (context switching)
 - Show settings + banner list in same view
@@ -95,6 +98,7 @@ Build hero display settings component that controls how banners appear on the cl
 
 **Decision**: Use local component state with API sync
 **Rationale**:
+
 - Settings rarely change (not frequently accessed)
 - No need for global state (not used in other pages)
 - Simpler implementation
@@ -105,6 +109,7 @@ Build hero display settings component that controls how banners appear on the cl
 
 **Decision**: Show thumbnail preview (same as table)
 **Rationale**:
+
 - Consistent with data table design
 - Saves space (settings card stays compact)
 - Full preview available in edit modal
@@ -443,7 +448,7 @@ export function initializeMockData() {
   if (!storage.getItem(prefix + "hero_settings")) {
     storage.setItem(
       prefix + "hero_settings",
-      JSON.stringify(defaultHeroSettings)
+      JSON.stringify(defaultHeroSettings),
     );
   }
 
@@ -453,7 +458,8 @@ export function initializeMockData() {
       id: crypto.randomUUID(),
       title: "Welcome to Pink Nail Salon",
       description: "Premium nail care services in a relaxing atmosphere",
-      imageUrl: "https://images.unsplash.com/photo-1604654894610-df63bc536371?w=1920",
+      imageUrl:
+        "https://images.unsplash.com/photo-1604654894610-df63bc536371?w=1920",
       sortIndex: 0,
       isActive: true,
       isPrimary: true,
@@ -511,10 +517,12 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
 ## Risk Assessment
 
 **Medium Risk**:
+
 - Mode validation (ensure primary banner exists before enabling mode)
 - Client-side sync (client app must fetch settings to render hero)
 
 **Low Risk**:
+
 - Radio button group (simple UI)
 - Settings persistence (localStorage stable)
 
@@ -527,6 +535,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
 ## Next Steps
 
 After Phase 4 completion:
+
 1. Proceed to Phase 5: Testing & validation
 2. Document hero settings integration for client project
 3. Create API endpoint spec for hero settings (for backend migration)

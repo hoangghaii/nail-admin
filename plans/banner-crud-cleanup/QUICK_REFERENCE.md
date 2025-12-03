@@ -15,6 +15,7 @@ Remove 3 fields from Banner type and 1 field from HeroSettings type. Total: 9 fi
 **Solution**: Remove these 3 optional fields from Banner type definition
 
 **Files affected**: 7 files
+
 - Type definition
 - Form validation + UI
 - Data table display
@@ -30,6 +31,7 @@ Remove 3 fields from Banner type and 1 field from HeroSettings type. Total: 9 fi
 **Solution**: Remove `autoPlay` from HeroSettings type and UI
 
 **Files affected**: 5 files
+
 - Type definition
 - Service defaults
 - Form schema + UI
@@ -42,6 +44,7 @@ Remove 3 fields from Banner type and 1 field from HeroSettings type. Total: 9 fi
 **Problem**: Statement is ambiguous - what does "setting type" mean?
 
 **Options**:
+
 1. Add new `type` field to Banner (extension)
 2. Update `active` status automatically (logic layer)
 3. Client-side display filtering (no storage change)
@@ -56,17 +59,17 @@ Remove 3 fields from Banner type and 1 field from HeroSettings type. Total: 9 fi
 
 ### Files to Edit
 
-| File | Lines | Changes | Type |
-|------|-------|---------|------|
-| `src/types/banner.types.ts` | 4, 7-8 | Remove 3 fields | Type def |
-| `src/types/heroSettings.types.ts` | 13 | Remove 1 field | Type def |
-| `src/components/banners/BannerFormModal.tsx` | Multiple | Remove form fields | Component |
-| `src/pages/BannersPage.tsx` | 167-171, 177-184 | Remove table column | Component |
-| `src/components/banners/HeroSettingsCard.tsx` | Multiple | Remove UI section | Component |
-| `src/components/banners/DeleteBannerDialog.tsx` | 77-80 | Remove description | Component |
-| `src/services/heroSettings.service.ts` | 12 | Remove from defaults | Service |
-| `src/data/mockBanners.ts` | All 5 banners | Remove fields | Data |
-| `src/data/initializeMockData.ts` | 13 | Remove from init | Data |
+| File                                            | Lines            | Changes              | Type      |
+| ----------------------------------------------- | ---------------- | -------------------- | --------- |
+| `src/types/banner.types.ts`                     | 4, 7-8           | Remove 3 fields      | Type def  |
+| `src/types/heroSettings.types.ts`               | 13               | Remove 1 field       | Type def  |
+| `src/components/banners/BannerFormModal.tsx`    | Multiple         | Remove form fields   | Component |
+| `src/pages/BannersPage.tsx`                     | 167-171, 177-184 | Remove table column  | Component |
+| `src/components/banners/HeroSettingsCard.tsx`   | Multiple         | Remove UI section    | Component |
+| `src/components/banners/DeleteBannerDialog.tsx` | 77-80            | Remove description   | Component |
+| `src/services/heroSettings.service.ts`          | 12               | Remove from defaults | Service   |
+| `src/data/mockBanners.ts`                       | All 5 banners    | Remove fields        | Data      |
+| `src/data/initializeMockData.ts`                | 13               | Remove from init     | Data      |
 
 ---
 
@@ -75,12 +78,14 @@ Remove 3 fields from Banner type and 1 field from HeroSettings type. Total: 9 fi
 ### Banner Type Changes
 
 **From** (14 fields):
+
 ```
 id, title, description, imageUrl, videoUrl, ctaText, ctaLink,
 sortIndex, active, isPrimary, createdAt, updatedAt
 ```
 
 **To** (11 fields):
+
 ```
 id, title, imageUrl, videoUrl, sortIndex, active, isPrimary,
 createdAt, updatedAt
@@ -89,11 +94,13 @@ createdAt, updatedAt
 ### HeroSettings Type Changes
 
 **From** (5 fields):
+
 ```
 displayMode, carouselInterval, autoPlay, showControls, updatedAt
 ```
 
 **To** (4 fields):
+
 ```
 displayMode, carouselInterval, showControls, updatedAt
 ```
@@ -102,11 +109,11 @@ displayMode, carouselInterval, showControls, updatedAt
 
 ## Breaking Changes
 
-| Category | Impact | Mitigation |
-|----------|--------|-----------|
-| **Type System** | Banner & HeroSettings signatures change | TypeScript will catch errors |
-| **localStorage** | Old data structure incompatible | Hard reset on load (pre-release OK) |
-| **UI** | Form fields removed, table simplified | Intentional simplification |
+| Category         | Impact                                  | Mitigation                          |
+| ---------------- | --------------------------------------- | ----------------------------------- |
+| **Type System**  | Banner & HeroSettings signatures change | TypeScript will catch errors        |
+| **localStorage** | Old data structure incompatible         | Hard reset on load (pre-release OK) |
+| **UI**           | Form fields removed, table simplified   | Intentional simplification          |
 
 ---
 
@@ -145,6 +152,7 @@ npm run dev
 ## Code Changes - Exact Diffs
 
 ### Type: banner.types.ts
+
 ```diff
   export type Banner = {
     id: string;
@@ -163,6 +171,7 @@ npm run dev
 ```
 
 ### Type: heroSettings.types.ts
+
 ```diff
   export type HeroSettings = {
     displayMode: HeroDisplayMode;
@@ -174,6 +183,7 @@ npm run dev
 ```
 
 ### Form: BannerFormModal.tsx Schema
+
 ```diff
   const bannerSchema = z.object({
     active: z.boolean(),
@@ -187,6 +197,7 @@ npm run dev
 ```
 
 ### Service: heroSettings.service.ts Defaults
+
 ```diff
   private readonly DEFAULT_SETTINGS: HeroSettings = {
     displayMode: HERO_DISPLAY_MODES.CAROUSEL,

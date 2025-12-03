@@ -35,7 +35,13 @@ export type StatusBadgeProps = {
 
 const StatusBadge = React.forwardRef<HTMLSpanElement, StatusBadgeProps>(
   (
-    { className, isPrimary = false, status = "active", variant = "default", ...props },
+    {
+      className,
+      isPrimary = false,
+      status = "active",
+      variant = "default",
+      ...props
+    },
     ref,
   ) => {
     const getStatusStyles = () => {

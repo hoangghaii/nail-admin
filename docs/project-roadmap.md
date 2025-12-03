@@ -16,12 +16,14 @@ Pink Nail Admin Dashboard is a professional React-based admin panel for managing
 ## Phase Overview
 
 ### Phase 1: Project Foundation (COMPLETE)
+
 **Status:** ✅ Complete | **Completion Date:** 2025-11-30
 **Progress:** 100%
 
 Established core project infrastructure, type system, design system, and authentication framework.
 
 **Key Achievements:**
+
 - React 19 + TypeScript 5.9 setup with Vite
 - shadcn/ui blue theme design system (professional aesthetic)
 - Glassmorphism UI components and layout system
@@ -32,6 +34,7 @@ Established core project infrastructure, type system, design system, and authent
 - Type definitions aligned with client project
 
 **Deliverables:**
+
 - ✅ Project setup and dependencies installed
 - ✅ TypeScript strict mode configuration
 - ✅ Design system with CSS variables
@@ -45,12 +48,14 @@ Established core project infrastructure, type system, design system, and authent
 ---
 
 ### Phase 2: Banner CRUD with Hero Settings (COMPLETE)
+
 **Status:** ✅ Complete | **Completion Date:** 2025-12-03
 **Progress:** 100% | **Code Quality:** 8.5/10
 
 Implemented first complete CRUD feature with hero display settings, image/video uploads, drag-drop reordering, and dual-mode service architecture.
 
 **Key Achievements:**
+
 - ✅ Banner type extension with video, CTA, and sort support
 - ✅ Type-safe service layer (mock + API-ready)
 - ✅ DataTable component with TanStack Table v8
@@ -63,6 +68,7 @@ Implemented first complete CRUD feature with hero display settings, image/video 
 - ✅ Mock data initialization
 
 **Technical Details:**
+
 - **Files Created:** 17 new files
 - **Files Modified:** 4 files
 - **Code Size:** ~2,800 lines
@@ -71,6 +77,7 @@ Implemented first complete CRUD feature with hero display settings, image/video 
 - **Test Coverage:** Code review complete (0 critical issues)
 
 **Code Review Results:**
+
 - Critical Issues: 0
 - High Priority: 0
 - Medium Priority: 4 (optional enhancements)
@@ -78,6 +85,7 @@ Implemented first complete CRUD feature with hero display settings, image/video 
 - Overall Rating: 8.5/10 (Excellent)
 
 **Deliverables:**
+
 - ✅ Types: `banner.types.ts`, `heroSettings.types.ts`
 - ✅ Services: `banners.service.ts`, `heroSettings.service.ts`, `imageUpload.service.ts`
 - ✅ UI Components: `dialog.tsx`, `radio-group.tsx`, `switch.tsx`, `textarea.tsx`
@@ -91,12 +99,14 @@ Implemented first complete CRUD feature with hero display settings, image/video 
 ---
 
 ### Phase 3: Services CRUD (PLANNED)
+
 **Status:** 📋 Planned | **Estimated Start:** 2025-12-04
 **Progress:** 0%
 
 Implement comprehensive service management system with category filtering, pricing, and duration configuration.
 
 **Planned Features:**
+
 - Services CRUD operations (create/read/update/delete)
 - Category selection (extensions, manicure, nail-art, pedicure, spa)
 - Pricing and duration configuration
@@ -106,6 +116,7 @@ Implement comprehensive service management system with category filtering, prici
 - Service form modal with validation
 
 **Dependencies:**
+
 - ✅ DataTable component (from Phase 2)
 - ✅ ImageUpload component (from Phase 2)
 - ✅ Dialog component (from Phase 2)
@@ -113,12 +124,14 @@ Implement comprehensive service management system with category filtering, prici
 ---
 
 ### Phase 4: Gallery CRUD (PLANNED)
+
 **Status:** 📋 Planned | **Estimated Start:** 2025-12-09
 **Progress:** 0%
 
 Implement portfolio gallery management with bulk upload, category organization, and featured image selection.
 
 **Planned Features:**
+
 - Gallery CRUD operations
 - Category filtering (all, extensions, manicure, nail-art, pedicure, seasonal)
 - Bulk image upload
@@ -128,6 +141,7 @@ Implement portfolio gallery management with bulk upload, category organization, 
 - Drag-drop reordering for gallery sequence
 
 **Dependencies:**
+
 - ✅ DataTable component (from Phase 2)
 - ✅ ImageUpload component (from Phase 2)
 - ✅ Dialog component (from Phase 2)
@@ -135,12 +149,14 @@ Implement portfolio gallery management with bulk upload, category organization, 
 ---
 
 ### Phase 5: Bookings Management (PLANNED)
+
 **Status:** 📋 Planned | **Estimated Start:** 2025-12-16
 **Progress:** 0%
 
 Implement booking view and status management system with customer communication features.
 
 **Planned Features:**
+
 - Bookings DataTable with filtering by date/status/service
 - Status update (pending -> confirmed -> completed/cancelled)
 - Customer information display
@@ -154,12 +170,14 @@ Implement booking view and status management system with customer communication 
 ---
 
 ### Phase 6: Contacts Management (PLANNED)
+
 **Status:** 📋 Planned | **Estimated Start:** 2025-12-23
 **Progress:** 0%
 
 Implement customer inquiry management system with admin notes and follow-up tracking.
 
 **Planned Features:**
+
 - Contacts DataTable with filtering
 - View/edit customer inquiries
 - Admin notes and follow-up status
@@ -171,12 +189,14 @@ Implement customer inquiry management system with admin notes and follow-up trac
 ---
 
 ### Phase 7: Advanced Features & Polish (PLANNED)
+
 **Status:** 📋 Planned | **Estimated Start:** 2026-01-06
 **Progress:** 0%
 
 Implement advanced features, optimizations, and production hardening.
 
 **Planned Items:**
+
 - Search functionality across all entities
 - Bulk operations (delete, status update, export)
 - Dashboard analytics and metrics
@@ -191,16 +211,19 @@ Implement advanced features, optimizations, and production hardening.
 ## Current Development Focus
 
 ### 1. Services CRUD Implementation
+
 - Design service form with category dropdown
 - Implement service creation and editing
 - Add service deletion with confirmation
 - Build services DataTable with filtering
 
 ### 2. Client Project Type Sync
+
 - Verify Service type compatibility between projects
 - Document any type changes for migration
 
 ### 3. Code Quality Improvements (From Phase 2 Review)
+
 - Implement medium-priority suggestions (upload cleanup, pagination)
 - Add auto-save debouncing for hero settings
 - Plan server-side validation for Phase 3+
@@ -210,26 +233,29 @@ Implement advanced features, optimizations, and production hardening.
 ## Milestone Tracking
 
 ### Q4 2025 Milestones
-| Milestone | Status | Target Date | Progress |
-|-----------|--------|-------------|----------|
-| Foundation Phase | ✅ Complete | 2025-11-30 | 100% |
-| Banner CRUD Feature | ✅ Complete | 2025-12-03 | 100% |
-| Services CRUD Feature | 📋 Planned | 2025-12-13 | 0% |
-| Gallery CRUD Feature | 📋 Planned | 2025-12-23 | 0% |
+
+| Milestone             | Status      | Target Date | Progress |
+| --------------------- | ----------- | ----------- | -------- |
+| Foundation Phase      | ✅ Complete | 2025-11-30  | 100%     |
+| Banner CRUD Feature   | ✅ Complete | 2025-12-03  | 100%     |
+| Services CRUD Feature | 📋 Planned  | 2025-12-13  | 0%       |
+| Gallery CRUD Feature  | 📋 Planned  | 2025-12-23  | 0%       |
 
 ### Q1 2026 Milestones
-| Milestone | Status | Target Date | Progress |
-|-----------|--------|-------------|----------|
-| Bookings Management | 📋 Planned | 2026-01-10 | 0% |
-| Contacts Management | 📋 Planned | 2026-01-17 | 0% |
-| Advanced Features | 📋 Planned | 2026-02-07 | 0% |
-| Production Deployment | 📋 Planned | 2026-03-01 | 0% |
+
+| Milestone             | Status     | Target Date | Progress |
+| --------------------- | ---------- | ----------- | -------- |
+| Bookings Management   | 📋 Planned | 2026-01-10  | 0%       |
+| Contacts Management   | 📋 Planned | 2026-01-17  | 0%       |
+| Advanced Features     | 📋 Planned | 2026-02-07  | 0%       |
+| Production Deployment | 📋 Planned | 2026-03-01  | 0%       |
 
 ---
 
 ## Feature Inventory
 
 ### Core Features (COMPLETE)
+
 - ✅ Authentication system with protected routes
 - ✅ shadcn/ui blue theme design system
 - ✅ Layout components (Sidebar, Topbar)
@@ -240,10 +266,12 @@ Implement advanced features, optimizations, and production hardening.
 - ✅ Image/Video upload components
 
 ### In Development
+
 - 🔄 Services CRUD (estimated 2025-12-13)
 - 🔄 Gallery CRUD (estimated 2025-12-23)
 
 ### Planned
+
 - 📋 Bookings management
 - 📋 Contacts management
 - 📋 Search and filtering
@@ -256,16 +284,19 @@ Implement advanced features, optimizations, and production hardening.
 ## Success Metrics
 
 ### Adoption & Quality
+
 - TypeScript: 100% type coverage (no `any` types)
 - Build: 0 errors, warnings acceptable
 - Code Quality: Average 8.0+/10 per feature
 - Type Compliance: verbatimModuleSyntax pass
 
 ### Feature Completeness
+
 - CRUD Features: Banner 100%, Services 0%, Gallery 0%, Bookings 0%, Contacts 0%
 - Overall Project: 25% (1 of 4 CRUD features complete)
 
 ### User Experience
+
 - Responsive design: Mobile/Tablet/Desktop support
 - Accessibility: WCAG 2.1 AA compliance
 - Performance: Pages load in < 2 seconds
@@ -276,6 +307,7 @@ Implement advanced features, optimizations, and production hardening.
 ## Technical Architecture
 
 ### Technology Stack
+
 - **Frontend:** React 19.2 + TypeScript 5.9
 - **Build:** Vite 7.2 with SWC
 - **Styling:** Tailwind CSS v4 (OKLCH color space)
@@ -287,12 +319,14 @@ Implement advanced features, optimizations, and production hardening.
 - **Tables:** TanStack Table v8
 
 ### Design System
+
 - **Primary Color:** Professional Blue `oklch(0.492 0.147 255.75)`
 - **Theme:** Light mode (can add dark mode later)
 - **Pattern:** Glassmorphism with shadow effects
 - **Accessibility:** Radix UI ensures WCAG 2.1 AA compliance
 
 ### Service Architecture
+
 - **Dual-Mode:** `VITE_USE_MOCK_API` environment variable controls mode
 - **Mock Mode:** localStorage-based persistence
 - **API Mode:** Ready for backend integration
@@ -303,17 +337,20 @@ Implement advanced features, optimizations, and production hardening.
 ## Known Constraints & Limitations
 
 ### Technical
+
 - Video uploads limited to 50MB (Firebase quota consideration)
 - Drag-drop less reliable on mobile (HTML5 API limitation)
 - Single admin user (future: multi-user roles)
 - No offline support yet
 
 ### Operational
+
 - Requires Firebase configuration
 - Demo credentials hardcoded (replace in production)
 - No backend API yet (placeholder URLs in services)
 
 ### Design
+
 - Light mode only (dark mode planned for Phase 7)
 - English text only (localization future work)
 - No real-time features yet
@@ -322,31 +359,34 @@ Implement advanced features, optimizations, and production hardening.
 
 ## Risk Management
 
-| Risk | Impact | Likelihood | Mitigation |
-|------|--------|-----------|-----------|
-| Type incompatibility with client | Medium | Low | Regular sync checks, shared type tests |
-| Firebase quota exhaustion | Medium | Low | Monitor usage, implement size limits |
-| Build size growth | Medium | Medium | Code splitting, lazy loading |
-| Performance regression | Medium | Medium | Bundlesize tracking, performance tests |
-| Service type changes | High | Medium | Comprehensive test coverage on sync |
+| Risk                             | Impact | Likelihood | Mitigation                             |
+| -------------------------------- | ------ | ---------- | -------------------------------------- |
+| Type incompatibility with client | Medium | Low        | Regular sync checks, shared type tests |
+| Firebase quota exhaustion        | Medium | Low        | Monitor usage, implement size limits   |
+| Build size growth                | Medium | Medium     | Code splitting, lazy loading           |
+| Performance regression           | Medium | Medium     | Bundlesize tracking, performance tests |
+| Service type changes             | High   | Medium     | Comprehensive test coverage on sync    |
 
 ---
 
 ## Dependencies & External Requirements
 
 ### Required
+
 - Node.js 18+
 - React 19 + TypeScript 5.9
 - Firebase project with Storage bucket
 - Vite build tool
 
 ### Optional
+
 - Dark mode CSS variables (future)
 - Real backend API (when ready)
 - Email service (for notifications)
 - Cloud storage bucket (S3, GCS, etc.)
 
 ### Key External Services
+
 - Firebase Storage for image/video uploads
 - React ecosystem (React Router, Zustand, etc.)
 - Radix UI for accessible component primitives
@@ -356,6 +396,7 @@ Implement advanced features, optimizations, and production hardening.
 ## Code Standards & Quality
 
 ### Standards
+
 - TypeScript strict mode with verbatimModuleSyntax
 - No `any` types (100% type coverage)
 - Zod validation for all forms
@@ -364,12 +405,14 @@ Implement advanced features, optimizations, and production hardening.
 - English validation messages
 
 ### Git Standards
+
 - Conventional commits
 - Feature branches for each CRUD feature
 - Pull requests with code review
 - Clean commit history
 
 ### Testing Standards
+
 - Code review for all features (target 8.0+/10)
 - Build verification (0 errors required)
 - Type checking (`tsc --noEmit`)
@@ -382,6 +425,7 @@ Implement advanced features, optimizations, and production hardening.
 ### Version 0.1.0 (Current - 2025-12-03)
 
 #### Features Added
+
 - **Banner CRUD Feature:** Complete hero banner management system
   - Create, read, update, delete operations
   - Image and video upload support
@@ -391,6 +435,7 @@ Implement advanced features, optimizations, and production hardening.
   - Type-safe dual-mode architecture
 
 #### Components Added
+
 - DataTable component (TanStack Table v8)
 - ImageUpload component (Firebase integration)
 - VideoUpload component (Firebase integration)
@@ -399,12 +444,14 @@ Implement advanced features, optimizations, and production hardening.
 - Banner form modal and delete confirmation
 
 #### Code Quality
+
 - 0 critical issues
 - 0 high-priority issues
 - 4 medium-priority items (optional enhancements)
 - 8.5/10 overall quality rating
 
 #### Documentation Added
+
 - Implementation plan with 5 phases
 - Code review report
 - Type definitions documented
@@ -414,6 +461,7 @@ Implement advanced features, optimizations, and production hardening.
 ### Version 0.0.0 (Foundation - 2025-11-30)
 
 #### Foundation Phase Complete
+
 - ✅ React 19 + TypeScript setup
 - ✅ shadcn/ui blue theme
 - ✅ Authentication system
@@ -427,6 +475,7 @@ Implement advanced features, optimizations, and production hardening.
 ## Document References
 
 ### Core Documentation
+
 - [Project Overview & PDR](./project-overview-pdr.md)
 - [Code Standards](./code-standards.md)
 - [System Architecture](./system-architecture.md)
@@ -434,6 +483,7 @@ Implement advanced features, optimizations, and production hardening.
 - [Design Guidelines](./design-guidelines.md)
 
 ### Implementation Plans
+
 - [Banner CRUD Plan](../plans/251202-2256-banner-crud-hero-settings/plan.md)
 - [Code Review Report](../plans/251202-2256-banner-crud-hero-settings/reports/251203-code-review-report.md)
 
@@ -442,24 +492,28 @@ Implement advanced features, optimizations, and production hardening.
 ## Next Steps & Recommendations
 
 ### Immediate (Next Sprint)
+
 1. **Deploy to Staging:** Transfer Banner CRUD to staging environment
 2. **Begin Services CRUD:** Start Phase 3 with service management
 3. **Fix Medium-Priority Items:** Address code review suggestions (M2, M4)
 4. **Type Sync Check:** Verify Service type compatibility with client project
 
 ### Short-term (2 Weeks)
+
 1. Complete Services CRUD implementation
 2. Begin Gallery CRUD planning and development
 3. Document API endpoint specifications for backend team
 4. Conduct comprehensive responsive design testing
 
 ### Medium-term (1 Month)
+
 1. Complete Gallery CRUD
 2. Implement Bookings management
 3. Implement Contacts management
 4. Performance optimization
 
 ### Long-term (2+ Months)
+
 1. Advanced features and polish
 2. Multi-user role support
 3. Production deployment

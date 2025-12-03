@@ -20,6 +20,7 @@ Implemented 4 core shared UI components following shadcn/ui blue theme design sy
 **Dependencies**: `@radix-ui/react-dialog`, `lucide-react`
 
 **Exports**:
+
 - `Dialog` - Root component
 - `DialogTrigger` - Trigger button
 - `DialogContent` - Modal content container
@@ -32,6 +33,7 @@ Implemented 4 core shared UI components following shadcn/ui blue theme design sy
 - `DialogPortal` - Portal container
 
 **Features**:
+
 - Blur backdrop (`backdrop-blur-sm`)
 - Keyboard navigation (Esc to close)
 - Focus trap inside dialog
@@ -41,6 +43,7 @@ Implemented 4 core shared UI components following shadcn/ui blue theme design sy
 - Responsive (max-w-lg, centered)
 
 **Styling**:
+
 - Border: `border-border`
 - Background: `bg-card`
 - Shadow: `shadow-lg`
@@ -55,6 +58,7 @@ Implemented 4 core shared UI components following shadcn/ui blue theme design sy
 **Dependencies**: `class-variance-authority`, `lucide-react`
 
 **Props**:
+
 ```typescript
 {
   status?: "active" | "inactive";
@@ -65,6 +69,7 @@ Implemented 4 core shared UI components following shadcn/ui blue theme design sy
 ```
 
 **Variants**:
+
 - **Active**: Green badge with Check icon
 - **Inactive**: Gray badge with X icon
 - **Primary**: Blue badge with Star icon
@@ -72,6 +77,7 @@ Implemented 4 core shared UI components following shadcn/ui blue theme design sy
 - **Outline variant**: Border only
 
 **Features**:
+
 - CVA (class-variance-authority) for variant management
 - Icon integration (lucide-react)
 - Dark mode support
@@ -79,6 +85,7 @@ Implemented 4 core shared UI components following shadcn/ui blue theme design sy
 - Semantic colors
 
 **Usage Example**:
+
 ```tsx
 <StatusBadge status="active" />
 <StatusBadge status="inactive" variant="outline" />
@@ -93,6 +100,7 @@ Implemented 4 core shared UI components following shadcn/ui blue theme design sy
 **Dependencies**: `sonner`, `lucide-react`, `imageUploadService`
 
 **Props**:
+
 ```typescript
 {
   value?: string;
@@ -103,6 +111,7 @@ Implemented 4 core shared UI components following shadcn/ui blue theme design sy
 ```
 
 **Features**:
+
 - **Drag-and-drop zone** with visual feedback
 - **File input** click to upload
 - **Image preview** with thumbnail display
@@ -117,11 +126,13 @@ Implemented 4 core shared UI components following shadcn/ui blue theme design sy
 - **Toast notifications** (success/error)
 
 **States**:
+
 1. **Empty**: Upload zone with ImagePlus icon
 2. **Uploading**: Spinner + progress bar
 3. **Uploaded**: Image preview + action buttons
 
 **Validation**:
+
 ```typescript
 validateFile(file: File): string | null {
   // Returns error message or null if valid
@@ -129,9 +140,10 @@ validateFile(file: File): string | null {
 ```
 
 **Firebase Integration**:
+
 ```typescript
-imageUploadService.uploadImage(file, folder, onProgress)
-imageUploadService.deleteImage(url)
+imageUploadService.uploadImage(file, folder, onProgress);
+imageUploadService.deleteImage(url);
 ```
 
 ---
@@ -142,6 +154,7 @@ imageUploadService.deleteImage(url)
 **Dependencies**: `sonner`, `lucide-react`, `imageUploadService`
 
 **Props**:
+
 ```typescript
 {
   value?: string;
@@ -152,6 +165,7 @@ imageUploadService.deleteImage(url)
 ```
 
 **Features**:
+
 - **Drag-and-drop zone** with visual feedback
 - **File input** click to upload
 - **Video preview** with native controls
@@ -166,19 +180,22 @@ imageUploadService.deleteImage(url)
 - **Toast notifications** (success/error)
 
 **States**:
+
 1. **Empty**: Upload zone with Video icon
 2. **Uploading**: Spinner + progress bar
 3. **Uploaded**: Video player + action buttons
 
 **Video Player**:
+
 - Height: `h-64` (256px)
 - Controls: Native browser controls
 - Fallback: "Your browser does not support the video tag"
 
 **Firebase Integration**:
+
 ```typescript
-imageUploadService.uploadVideo(file, folder, onProgress)
-imageUploadService.deleteVideo(url)
+imageUploadService.uploadVideo(file, folder, onProgress);
+imageUploadService.deleteVideo(url);
 ```
 
 ---
@@ -222,11 +239,13 @@ All components use CSS variables from `src/index.css`:
 ### TypeScript Patterns
 
 **Type-only imports** (required for `verbatimModuleSyntax: true`):
+
 ```typescript
 import type { VariantProps } from "class-variance-authority";
 ```
 
 **forwardRef pattern**:
+
 ```typescript
 const Component = React.forwardRef<HTMLDivElement, Props>(
   ({ className, ...props }, ref) => {
@@ -304,6 +323,7 @@ All dependencies already installed in `package.json`:
 ### Type Checking
 
 ✅ Passed TypeScript compilation:
+
 ```bash
 npx tsc --noEmit
 # No errors
@@ -312,6 +332,7 @@ npx tsc --noEmit
 ### Component Exports
 
 All components properly export named exports:
+
 - Dialog: 9 exports
 - StatusBadge: 1 export
 - ImageUpload: 1 export
@@ -320,6 +341,7 @@ All components properly export named exports:
 ### Import Paths
 
 All use `@/` alias (configured in `tsconfig.json`):
+
 ```typescript
 import { cn } from "@/lib/utils";
 import { imageUploadService } from "@/services/imageUpload.service";
@@ -349,9 +371,7 @@ import {
         Add a new banner for the hero section.
       </DialogDescription>
     </DialogHeader>
-    <form onSubmit={handleSubmit}>
-      {/* Form fields */}
-    </form>
+    <form onSubmit={handleSubmit}>{/* Form fields */}</form>
     <DialogFooter>
       <Button variant="outline" onClick={() => setIsOpen(false)}>
         Cancel
@@ -359,7 +379,7 @@ import {
       <Button type="submit">Create</Button>
     </DialogFooter>
   </DialogContent>
-</Dialog>
+</Dialog>;
 ```
 
 ### StatusBadge in Table
@@ -370,7 +390,7 @@ import { StatusBadge } from "@/components/shared/StatusBadge";
 <td>
   <StatusBadge status={banner.isActive ? "active" : "inactive"} />
   {banner.isPrimary && <StatusBadge isPrimary />}
-</td>
+</td>;
 ```
 
 ### ImageUpload in Form
@@ -386,7 +406,7 @@ const imageUrl = watch("imageUrl");
   value={imageUrl}
   onChange={(url) => setValue("imageUrl", url)}
   folder="banners"
-/>
+/>;
 ```
 
 ### VideoUpload in Form
@@ -398,7 +418,7 @@ import { VideoUpload } from "@/components/shared/VideoUpload";
   value={videoUrl}
   onChange={(url) => setValue("videoUrl", url)}
   folder="banners"
-/>
+/>;
 ```
 
 ---
@@ -410,6 +430,7 @@ Created comprehensive design guidelines document:
 **File**: `/docs/design-guidelines.md`
 
 **Sections**:
+
 1. Design System Overview
 2. Color Palette (light/dark modes)
 3. Typography (fonts, type scale)

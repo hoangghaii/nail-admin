@@ -8,6 +8,7 @@
 ## Context
 
 **Related Files**:
+
 - `src/types/banner.types.ts` (existing)
 - `src/services/storage.service.ts` (existing)
 - `src/services/imageUpload.service.ts` (existing)
@@ -33,16 +34,16 @@ Extend Banner type with hero-specific fields (video, CTA, sorting, primary flag)
 
 ```typescript
 export type Banner = {
-  id: string;                    // UUID
-  title: string;                 // Required, max 100 chars
-  description?: string;          // Optional, max 500 chars
-  imageUrl: string;              // Required, Firebase Storage URL
-  videoUrl?: string;             // Optional, Firebase Storage URL (MP4/WebM)
-  ctaText?: string;              // Optional, CTA button text
-  ctaLink?: string;              // Optional, CTA button URL
-  sortIndex: number;             // For drag-drop ordering (0-based)
-  isActive: boolean;             // Display toggle
-  isPrimary: boolean;            // Primary banner for Image/Video mode
+  id: string; // UUID
+  title: string; // Required, max 100 chars
+  description?: string; // Optional, max 500 chars
+  imageUrl: string; // Required, Firebase Storage URL
+  videoUrl?: string; // Optional, Firebase Storage URL (MP4/WebM)
+  ctaText?: string; // Optional, CTA button text
+  ctaLink?: string; // Optional, CTA button URL
+  sortIndex: number; // For drag-drop ordering (0-based)
+  isActive: boolean; // Display toggle
+  isPrimary: boolean; // Primary banner for Image/Video mode
   createdAt: Date;
   updatedAt: Date;
 };
@@ -52,7 +53,7 @@ export type Banner = {
 
 ```typescript
 export type HeroSettings = {
-  mode: 'image' | 'video' | 'carousel';
+  mode: "image" | "video" | "carousel";
   updatedAt: Date;
 };
 ```
@@ -131,12 +132,12 @@ export type Banner = {
   title: string;
   description?: string;
   imageUrl: string;
-  videoUrl?: string;           // NEW
-  ctaText?: string;            // NEW
-  ctaLink?: string;            // NEW
-  sortIndex: number;           // RENAMED from displayOrder
-  isActive: boolean;           // RENAMED from active
-  isPrimary: boolean;          // NEW
+  videoUrl?: string; // NEW
+  ctaText?: string; // NEW
+  ctaLink?: string; // NEW
+  sortIndex: number; // RENAMED from displayOrder
+  isActive: boolean; // RENAMED from active
+  isPrimary: boolean; // NEW
   createdAt: Date;
   updatedAt: Date;
 };
@@ -162,7 +163,7 @@ export type BannerFormData = z.infer<typeof bannerSchema>;
 **File**: `src/types/heroSettings.types.ts`
 
 ```typescript
-export type HeroDisplayMode = 'image' | 'video' | 'carousel';
+export type HeroDisplayMode = "image" | "video" | "carousel";
 
 export type HeroSettings = {
   mode: HeroDisplayMode;
@@ -170,7 +171,7 @@ export type HeroSettings = {
 };
 
 export const heroSettingsSchema = z.object({
-  mode: z.enum(['image', 'video', 'carousel']),
+  mode: z.enum(["image", "video", "carousel"]),
 });
 
 export type HeroSettingsFormData = z.infer<typeof heroSettingsSchema>;
@@ -215,7 +216,9 @@ class BannersService {
     return banner;
   }
 
-  async create(data: Omit<Banner, "id" | "createdAt" | "updatedAt">): Promise<Banner> {
+  async create(
+    data: Omit<Banner, "id" | "createdAt" | "updatedAt">,
+  ): Promise<Banner> {
     if (this.useMockApi) {
       const banners = await this.getAll();
 
@@ -458,14 +461,17 @@ async uploadVideo(
 ## Risk Assessment
 
 **High Risk**:
+
 - Type compatibility with client project (must coordinate changes)
 - Breaking existing Banner references (if any)
 
 **Medium Risk**:
+
 - Primary banner auto-selection edge cases (no active banners)
 - Reorder logic (array index vs sortIndex mismatch)
 
 **Low Risk**:
+
 - Dual-mode pattern (established pattern in project)
 - Mock data storage (stable localStorage API)
 
@@ -479,6 +485,7 @@ async uploadVideo(
 ## Next Steps
 
 After Phase 1 completion:
+
 1. Proceed to Phase 2: Build shared components (DataTable, Dialog, ImageUpload)
 2. Seed mock data with sample banners for testing
 3. Update client project Banner type to match

@@ -11,12 +11,14 @@ This guide covers deploying Pink Nail Admin Dashboard from local development to 
 ## Prerequisites
 
 ### Required
+
 - Node.js >= 18.0.0
 - npm (comes with Node.js)
 - Firebase project (for image/video storage)
 - Git (for version control)
 
 ### Recommended
+
 - Firebase CLI (for Firebase Hosting deployment)
 - Vercel CLI or Netlify CLI (for respective platforms)
 
@@ -42,6 +44,7 @@ VITE_FIREBASE_APP_ID=your_app_id
 ```
 
 **Important Notes**:
+
 - `.env` file is gitignored - never commit to version control
 - Firebase config values are safe for client-side (public read, authenticated write)
 - Use `.env.example` as template for team members
@@ -64,6 +67,7 @@ VITE_FIREBASE_APP_ID=prod_app_id
 ```
 
 **Best Practices**:
+
 - Use separate Firebase projects for dev/staging/production
 - Set environment variables in hosting platform dashboard (Vercel, Netlify, etc.)
 - Never hardcode credentials in source code
@@ -112,6 +116,7 @@ service firebase.storage {
 ```
 
 **Explanation**:
+
 - Public read: Images/videos visible to all users
 - Authenticated write: Only logged-in admins can upload
 - Folder restrictions: Only allow uploads to specific folders
@@ -134,7 +139,7 @@ const firebaseConfig = {
   projectId: "...",
   storageBucket: "...",
   messagingSenderId: "...",
-  appId: "..."
+  appId: "...",
 };
 ```
 
@@ -179,6 +184,7 @@ npm run dev
 ```
 
 Features:
+
 - Hot Module Replacement (HMR)
 - Fast Refresh for React
 - TypeScript type checking
@@ -224,6 +230,7 @@ npm run build
 ```
 
 Output (`dist/` folder):
+
 ```
 dist/
 ├── index.html                          # Entry HTML
@@ -235,6 +242,7 @@ dist/
 ```
 
 **Build Optimizations**:
+
 - Tree shaking (removes unused code)
 - Minification (UglifyJS)
 - Code splitting (vendor chunks)
@@ -243,6 +251,7 @@ dist/
 - Source maps (optional, disabled by default)
 
 **Build Stats** (approximate):
+
 - Total bundle size: ~250KB (gzipped)
 - Initial load time: <2s on 3G connection
 - Lighthouse score: 95+ performance
@@ -273,6 +282,7 @@ npm run preview
 ### Option 1: Vercel (Recommended)
 
 **Advantages**:
+
 - Zero-config deployment
 - Automatic HTTPS
 - Global CDN
@@ -283,11 +293,13 @@ npm run preview
 **Steps**:
 
 1. **Install Vercel CLI** (optional, can use web UI):
+
 ```bash
 npm i -g vercel
 ```
 
 2. **Deploy via CLI**:
+
 ```bash
 # Login to Vercel
 vercel login
@@ -311,6 +323,7 @@ vercel --prod
    - Click "Deploy"
 
 4. **Environment Variables** (in Vercel dashboard):
+
 ```
 VITE_USE_MOCK_API = false
 VITE_FIREBASE_API_KEY = [production key]
@@ -330,6 +343,7 @@ VITE_FIREBASE_APP_ID = [production app id]
    - Wait for SSL certificate provisioning (~5 minutes)
 
 **Automatic Deployments**:
+
 - Push to `main` branch → Production deployment
 - Push to other branches → Preview deployment
 - Pull requests → Preview deployment with unique URL
@@ -337,6 +351,7 @@ VITE_FIREBASE_APP_ID = [production app id]
 ### Option 2: Netlify
 
 **Advantages**:
+
 - Simple drag-and-drop deployment
 - Automatic HTTPS
 - Global CDN
@@ -347,11 +362,13 @@ VITE_FIREBASE_APP_ID = [production app id]
 **Steps**:
 
 1. **Install Netlify CLI** (optional):
+
 ```bash
 npm i -g netlify-cli
 ```
 
 2. **Deploy via CLI**:
+
 ```bash
 # Login to Netlify
 netlify login
@@ -374,6 +391,7 @@ netlify deploy --prod
    - Click "Deploy site"
 
 4. **Netlify Configuration** (`netlify.toml` in root):
+
 ```toml
 [build]
   command = "npm run build"
@@ -390,6 +408,7 @@ netlify deploy --prod
 ### Option 3: Firebase Hosting
 
 **Advantages**:
+
 - Integrated with Firebase services
 - Fast global CDN
 - Automatic SSL
@@ -399,11 +418,13 @@ netlify deploy --prod
 **Steps**:
 
 1. **Install Firebase CLI**:
+
 ```bash
 npm i -g firebase-tools
 ```
 
 2. **Login and Initialize**:
+
 ```bash
 # Login
 firebase login
@@ -419,6 +440,7 @@ firebase init hosting
 ```
 
 3. **Build and Deploy**:
+
 ```bash
 # Build production bundle
 npm run build
@@ -428,15 +450,12 @@ firebase deploy --only hosting
 ```
 
 4. **Firebase Configuration** (`firebase.json`):
+
 ```json
 {
   "hosting": {
     "public": "dist",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
-    ],
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "rewrites": [
       {
         "source": "**",
@@ -459,6 +478,7 @@ firebase deploy --only hosting
 ```
 
 5. **Custom Domain**:
+
 ```bash
 firebase hosting:channel:deploy production --expires 30d
 # Or connect custom domain in Firebase Console
@@ -514,6 +534,7 @@ server {
 ```
 
 **Deployment Steps**:
+
 ```bash
 # 1. Build locally
 npm run build
@@ -527,6 +548,7 @@ sudo systemctl reload nginx
 ```
 
 **SSL Certificate** (Let's Encrypt):
+
 ```bash
 sudo certbot --nginx -d admin.pinknail.com
 ```
@@ -536,6 +558,7 @@ sudo certbot --nginx -d admin.pinknail.com
 ### Switching from Mock to Real API
 
 1. **Update Environment Variable**:
+
 ```bash
 VITE_USE_MOCK_API=false
 ```
@@ -547,6 +570,7 @@ The dual-mode service layer automatically switches based on this variable.
 ### Expected API Endpoints
 
 #### Authentication
+
 ```
 POST /api/auth/login
 Body: { email, password, rememberMe? }
@@ -562,6 +586,7 @@ Response: { success: true }
 ```
 
 #### Banners
+
 ```
 GET /api/banners
 Response: Banner[]
@@ -598,6 +623,7 @@ Response: { success: true }
 ```
 
 #### Hero Settings
+
 ```
 GET /api/hero-settings
 Response: HeroSettings
@@ -614,14 +640,16 @@ Allow admin domain to make requests:
 
 ```javascript
 // Node.js/Express example
-app.use(cors({
-  origin: [
-    'https://admin.pinknail.com',
-    'http://localhost:5173'  // Development
-  ],
-  credentials: true,
-  allowedHeaders: ['Content-Type', 'Authorization']
-}));
+app.use(
+  cors({
+    origin: [
+      "https://admin.pinknail.com",
+      "http://localhost:5173", // Development
+    ],
+    credentials: true,
+    allowedHeaders: ["Content-Type", "Authorization"],
+  }),
+);
 ```
 
 ### Authentication Flow (Real API)
@@ -688,17 +716,27 @@ Update `index.html` before deployment:
 
     <!-- SEO Meta Tags -->
     <title>Pink Nail Admin Dashboard</title>
-    <meta name="description" content="Admin dashboard for Pink Nail salon management" />
-    <meta name="robots" content="noindex, nofollow" />  <!-- Private admin panel -->
+    <meta
+      name="description"
+      content="Admin dashboard for Pink Nail salon management"
+    />
+    <meta name="robots" content="noindex, nofollow" />
+    <!-- Private admin panel -->
 
     <!-- Open Graph (Social Sharing) -->
     <meta property="og:title" content="Pink Nail Admin Dashboard" />
-    <meta property="og:description" content="Manage banners, services, bookings, and gallery" />
+    <meta
+      property="og:description"
+      content="Manage banners, services, bookings, and gallery"
+    />
     <meta property="og:type" content="website" />
 
     <!-- Security Headers (if not set by server) -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://firebasestorage.googleapis.com;" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://firebasestorage.googleapis.com;"
+    />
   </head>
   <body>
     <div id="root"></div>
@@ -718,6 +756,7 @@ npm install @sentry/react
 ```
 
 `src/main.tsx`:
+
 ```typescript
 import * as Sentry from "@sentry/react";
 
@@ -725,10 +764,7 @@ if (import.meta.env.PROD) {
   Sentry.init({
     dsn: "your-sentry-dsn",
     environment: import.meta.env.MODE,
-    integrations: [
-      new Sentry.BrowserTracing(),
-      new Sentry.Replay(),
-    ],
+    integrations: [new Sentry.BrowserTracing(), new Sentry.Replay()],
     tracesSampleRate: 0.1,
     replaysSessionSampleRate: 0.1,
     replaysOnErrorSampleRate: 1.0,
@@ -742,12 +778,17 @@ if (import.meta.env.PROD) {
 
 ```html
 <!-- Google Analytics (in index.html) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script
+  async
+  src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"
+></script>
 <script>
   window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-XXXXXXXXXX');
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag("js", new Date());
+  gtag("config", "G-XXXXXXXXXX");
 </script>
 ```
 
@@ -760,6 +801,7 @@ npm install firebase/performance
 ```
 
 `src/lib/firebase.ts`:
+
 ```typescript
 import { getPerformance } from "firebase/performance";
 
@@ -769,11 +811,13 @@ const perf = getPerformance(app);
 ### Backup Strategy
 
 **Firebase Storage**:
+
 - Enable daily backups in Firebase Console
 - Export storage rules periodically
 - Document folder structure
 
 **Database** (when using real API):
+
 - Daily automated backups
 - Point-in-time recovery
 - Backup retention policy (30 days minimum)
@@ -781,6 +825,7 @@ const perf = getPerformance(app);
 ### Update Strategy
 
 **Dependencies**:
+
 ```bash
 # Check for outdated packages
 npm outdated
@@ -795,6 +840,7 @@ npm install firebase@latest
 ```
 
 **Deployment**:
+
 1. Test locally after updates
 2. Deploy to staging environment
 3. Run full test suite
@@ -806,6 +852,7 @@ npm install firebase@latest
 ### Common Issues
 
 **Build Fails with TypeScript Errors**:
+
 ```bash
 # Run type checker
 npx tsc --noEmit
@@ -817,6 +864,7 @@ npx tsc --noEmit
 ```
 
 **Firebase Upload Fails**:
+
 ```bash
 # Check Firebase Storage rules
 # Verify environment variables are set
@@ -825,6 +873,7 @@ npx tsc --noEmit
 ```
 
 **Blank Page After Deployment**:
+
 ```bash
 # Common causes:
 # 1. SPA routing not configured (add redirects)
@@ -840,6 +889,7 @@ npx tsc --noEmit
 ```
 
 **Protected Routes Not Working**:
+
 ```bash
 # Verify authStore initialization
 # Check localStorage for token
@@ -848,6 +898,7 @@ npx tsc --noEmit
 ```
 
 **Images Not Loading from Firebase**:
+
 ```bash
 # Check Firebase Storage CORS configuration
 # Verify public read rules
@@ -860,22 +911,25 @@ npx tsc --noEmit
 Enable debug logs:
 
 `src/services/*.service.ts`:
+
 ```typescript
 const DEBUG = import.meta.env.DEV;
 
 if (DEBUG) {
-  console.log('[BannersService] Creating banner:', data);
+  console.log("[BannersService] Creating banner:", data);
 }
 ```
 
 ## Rollback Procedures
 
 ### Vercel/Netlify
+
 - Navigate to Deployments
 - Find previous successful deployment
 - Click "Promote to Production"
 
 ### Firebase Hosting
+
 ```bash
 # View deployment history
 firebase hosting:channel:list
@@ -885,6 +939,7 @@ firebase hosting:rollback
 ```
 
 ### Manual Rollback
+
 ```bash
 # Revert Git commit
 git revert <commit-hash>
@@ -898,22 +953,26 @@ git push origin main --force  # Use with caution!
 ## Cost Estimates
 
 ### Firebase Storage (Free Tier)
+
 - 5GB storage
 - 1GB/day downloads
 - Sufficient for small-medium admin panels
 
 ### Firebase Storage (Paid - Blaze Plan)
+
 - $0.026/GB/month storage
 - $0.12/GB downloads
 - Estimated $5-20/month for typical usage
 
 ### Vercel (Hobby - Free)
+
 - 100GB bandwidth
 - Unlimited websites
 - Automatic SSL
 - Sufficient for most admin panels
 
 ### Netlify (Free Tier)
+
 - 100GB bandwidth
 - 300 build minutes
 - Automatic SSL
@@ -935,18 +994,21 @@ git push origin main --force  # Use with caution!
 ## Support & Resources
 
 ### Official Documentation
+
 - [Vite Deployment Guide](https://vitejs.dev/guide/static-deploy.html)
 - [Firebase Hosting Docs](https://firebase.google.com/docs/hosting)
 - [Vercel Deployment](https://vercel.com/docs)
 - [Netlify Docs](https://docs.netlify.com)
 
 ### Project Documentation
+
 - [README.md](../README.md) - Project overview
 - [CLAUDE.md](../CLAUDE.md) - Development guide
 - [Code Standards](./code-standards.md) - Coding guidelines
 - [System Architecture](./system-architecture.md) - Architecture details
 
 ### Community
+
 - GitHub Issues: [repository-url]/issues
 - Firebase Community: [firebase.google.com/community](https://firebase.google.com/community)
 - React Community: [react.dev/community](https://react.dev/community)

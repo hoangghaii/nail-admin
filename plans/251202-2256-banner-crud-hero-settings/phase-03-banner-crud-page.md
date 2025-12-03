@@ -8,6 +8,7 @@
 ## Context
 
 **Related Files**:
+
 - `src/pages/DashboardPage.tsx` (existing page example)
 - `src/components/layout/Layout.tsx` (existing layout)
 - `src/App.tsx` (router configuration)
@@ -60,6 +61,7 @@ Build complete banner management page with data table, create/edit modals, delet
 ### Create/Edit Modal
 
 **Fields**:
+
 - Title (required, max 100 chars)
 - Description (optional, max 500 chars)
 - Image Upload (required)
@@ -70,6 +72,7 @@ Build complete banner management page with data table, create/edit modals, delet
 - Primary (checkbox, default: false)
 
 **Validation**:
+
 - Title: Required, 1-100 chars
 - Description: Max 500 chars
 - Image: Required (unless editing and already has image)
@@ -95,6 +98,7 @@ Build complete banner management page with data table, create/edit modals, delet
 
 **Decision**: Use HTML5 Drag API for Phase 1
 **Rationale**:
+
 - No external dependencies (keep bundle small)
 - Simple reordering use case (not complex drag scenarios)
 - Can upgrade to library later if needed (react-beautiful-dnd, dnd-kit)
@@ -105,6 +109,7 @@ Build complete banner management page with data table, create/edit modals, delet
 
 **Decision**: Single modal with mode prop ('create' | 'edit')
 **Rationale**:
+
 - DRY principle (shared form logic)
 - Consistent UX
 - Easier to maintain
@@ -113,6 +118,7 @@ Build complete banner management page with data table, create/edit modals, delet
 
 **Decision**: Use optimistic updates for toggles (active, primary)
 **Rationale**:
+
 - Instant feedback (better UX)
 - Mock API is fast, so rollback unlikely
 - Real API should be fast enough for toggles
@@ -754,13 +760,16 @@ Add to navigation items:
 ## Risk Assessment
 
 **High Risk**:
+
 - Drag-and-drop UX on touch devices (HTML5 API limitations)
 
 **Medium Risk**:
+
 - Form modal complexity (many fields, uploads)
 - Optimistic updates rollback (if reorder fails)
 
 **Low Risk**:
+
 - Data table rendering (TanStack Table stable)
 - Delete confirmation (simple dialog)
 
@@ -774,6 +783,7 @@ Add to navigation items:
 ## Next Steps
 
 After Phase 3 completion:
+
 1. Proceed to Phase 4: Build Hero Settings component
 2. Test full banner CRUD workflow
 3. Gather user feedback on drag-drop UX

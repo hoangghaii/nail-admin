@@ -11,6 +11,7 @@
 All localStorage operations for banner and hero settings management centralized through `StorageService` class with `nail_admin_` prefix. Implementation follows dual-mode architecture (mock API vs real API) controlled by `VITE_USE_MOCK_API` env variable.
 
 **Key Findings**:
+
 - 5 primary files using localStorage for banners/hero settings
 - 2 localStorage keys for feature data: `banners`, `hero_settings`
 - 1 initialization flag: `mock_data_initialized`
@@ -26,6 +27,7 @@ All localStorage operations for banner and hero settings management centralized 
 **Purpose**: Central localStorage abstraction layer
 
 **localStorage Operations**:
+
 - Line 6: `localStorage.setItem(this.prefix + key, serialized)` - Write operation
 - Line 10: `localStorage.getItem(this.prefix + key)` - Read operation
 - Line 20: `localStorage.removeItem(this.prefix + key)` - Delete operation
@@ -34,6 +36,7 @@ All localStorage operations for banner and hero settings management centralized 
 **Key Prefix**: `nail_admin_`
 
 **Public Methods**:
+
 - `set<T>(key: string, value: T)`: Stores JSON-serialized data
 - `get<T>(key: string, defaultValue: T)`: Retrieves parsed data with fallback
 - `remove(key: string)`: Deletes single key
@@ -50,6 +53,7 @@ All localStorage operations for banner and hero settings management centralized 
 **localStorage Key**: `"banners"`
 
 **Data Structure**:
+
 ```typescript
 Banner[] = [
   {
@@ -110,6 +114,7 @@ Banner[] = [
 **Purpose**: Initial seed data for banners
 
 **Structure**: 5 mock banners
+
 - 1 primary image banner (active)
 - 2 secondary image banners (1 active, 1 inactive)
 - 2 video banners (1 active, 1 inactive)
@@ -125,16 +130,18 @@ Banner[] = [
 **localStorage Key**: `"hero_settings"`
 
 **Data Structure**:
+
 ```typescript
 HeroSettings = {
   displayMode: "image" | "video" | "carousel",
-  carouselInterval: number,  // milliseconds (default: 5000)
-  showControls: boolean,     // Show carousel navigation
-  updatedAt: Date
-}
+  carouselInterval: number, // milliseconds (default: 5000)
+  showControls: boolean, // Show carousel navigation
+  updatedAt: Date,
+};
 ```
 
 **Default Settings** (Line 9-14):
+
 ```typescript
 {
   displayMode: "carousel",
@@ -169,11 +176,13 @@ HeroSettings = {
 ### 4.1 Mock Data Initializer (`src/data/initializeMockData.ts`)
 
 **localStorage Keys Used**:
+
 1. `"mock_data_initialized"` (boolean flag)
 2. `"banners"` (Banner array)
 3. `"hero_settings"` (HeroSettings object)
 
 **Operations**:
+
 - Line 5: `storage.get<boolean>("mock_data_initialized", false)` - Check if already initialized
 - Line 8: `storage.set("banners", MOCK_BANNERS)` - Seed 5 mock banners
 - Line 10-15: `storage.set("hero_settings", {...})` - Seed default hero settings
@@ -190,6 +199,7 @@ HeroSettings = {
 ### 5.1 BannersPage (`src/pages/BannersPage.tsx`)
 
 **Service Calls** (indirect localStorage access):
+
 - Line 64: `bannersService.getAll()` - Load all banners
 - Line 76: `heroSettingsService.getSettings()` - Load display mode
 - Line 105: `bannersService.setPrimary(banner.id)` - Update primary banner
@@ -203,12 +213,14 @@ HeroSettings = {
 ### 5.2 HeroSettingsCard (`src/components/banners/HeroSettingsCard.tsx`)
 
 **Service Calls**:
+
 - Line 75: `heroSettingsService.getSettings()` - Load settings
 - Line 76: `bannersService.getPrimary()` - Load primary banner for preview
 - Line 99: `heroSettingsService.updateSettings({...})` - Auto-save on change
 - Line 126: `heroSettingsService.resetSettings()` - Reset to defaults
 
 **Auto-Save Mechanism** (Lines 115-122):
+
 - Watches form fields
 - Triggers save on any change
 - Debounced through React Hook Form
@@ -218,10 +230,12 @@ HeroSettings = {
 ### 5.3 BannerFormModal (`src/components/banners/BannerFormModal.tsx`)
 
 **Service Calls**:
+
 - Line 107: `bannersService.update(banner.id, {...})` - Update existing banner
 - Line 116-121: `bannersService.getAll()` + `bannersService.create({...})` - Create new banner
 
 **SortIndex Calculation** (Lines 116-119):
+
 - Reads all banners to find max sortIndex
 - Assigns new banner to end of list
 
@@ -230,6 +244,7 @@ HeroSettings = {
 ### 5.4 DeleteBannerDialog (`src/components/banners/DeleteBannerDialog.tsx`)
 
 **Service Calls**:
+
 - Line 37: `bannersService.delete(banner.id)` - Remove banner from localStorage
 
 ---
@@ -239,6 +254,7 @@ HeroSettings = {
 ### 6.1 AuthStore (`src/store/authStore.ts`)
 
 **localStorage Keys** (separate from banners/hero):
+
 - `"auth_token"` - JWT token
 - `"auth_user"` - User object
 
@@ -251,6 +267,7 @@ HeroSettings = {
 **Environment Variable**: `VITE_USE_MOCK_API`
 
 **Values**:
+
 - `"true"` → Use localStorage (mock API)
 - `"false"` → Use real API endpoints
 
@@ -315,24 +332,26 @@ HeroSettings = {
 
 ## 9. Summary Table
 
-| File | localStorage Keys | Operations | Lines |
-|------|-------------------|------------|-------|
-| `storage.service.ts` | All keys (via prefix) | get, set, remove, clear | 6, 10, 20, 24-26 |
-| `banners.service.ts` | `banners` | get (7x), set (5x) | 11, 22, 38, 46, 64, 74, 89, 91, 109, 117, 133, 144 |
-| `heroSettings.service.ts` | `hero_settings` | get (2x), set (1x) | 18, 28-29, 39 |
-| `initializeMockData.ts` | `mock_data_initialized`, `banners`, `hero_settings` | get (1x), set (3x) | 5, 8, 10-15, 17 |
-| `authStore.ts` | `auth_token`, `auth_user` | get (2x), set (2x), remove (2x) | 18-19, 27-28, 33-34 |
+| File                      | localStorage Keys                                   | Operations                      | Lines                                              |
+| ------------------------- | --------------------------------------------------- | ------------------------------- | -------------------------------------------------- |
+| `storage.service.ts`      | All keys (via prefix)                               | get, set, remove, clear         | 6, 10, 20, 24-26                                   |
+| `banners.service.ts`      | `banners`                                           | get (7x), set (5x)              | 11, 22, 38, 46, 64, 74, 89, 91, 109, 117, 133, 144 |
+| `heroSettings.service.ts` | `hero_settings`                                     | get (2x), set (1x)              | 18, 28-29, 39                                      |
+| `initializeMockData.ts`   | `mock_data_initialized`, `banners`, `hero_settings` | get (1x), set (3x)              | 5, 8, 10-15, 17                                    |
+| `authStore.ts`            | `auth_token`, `auth_user`                           | get (2x), set (2x), remove (2x) | 18-19, 27-28, 33-34                                |
 
 ---
 
 ## 10. localStorage Keys Reference
 
 ### Banner/Hero Settings Keys:
+
 1. **`nail_admin_banners`** - Array of Banner objects (CRUD operations)
 2. **`nail_admin_hero_settings`** - HeroSettings object (display configuration)
 3. **`nail_admin_mock_data_initialized`** - Boolean flag (one-time setup)
 
 ### Auth Keys (not banner-related):
+
 4. **`nail_admin_auth_token`** - JWT token string
 5. **`nail_admin_auth_user`** - User object
 

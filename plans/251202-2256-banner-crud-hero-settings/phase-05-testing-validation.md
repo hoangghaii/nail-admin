@@ -8,6 +8,7 @@
 ## Context
 
 **Related Files**:
+
 - All Phase 1-4 implementations
 - `tsconfig.json` (TypeScript configuration)
 - `.env` (environment variables)
@@ -39,6 +40,7 @@ Comprehensive testing and validation of the Banner CRUD with Hero Settings featu
 ### Functional Testing
 
 **Banner CRUD**:
+
 - [ ] Create banner with image upload
 - [ ] Create banner with image + video upload
 - [ ] Edit banner (pre-fills form correctly)
@@ -48,6 +50,7 @@ Comprehensive testing and validation of the Banner CRUD with Hero Settings featu
 - [ ] Drag-drop reorder banners
 
 **Hero Settings**:
+
 - [ ] Switch to Image mode (shows primary banner)
 - [ ] Switch to Video mode (shows primary banner)
 - [ ] Switch to Carousel mode (hides primary preview)
@@ -55,6 +58,7 @@ Comprehensive testing and validation of the Banner CRUD with Hero Settings featu
 - [ ] Reload page (settings load correctly)
 
 **Validation**:
+
 - [ ] Title required (shows error)
 - [ ] Title max 100 chars (shows error)
 - [ ] Description max 500 chars (shows error)
@@ -64,6 +68,7 @@ Comprehensive testing and validation of the Banner CRUD with Hero Settings featu
 - [ ] CTA link URL validation (invalid URL shows error)
 
 **Edge Cases**:
+
 - [ ] No banners (empty state displays)
 - [ ] No primary banner (warning in Video/Image mode)
 - [ ] Primary banner deleted (next active becomes primary)
@@ -103,6 +108,7 @@ Comprehensive testing and validation of the Banner CRUD with Hero Settings featu
 
 **Decision**: Manual testing for Phase 1, automated later
 **Rationale**:
+
 - Project has no test setup yet (Vitest, React Testing Library)
 - Manual testing faster for MVP validation
 - Automated tests can be added in Phase 6
@@ -113,6 +119,7 @@ Comprehensive testing and validation of the Banner CRUD with Hero Settings featu
 
 **Decision**: Comprehensive mock data with multiple scenarios
 **Rationale**:
+
 - Test edge cases (long text, no video, inactive banners)
 - Representative of production data
 - Easier to demo feature
@@ -145,7 +152,8 @@ export const mockBanners: Banner[] = [
     id: "banner-1",
     title: "Summer Sale 2024",
     description: "Get 20% off all manicure and pedicure services this summer!",
-    imageUrl: "https://images.unsplash.com/photo-1604654894610-df63bc536371?w=1920",
+    imageUrl:
+      "https://images.unsplash.com/photo-1604654894610-df63bc536371?w=1920",
     videoUrl: "https://storage.googleapis.com/sample-videos/nail-promo.mp4",
     ctaText: "Book Now",
     ctaLink: "https://pinknail.com/booking",
@@ -158,8 +166,10 @@ export const mockBanners: Banner[] = [
   {
     id: "banner-2",
     title: "New Nail Art Collection",
-    description: "Discover our latest seasonal nail art designs featuring floral patterns and metallic accents.",
-    imageUrl: "https://images.unsplash.com/photo-1610992015732-2449b76344bc?w=1920",
+    description:
+      "Discover our latest seasonal nail art designs featuring floral patterns and metallic accents.",
+    imageUrl:
+      "https://images.unsplash.com/photo-1610992015732-2449b76344bc?w=1920",
     ctaText: "View Gallery",
     ctaLink: "https://pinknail.com/gallery",
     sortIndex: 1,
@@ -171,8 +181,10 @@ export const mockBanners: Banner[] = [
   {
     id: "banner-3",
     title: "Spa Package Special",
-    description: "Pamper yourself with our exclusive spa package including full nail treatment and massage.",
-    imageUrl: "https://images.unsplash.com/photo-1519415510236-718bdfcd89c8?w=1920",
+    description:
+      "Pamper yourself with our exclusive spa package including full nail treatment and massage.",
+    imageUrl:
+      "https://images.unsplash.com/photo-1519415510236-718bdfcd89c8?w=1920",
     ctaText: "Learn More",
     ctaLink: "https://pinknail.com/spa-packages",
     sortIndex: 2,
@@ -185,7 +197,8 @@ export const mockBanners: Banner[] = [
     id: "banner-4",
     title: "Holiday Special - Coming Soon",
     description: "Stay tuned for our holiday promotions launching next month!",
-    imageUrl: "https://images.unsplash.com/photo-1632345031435-8727f6897d53?w=1920",
+    imageUrl:
+      "https://images.unsplash.com/photo-1632345031435-8727f6897d53?w=1920",
     sortIndex: 3,
     isActive: false,
     isPrimary: false,
@@ -195,8 +208,10 @@ export const mockBanners: Banner[] = [
   {
     id: "banner-5",
     title: "Grand Opening Anniversary",
-    description: "Celebrating 5 years of beautiful nails! Special discounts all week long with complimentary champagne for all customers.",
-    imageUrl: "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=1920",
+    description:
+      "Celebrating 5 years of beautiful nails! Special discounts all week long with complimentary champagne for all customers.",
+    imageUrl:
+      "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=1920",
     ctaText: "Celebrate With Us",
     ctaLink: "https://pinknail.com/anniversary",
     sortIndex: 4,
@@ -270,7 +285,9 @@ if (import.meta.env.DEV) {
     init: initializeMockData,
     clear: clearMockData,
   };
-  console.log("🔧 Debug tools available: window.mockData.init(), window.mockData.clear()");
+  console.log(
+    "🔧 Debug tools available: window.mockData.init(), window.mockData.clear()",
+  );
 }
 ```
 
@@ -278,7 +295,7 @@ if (import.meta.env.DEV) {
 
 **File**: `src/data/TESTING_CHECKLIST.md`
 
-```markdown
+````markdown
 # Banner CRUD Testing Checklist
 
 ## Pre-Testing Setup
@@ -294,6 +311,7 @@ if (import.meta.env.DEV) {
 ```bash
 npx tsc --noEmit
 ```
+````
 
 Expected: 0 errors
 
@@ -360,26 +378,31 @@ Expected: 0 errors
 ### Validation
 
 **Title**:
+
 - [ ] Empty title → Error
 - [ ] 1 character → Valid
 - [ ] 100 characters → Valid
 - [ ] 101 characters → Error
 
 **Description**:
+
 - [ ] 500 characters → Valid
 - [ ] 501 characters → Error
 
 **Image Upload**:
+
 - [ ] PDF file → Error "Please select an image file"
 - [ ] 6MB image → Error "Image must be less than 5MB"
 - [ ] Valid image → Success
 
 **Video Upload**:
+
 - [ ] AVI file → Error "Only MP4 and WebM videos are supported"
 - [ ] 51MB video → Error "Video must be less than 50MB"
 - [ ] Valid MP4 → Success
 
 **CTA Link**:
+
 - [ ] "not-a-url" → Error "Invalid URL"
 - [ ] "https://example.com" → Valid
 
@@ -401,17 +424,20 @@ Expected: 0 errors
 ### Responsive Design
 
 **Desktop (1920x1080)**:
+
 - [ ] Hero Settings card full width
 - [ ] Data table displays all columns
 - [ ] Modal centered, proper width
 - [ ] Drag-drop smooth
 
 **Tablet (768x1024)**:
+
 - [ ] Layout responsive, no overflow
 - [ ] Table horizontally scrollable if needed
 - [ ] Modal adapts to width
 
 **Mobile (375x667)**:
+
 - [ ] Hero Settings card stacks vertically
 - [ ] Table scrollable
 - [ ] Modal full width on small screen
@@ -443,7 +469,8 @@ _Document any bugs discovered during testing:_
 ## Notes
 
 _Additional observations or improvements:_
-```
+
+````
 
 ### Step 4: TypeScript Verification Script
 
@@ -465,7 +492,7 @@ else
   echo "❌ TypeScript verification failed"
   exit 1
 fi
-```
+````
 
 Make executable:
 
@@ -489,15 +516,18 @@ Add to `package.json`:
 **Schedule**: 2-hour testing session
 
 **Roles**:
+
 - Tester 1: Follow checklist systematically
 - Tester 2: Exploratory testing (break things)
 
 **Environment**:
+
 - Chrome DevTools open (console, network tab)
 - Mock API enabled (`VITE_USE_MOCK_API=true`)
 - Clear localStorage before starting
 
 **Process**:
+
 1. Clear mock data: `window.mockData.clear()`
 2. Reload page (triggers mock data initialization)
 3. Follow testing checklist step-by-step
@@ -536,10 +566,12 @@ Add to `package.json`:
 ## Risk Assessment
 
 **Medium Risk**:
+
 - Cross-browser compatibility (Safari may have issues)
 - Mobile drag-drop UX (HTML5 API less reliable)
 
 **Low Risk**:
+
 - Type checking (established patterns)
 - Mock data persistence (localStorage stable)
 
@@ -553,6 +585,7 @@ Add to `package.json`:
 ## Next Steps
 
 After Phase 5 completion:
+
 1. Deploy to staging environment (Vercel/Netlify)
 2. Share with stakeholders for feedback
 3. Create API endpoint documentation for backend team

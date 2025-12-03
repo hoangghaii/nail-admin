@@ -8,6 +8,7 @@
 ## Context
 
 **Related Files**:
+
 - `src/components/ui/button.tsx` (existing)
 - `src/components/ui/input.tsx` (existing)
 - `src/components/ui/card.tsx` (existing)
@@ -33,6 +34,7 @@ Build reusable components for data display (DataTable), user interactions (Dialo
 ### DataTable Component
 
 **Features**:
+
 - Column configuration (header, accessor, cell renderer)
 - Sorting (client-side for mock data)
 - Row selection (optional, for bulk actions)
@@ -44,6 +46,7 @@ Build reusable components for data display (DataTable), user interactions (Dialo
 ### Dialog Component
 
 **Features**:
+
 - Radix UI Dialog primitive
 - Title + description
 - Content area (form container)
@@ -54,6 +57,7 @@ Build reusable components for data display (DataTable), user interactions (Dialo
 ### ImageUpload Component
 
 **Features**:
+
 - File input with preview
 - Drag-and-drop support
 - Upload progress bar
@@ -65,6 +69,7 @@ Build reusable components for data display (DataTable), user interactions (Dialo
 ### VideoUpload Component
 
 **Features**:
+
 - Same as ImageUpload but for video files
 - Video preview (HTML5 video player)
 - File size validation (max 50MB)
@@ -73,6 +78,7 @@ Build reusable components for data display (DataTable), user interactions (Dialo
 ### StatusBadge Component
 
 **Features**:
+
 - Color-coded badges (active/inactive, primary/secondary)
 - Size variants (sm, md, lg)
 - Icon support (optional)
@@ -83,6 +89,7 @@ Build reusable components for data display (DataTable), user interactions (Dialo
 
 **Decision**: Use TanStack Table v8
 **Rationale**:
+
 - Type-safe column definitions
 - Built-in sorting, filtering, pagination
 - Headless UI (style with shadcn/ui)
@@ -92,6 +99,7 @@ Build reusable components for data display (DataTable), user interactions (Dialo
 
 **Decision**: Use Radix UI Dialog
 **Rationale**:
+
 - Accessibility built-in (focus trap, ARIA attributes)
 - Portal rendering (avoids z-index issues)
 - Keyboard navigation
@@ -102,6 +110,7 @@ Build reusable components for data display (DataTable), user interactions (Dialo
 
 **Decision**: Separate components, shared logic
 **Rationale**:
+
 - Different preview UIs (img vs video tag)
 - Different validation rules (size, format)
 - Clearer component API
@@ -740,10 +749,12 @@ export function VideoUpload({
 ## Risk Assessment
 
 **Medium Risk**:
+
 - File upload progress tracking (Firebase API complexity)
 - Video file size limits (may need backend compression)
 
 **Low Risk**:
+
 - Dialog component (Radix UI well-documented)
 - DataTable (TanStack Table stable API)
 
@@ -757,6 +768,7 @@ export function VideoUpload({
 ## Next Steps
 
 After Phase 2 completion:
+
 1. Proceed to Phase 3: Build BannersPage with CRUD UI
 2. Test all components in isolation (Storybook-style testing)
 3. Document component APIs and usage examples

@@ -4,6 +4,8 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 
+import type { Banner, BannerType } from "@/types/banner.types";
+
 import { ImageUpload } from "@/components/shared/ImageUpload";
 import { VideoUpload } from "@/components/shared/VideoUpload";
 import { Button } from "@/components/ui/button";
@@ -26,17 +28,16 @@ import {
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { bannersService } from "@/services/banners.service";
-import type { Banner, BannerType } from "@/types/banner.types";
 
 const bannerSchema = z.object({
+  active: z.boolean(),
+  imageUrl: z.string().min(1, "Image is required"),
   title: z
     .string()
     .min(3, "Title must be at least 3 characters")
     .max(100, "Title must be 100 characters or less"),
   type: z.enum(["image", "video"]),
-  imageUrl: z.string().min(1, "Image is required"),
   videoUrl: z.string().optional(),
-  active: z.boolean(),
 });
 
 type BannerFormData = z.infer<typeof bannerSchema>;
@@ -66,11 +67,11 @@ export function BannerFormModal({
     watch,
   } = useForm<BannerFormData>({
     defaultValues: {
+      active: true,
+      imageUrl: "",
       title: "",
       type: "image",
-      imageUrl: "",
       videoUrl: "",
-      active: true,
     },
     resolver: zodResolver(bannerSchema),
   });
@@ -83,19 +84,19 @@ export function BannerFormModal({
   useEffect(() => {
     if (banner) {
       reset({
+        active: banner.active,
+        imageUrl: banner.imageUrl,
         title: banner.title,
         type: banner.type,
-        imageUrl: banner.imageUrl,
         videoUrl: banner.videoUrl || "",
-        active: banner.active,
       });
     } else {
       reset({
+        active: true,
+        imageUrl: "",
         title: "",
         type: "image",
-        imageUrl: "",
         videoUrl: "",
-        active: true,
       });
     }
   }, [banner, reset]);
@@ -105,27 +106,28 @@ export function BannerFormModal({
     try {
       if (isEditMode) {
         await bannersService.update(banner.id, {
+          active: data.active,
+          imageUrl: data.imageUrl,
           title: data.title,
           type: data.type,
-          imageUrl: data.imageUrl,
           videoUrl: data.videoUrl || undefined,
-          active: data.active,
         });
         toast.success("Banner updated successfully!");
       } else {
         const banners = await bannersService.getAll();
-        const maxSortIndex = banners.length > 0
-          ? Math.max(...banners.map(b => b.sortIndex))
-          : -1;
+        const maxSortIndex =
+          banners.length > 0
+            ? Math.max(...banners.map((b) => b.sortIndex))
+            : -1;
 
         await bannersService.create({
+          active: data.active,
+          imageUrl: data.imageUrl,
+          isPrimary: false,
+          sortIndex: maxSortIndex + 1,
           title: data.title,
           type: data.type,
-          imageUrl: data.imageUrl,
           videoUrl: data.videoUrl || undefined,
-          sortIndex: maxSortIndex + 1,
-          active: data.active,
-          isPrimary: false,
         });
         toast.success("Banner created successfully!");
       }
@@ -201,7 +203,8 @@ export function BannerFormModal({
                 </p>
               )}
               <p className="text-xs text-muted-foreground">
-                Choose "Image" for static image banners or "Video" for video background banners
+                Choose "Image" for static image banners or "Video" for video
+                background banners
               </p>
             </div>
 

@@ -11,8 +11,10 @@ Pink Nail Admin Dashboard implements a modern client-side React architecture wit
 ## Architectural Pattern
 
 ### Pattern Classification
+
 **Primary Pattern**: Layered Architecture with Service Layer Pattern
 **Secondary Patterns**:
+
 - Model-View-Controller (MVC) via React
 - Repository Pattern (services as data repositories)
 - Strategy Pattern (dual-mode API toggle)
@@ -20,6 +22,7 @@ Pink Nail Admin Dashboard implements a modern client-side React architecture wit
 - Compound Component Pattern (shadcn/ui components)
 
 ### Design Philosophy
+
 - **Separation of Concerns**: Clear boundaries between UI, business logic, and data
 - **Type Safety First**: Full TypeScript coverage with strict mode
 - **Component Reusability**: Shared components and UI primitives
@@ -32,9 +35,11 @@ Pink Nail Admin Dashboard implements a modern client-side React architecture wit
 ### 1. Presentation Layer
 
 #### 1.1 Pages (Route-level Components)
+
 **Location**: `src/pages/`
 **Responsibility**: Page-level orchestration, data fetching, state management
 **Key Pages**:
+
 - `LoginPage.tsx` - Authentication UI
 - `DashboardPage.tsx` - Overview dashboard with stats
 - `BannersPage.tsx` - Banner management (CRUD complete)
@@ -46,10 +51,12 @@ Pink Nail Admin Dashboard implements a modern client-side React architecture wit
 **Technology**: React 19.2 functional components with hooks
 
 #### 1.2 Layout Components
+
 **Location**: `src/components/layout/`
 **Responsibility**: Application structure and navigation
 
 **Components**:
+
 - `Layout.tsx` - Main layout wrapper with sidebar and topbar
 - `Sidebar.tsx` - Fixed navigation sidebar (250px width)
   - Logo section
@@ -61,16 +68,19 @@ Pink Nail Admin Dashboard implements a modern client-side React architecture wit
   - Logout action
 
 **Features**:
+
 - Fixed sidebar navigation
 - Sticky topbar (z-index: 40)
 - Active route highlighting
 - Responsive design (mobile-first)
 
 #### 1.3 Feature Components
+
 **Location**: `src/components/[feature]/`
 **Responsibility**: Feature-specific UI logic
 
 **Banner Components** (`src/components/banners/`):
+
 - `BannerFormModal.tsx` - Create/edit modal with React Hook Form + Zod validation
   - Title, description fields
   - Image/video upload
@@ -86,16 +96,19 @@ Pink Nail Admin Dashboard implements a modern client-side React architecture wit
 - `index.ts` - Barrel export
 
 **Implementation**:
+
 - React Hook Form for form state
 - Zod for validation schemas
 - Sonner for toast notifications
 - Firebase Storage integration
 
 #### 1.4 Shared Components
+
 **Location**: `src/components/shared/`
 **Responsibility**: Reusable cross-feature components
 
 **DataTable** (`DataTable.tsx`):
+
 - Built on TanStack Table v8
 - Generic column definitions
 - Sorting support
@@ -106,33 +119,38 @@ Pink Nail Admin Dashboard implements a modern client-side React architecture wit
 - Responsive design
 
 **ImageUpload** (`ImageUpload.tsx`):
+
 - Firebase Storage integration
 - Drag-and-drop upload
-- File validation (type: image/*, size: <5MB)
+- File validation (type: image/\*, size: <5MB)
 - Image preview
 - Upload progress indicator
 - Delete functionality
 - Folder organization
 
 **VideoUpload** (`VideoUpload.tsx`):
+
 - Firebase Storage for videos
 - Drag-and-drop interface
-- File validation (type: video/*, size: <50MB)
+- File validation (type: video/\*, size: <50MB)
 - Video preview
 - Upload progress
 - Delete functionality
 - Folder organization
 
 **StatusBadge** (`StatusBadge.tsx`):
+
 - Variant-based styling (default, success, destructive, warning)
 - Status indicators (active/inactive, pending/confirmed/completed/cancelled)
 - Consistent badge design
 
 #### 1.5 UI Primitives (shadcn/ui)
+
 **Location**: `src/components/ui/`
 **Responsibility**: Base UI components with consistent design
 
 **Components**:
+
 - `button.tsx` - Button variants (default, destructive, outline, ghost, link, secondary)
 - `card.tsx` - Card layout (Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter)
 - `dialog.tsx` - Modal dialogs (Dialog, DialogTrigger, DialogContent, DialogHeader, DialogFooter)
@@ -144,6 +162,7 @@ Pink Nail Admin Dashboard implements a modern client-side React architecture wit
 - `textarea.tsx` - Multi-line text input
 
 **Design System**:
+
 - OKLCH color space
 - CSS variable-based theming
 - Professional blue primary color
@@ -154,11 +173,13 @@ Pink Nail Admin Dashboard implements a modern client-side React architecture wit
 ### 2. Business Logic Layer
 
 #### 2.1 Service Layer
+
 **Location**: `src/services/`
 **Responsibility**: API communication and business logic
 **Pattern**: Dual-mode architecture controlled by `VITE_USE_MOCK_API` environment variable
 
 **Architecture**:
+
 ```typescript
 class ServiceName {
   private useMockApi = import.meta.env.VITE_USE_MOCK_API === "true";
@@ -178,6 +199,7 @@ class ServiceName {
 **Services**:
 
 **auth.service.ts** - Authentication management:
+
 - `login(credentials)` - Authenticate user, return JWT token
 - `logout()` - Clear session
 - `getCurrentUser()` - Get current authenticated user
@@ -185,6 +207,7 @@ class ServiceName {
 - Token stored in localStorage (`nail_admin_token`)
 
 **banners.service.ts** - Banner CRUD:
+
 - `getAll()` - Fetch all banners sorted by sortIndex
 - `getById(id)` - Fetch single banner
 - `create(banner)` - Create new banner with auto-generated ID and timestamps
@@ -195,10 +218,12 @@ class ServiceName {
 - `reorder(bannerId, newIndex)` - Update sortIndex for drag-and-drop
 
 **heroSettings.service.ts** - Hero settings persistence:
+
 - `get()` - Fetch current hero settings with defaults
 - `update(settings)` - Update hero settings and timestamp
 
 **imageUpload.service.ts** - Firebase Storage integration:
+
 - `uploadImage(file, folder)` - Upload image, return public URL
 - `uploadVideo(file, folder)` - Upload video, return public URL
 - `deleteFile(url)` - Delete file from storage by URL
@@ -207,6 +232,7 @@ class ServiceName {
 - Error handling
 
 **storage.service.ts** - localStorage wrapper:
+
 - `set<T>(key, value)` - Store typed data with `nail_admin_` prefix
 - `get<T>(key, defaultValue)` - Retrieve typed data with fallback
 - `remove(key)` - Remove single key
@@ -215,12 +241,14 @@ class ServiceName {
 - Type-safe operations
 
 **Mock Mode** (`VITE_USE_MOCK_API=true`):
+
 - Data persisted in localStorage with `nail_admin_` prefix
 - Simulated network delays (800ms for auth)
 - Full CRUD operations
 - No backend required
 
 **Real API Mode** (`VITE_USE_MOCK_API=false`):
+
 - Expected endpoints:
   - `POST /api/auth/login`
   - `GET /api/banners`
@@ -234,11 +262,13 @@ class ServiceName {
 - No frontend code changes needed
 
 #### 2.2 State Management
+
 **Location**: `src/store/`
 **Technology**: Zustand 5.0.2
 **Responsibility**: Global application state
 
 **authStore.ts** - Authentication state:
+
 ```typescript
 {
   user: User | null
@@ -251,6 +281,7 @@ class ServiceName {
 ```
 
 **Features**:
+
 - Automatic persistence to localStorage
 - Session initialization on mount
 - Token expiry handling
@@ -259,10 +290,12 @@ class ServiceName {
 **Pattern**: Zustand slice pattern for potential expansion
 
 #### 2.3 Data Initialization
+
 **Location**: `src/data/`
 **Responsibility**: Mock data seeding
 
 **initializeMockData.ts** - Auto-initialization logic:
+
 - Runs on app mount in `main.tsx`
 - Checks if data exists in localStorage
 - Seeds banners if empty
@@ -270,6 +303,7 @@ class ServiceName {
 - Idempotent (safe to run multiple times)
 
 **mockBanners.ts** - Sample banner data:
+
 - 5 pre-configured banners
 - Various display types (image, video)
 - Realistic content for testing
@@ -278,6 +312,7 @@ class ServiceName {
 ### 3. Data Layer
 
 #### 3.1 Type System
+
 **Location**: `src/types/`
 **Responsibility**: TypeScript type definitions
 **Strategy**: Shared types must remain compatible with client project
@@ -285,12 +320,14 @@ class ServiceName {
 **Type Files**:
 
 **Shared Types** (synchronized with `/Users/hainguyen/Documents/nail-project/nail-client`):
+
 - `service.types.ts` - Service, ServiceCategory
 - `gallery.types.ts` - GalleryItem, GalleryCategory
 - `booking.types.ts` - Booking, BookingStatus, CustomerInfo
 - **Rule**: Never modify without updating both projects
 
 **Admin-Only Types**:
+
 - `banner.types.ts` - Banner entity (NEW in v0.1.0)
   - id, title, description, imageUrl, videoUrl
   - ctaText, ctaLink
@@ -309,6 +346,7 @@ class ServiceName {
   - JWT-based authentication types
 
 **TypeScript Configuration**:
+
 - `verbatimModuleSyntax: true` - **CRITICAL**: Must use `import type` for type-only imports
 - Strict mode enabled
 - No implicit any
@@ -317,6 +355,7 @@ class ServiceName {
 #### 3.2 Data Storage
 
 **localStorage Structure** (Mock Mode):
+
 ```
 nail_admin_token          → JWT token string
 nail_admin_user           → User object
@@ -325,6 +364,7 @@ nail_admin_heroSettings   → HeroSettings object
 ```
 
 **Firebase Storage Structure**:
+
 ```
 /banners/
   ├── {timestamp}-{filename}.jpg
@@ -336,6 +376,7 @@ nail_admin_heroSettings   → HeroSettings object
 ```
 
 **Data Flow**:
+
 ```
 User Action (Component)
     ↓
@@ -352,14 +393,17 @@ UI Re-render (React)
 ### 4. Integration Layer
 
 #### 4.1 Firebase Integration
+
 **Purpose**: Cloud storage for images and videos
 **SDK Version**: 11.1.0
 **Configuration**: `src/lib/firebase.ts`
 
 **Initialized Services**:
+
 - Firebase Storage only (no Auth, Firestore, etc.)
 
 **Environment Variables**:
+
 ```env
 VITE_FIREBASE_API_KEY
 VITE_FIREBASE_AUTH_DOMAIN
@@ -370,6 +414,7 @@ VITE_FIREBASE_APP_ID
 ```
 
 **Upload Flow**:
+
 1. User selects file via ImageUpload/VideoUpload component
 2. File validation (type, size)
 3. Generate unique filename (timestamp + original name)
@@ -379,6 +424,7 @@ VITE_FIREBASE_APP_ID
 7. Save URL in banner/service/gallery entity
 
 **Security Rules** (Firebase Console):
+
 ```
 rules_version = '2';
 service firebase.storage {
@@ -392,10 +438,12 @@ service firebase.storage {
 ```
 
 #### 4.2 React Router Integration
+
 **Version**: 6.28.0
 **Configuration**: `src/App.tsx`
 
 **Route Structure**:
+
 ```
 /
 ├── /login (public)
@@ -411,14 +459,17 @@ service firebase.storage {
 **Protection**: `<ProtectedRoute>` wrapper component checks `authStore.isAuthenticated`
 
 **Redirect Logic**:
+
 - Not authenticated → `/login`
 - Authenticated → Requested route
 
 #### 4.3 Form Validation
+
 **Technology**: React Hook Form 7.54.2 + Zod 3.24.1
 **Pattern**: Schema-based validation with type inference
 
 **Example** (BannerFormModal):
+
 ```typescript
 const bannerSchema = z.object({
   title: z.string().min(3).max(100),
@@ -432,12 +483,17 @@ const bannerSchema = z.object({
 
 type BannerFormData = z.infer<typeof bannerSchema>;
 
-const { register, handleSubmit, formState: { errors } } = useForm<BannerFormData>({
+const {
+  register,
+  handleSubmit,
+  formState: { errors },
+} = useForm<BannerFormData>({
   resolver: zodResolver(bannerSchema),
 });
 ```
 
 **Benefits**:
+
 - Type-safe form data
 - Automatic error messages
 - Runtime validation
@@ -446,11 +502,13 @@ const { register, handleSubmit, formState: { errors } } = useForm<BannerFormData
 ### 5. Build & Development Layer
 
 #### 5.1 Build System
+
 **Tool**: Vite 7.2.0
 **Compiler**: SWC (faster than Babel)
 **Configuration**: `vite.config.ts`
 
 **Features**:
+
 - Hot Module Replacement (HMR)
 - Path alias resolution (`@/*`)
 - React plugin with Fast Refresh
@@ -458,27 +516,32 @@ const { register, handleSubmit, formState: { errors } } = useForm<BannerFormData
 - Production build optimization
 
 **Build Output** (`dist/`):
+
 - Minified JavaScript bundles
 - CSS extraction and minification
 - Asset optimization
 - Source maps (optional)
 
 #### 5.2 Code Quality
+
 **Linting**: ESLint 9.17.0 with TypeScript plugin
 **Formatting**: Prettier 3.4.2
 **Git Hooks**: Husky 9.1.7
 
 **Pre-commit Hook**:
+
 - Format code with Prettier
 - Auto-fix on commit
 
 **ESLint Rules**:
+
 - React Hooks rules enforcement
 - React Refresh compatibility
 - TypeScript type checking
 - No unused variables
 
 **Prettier Configuration**:
+
 ```json
 {
   "semi": true,
@@ -489,10 +552,12 @@ const { register, handleSubmit, formState: { errors } } = useForm<BannerFormData
 ```
 
 #### 5.3 Type Checking
+
 **Compiler**: TypeScript 5.9.0
 **Configuration**: `tsconfig.json`, `tsconfig.app.json`, `tsconfig.node.json`
 
 **Critical Settings**:
+
 - `verbatimModuleSyntax: true` - Enforces `import type` for types
 - `strict: true` - All strict checks enabled
 - `noImplicitAny: true`
@@ -500,6 +565,7 @@ const { register, handleSubmit, formState: { errors } } = useForm<BannerFormData
 - `noUncheckedIndexedAccess: true`
 
 **Path Mapping**:
+
 ```json
 {
   "paths": {
@@ -511,26 +577,29 @@ const { register, handleSubmit, formState: { errors } } = useForm<BannerFormData
 ### 6. UI/UX Layer
 
 #### 6.1 Design System
+
 **Framework**: Tailwind CSS v4.0.18
 **Component Library**: shadcn/ui (Radix UI primitives)
 **Color Space**: OKLCH (perceptually uniform)
 
 **Color Palette** (Professional Blue Theme):
+
 ```css
---color-background: oklch(1 0 0);                    /* White */
---color-foreground: oklch(0.145 0.007 255.75);       /* Dark blue-gray */
---color-primary: oklch(0.492 0.147 255.75);          /* Professional blue */
---color-secondary: oklch(0.961 0.004 255.75);        /* Light gray */
---color-muted: oklch(0.961 0.004 255.75);            /* Light background */
---color-accent: oklch(0.961 0.004 255.75);           /* Accent background */
---color-destructive: oklch(0.577 0.245 27.325);      /* Red */
---color-border: oklch(0.898 0.003 255.75);           /* Border gray */
---color-ring: oklch(0.492 0.147 255.75);             /* Focus ring (blue) */
---color-success: oklch(0.629 0.176 152.87);          /* Green */
---color-warning: oklch(0.755 0.153 79.98);           /* Amber */
+--color-background: oklch(1 0 0); /* White */
+--color-foreground: oklch(0.145 0.007 255.75); /* Dark blue-gray */
+--color-primary: oklch(0.492 0.147 255.75); /* Professional blue */
+--color-secondary: oklch(0.961 0.004 255.75); /* Light gray */
+--color-muted: oklch(0.961 0.004 255.75); /* Light background */
+--color-accent: oklch(0.961 0.004 255.75); /* Accent background */
+--color-destructive: oklch(0.577 0.245 27.325); /* Red */
+--color-border: oklch(0.898 0.003 255.75); /* Border gray */
+--color-ring: oklch(0.492 0.147 255.75); /* Focus ring (blue) */
+--color-success: oklch(0.629 0.176 152.87); /* Green */
+--color-warning: oklch(0.755 0.153 79.98); /* Amber */
 ```
 
 **Dark Mode Support**:
+
 ```css
 @media (prefers-color-scheme: dark) {
   --color-background: oklch(0.145 0.007 255.75);
@@ -540,18 +609,22 @@ const { register, handleSubmit, formState: { errors } } = useForm<BannerFormData
 ```
 
 **Typography**:
+
 - Font: System font stack (no web fonts for performance)
 - Sizes: 0.875rem (sm), 1rem (base), 1.125rem (lg), 1.25rem (xl), etc.
 - Line heights: 1.5 (base), 1.25 (tight), 1.75 (relaxed)
 
 **Spacing**:
+
 - 4px grid system
 - Consistent padding/margin scales
 - Responsive utilities
 
 #### 6.2 Responsive Design
+
 **Strategy**: Mobile-first approach
 **Breakpoints** (Tailwind defaults):
+
 - `sm`: 640px
 - `md`: 768px
 - `lg`: 1024px
@@ -559,16 +632,19 @@ const { register, handleSubmit, formState: { errors } } = useForm<BannerFormData
 - `2xl`: 1536px
 
 **Responsive Patterns**:
+
 - Fixed sidebar on desktop, collapsible on mobile
 - Stacked cards on mobile, grid on desktop
 - Responsive data tables (horizontal scroll)
 - Touch-friendly button sizes (min 44x44px)
 
 #### 6.3 Accessibility
+
 **Standards**: WCAG 2.1 AA compliance
 **Foundation**: Radix UI primitives (accessible by default)
 
 **Features**:
+
 - Semantic HTML
 - ARIA labels and roles
 - Keyboard navigation
@@ -787,6 +863,7 @@ File validation (type, size)
 ## Technology Stack
 
 ### Frontend Technologies
+
 - **React**: 19.2.0 - UI library
 - **TypeScript**: 5.9.0 - Type safety
 - **Vite**: 7.2.0 - Build tool
@@ -794,25 +871,30 @@ File validation (type, size)
 - **Tailwind CSS**: 4.0.18 - Styling
 
 ### UI & Components
+
 - **Radix UI**: Accessible component primitives
 - **shadcn/ui**: Component patterns
 - **Lucide React**: Icon library
 - **Sonner**: Toast notifications
 
 ### Forms & Validation
+
 - **React Hook Form**: 7.54.2
 - **Zod**: 3.24.1
 - **@hookform/resolvers**: 3.9.1
 
 ### State & Data
+
 - **Zustand**: 5.0.2 - State management
 - **TanStack Table**: 8.21.0 - Data tables
 - **@dnd-kit**: Drag-and-drop
 
 ### Cloud Services
+
 - **Firebase**: 11.1.0 - Storage
 
 ### Development Tools
+
 - **ESLint**: 9.17.0
 - **Prettier**: 3.4.2
 - **Husky**: 9.1.7
@@ -821,36 +903,44 @@ File validation (type, size)
 ## Security Architecture
 
 ### Frontend Security
+
 **Authentication**:
+
 - JWT-based token authentication
 - Token stored in localStorage (encrypted in production)
 - Automatic session expiry
 - Remember me option (30-day vs 1-day expiry)
 
 **Protected Routes**:
+
 - Authentication check via `ProtectedRoute` component
 - Automatic redirect to `/login` if not authenticated
 - Session persistence across page reloads
 
 **Input Validation**:
+
 - Zod schema validation on all forms
 - Client-side validation before submission
 - Type-safe form data
 - XSS prevention via React's automatic escaping
 
 **File Upload Security**:
+
 - File type validation (whitelist approach)
 - File size limits (images: 5MB, videos: 50MB)
 - Unique filenames to prevent collisions
 - Firebase Storage security rules (auth required for write)
 
 **Environment Variables**:
+
 - Sensitive config in `.env` (gitignored)
 - No hardcoded credentials
 - Public read-only Firebase credentials (safe for client-side)
 
 ### API Security (Backend Responsibility)
+
 When integrating real API:
+
 - HTTPS only
 - CORS configuration
 - Rate limiting
@@ -862,33 +952,41 @@ When integrating real API:
 ## Scalability Considerations
 
 ### Performance Optimization
+
 **Code Splitting** (Ready for):
+
 - React.lazy for route-level components
 - Dynamic imports for large libraries
 - Chunk optimization
 
 **Asset Optimization**:
+
 - Image lazy loading
 - Firebase Storage CDN
 - Vite build optimization (tree shaking, minification)
 
 **State Management**:
+
 - Zustand lightweight store (<1KB)
 - Selective re-renders
 - Memoization where needed
 
 **Data Fetching**:
+
 - Client-side caching potential
 - Optimistic UI updates
 - Debounced search inputs
 
 ### Horizontal Scalability
+
 **Client-Side**:
+
 - Static build (CDN-friendly)
 - No server-side rendering (SSR) needed
 - Deployable to any static host (Vercel, Netlify, Firebase Hosting)
 
 **Backend (Future)**:
+
 - Stateless API design
 - JWT authentication (no session storage)
 - Database connection pooling
@@ -896,12 +994,15 @@ When integrating real API:
 - Load balancing ready
 
 ### Vertical Scalability
+
 **Component Reusability**:
+
 - Shared component library
 - Consistent design patterns
 - Easy to add new features
 
 **Type System**:
+
 - Shared types with client project
 - Type safety prevents runtime errors
 - Easy refactoring
@@ -909,6 +1010,7 @@ When integrating real API:
 ## Deployment Architecture
 
 ### Development Environment
+
 ```
 Developer Machine
 ├── Node.js 18+
@@ -919,6 +1021,7 @@ Developer Machine
 ```
 
 ### Production Build
+
 ```
 npm run build
     ↓
@@ -940,17 +1043,20 @@ dist/ folder
 ### Deployment Options
 
 **Option 1: Static Hosting (Recommended)**:
+
 - Vercel, Netlify, Firebase Hosting
 - Automatic HTTPS
 - Global CDN
 - Automatic deployments from Git
 
 **Option 2: Traditional Server**:
+
 - Nginx/Apache serving static files
 - Custom domain configuration
 - Manual deployments
 
 **Environment Variables** (Production):
+
 ```bash
 VITE_USE_MOCK_API=false
 VITE_FIREBASE_API_KEY=prod_key
@@ -959,6 +1065,7 @@ VITE_FIREBASE_STORAGE_BUCKET=prod_bucket.appspot.com
 ```
 
 **Backend API** (When ready):
+
 - Deployed separately (e.g., Node.js, Python, Go)
 - CORS configured for admin domain
 - JWT authentication
@@ -967,6 +1074,7 @@ VITE_FIREBASE_STORAGE_BUCKET=prod_bucket.appspot.com
 ## Module Dependencies
 
 ### Dependency Graph
+
 ```
 Pages
   ↓ imports
@@ -981,7 +1089,9 @@ Utils ←→ Components
 ```
 
 ### Critical Dependencies
+
 **Must remain compatible**:
+
 - React 19.x
 - TypeScript 5.x
 - Tailwind CSS 4.x
@@ -989,6 +1099,7 @@ Utils ←→ Components
 - Firebase 11.x
 
 **Can upgrade independently**:
+
 - Vite
 - ESLint
 - Prettier
@@ -998,6 +1109,7 @@ Utils ←→ Components
 ## Banner Management Module (Detailed)
 
 ### Module Structure
+
 ```
 Banner Management
 ├── UI Layer
@@ -1022,6 +1134,7 @@ Banner Management
 ```
 
 ### Banner Entity Schema
+
 ```typescript
 Banner {
   id: string                 // UUID
@@ -1040,6 +1153,7 @@ Banner {
 ```
 
 ### Hero Settings Schema
+
 ```typescript
 HeroSettings {
   displayMode: "image" | "video" | "carousel"
@@ -1053,6 +1167,7 @@ HeroSettings {
 ### Banner Operations
 
 **Create Banner**:
+
 1. User clicks "Create Banner"
 2. BannerFormModal opens
 3. User fills form (title, description, uploads image/video)
@@ -1065,6 +1180,7 @@ HeroSettings {
 10. Toast success notification
 
 **Edit Banner**:
+
 1. User clicks edit button in DataTable
 2. BannerFormModal opens with pre-filled data
 3. User modifies fields
@@ -1075,6 +1191,7 @@ HeroSettings {
 8. Toast success notification
 
 **Delete Banner**:
+
 1. User clicks delete button
 2. DeleteBannerDialog opens with confirmation
 3. User confirms
@@ -1085,6 +1202,7 @@ HeroSettings {
 8. Toast success notification
 
 **Set Primary**:
+
 1. User clicks star icon
 2. bannersService.setPrimary() called
 3. Set target banner isPrimary = true
@@ -1094,6 +1212,7 @@ HeroSettings {
 7. Toast success notification
 
 **Toggle Active**:
+
 1. User clicks toggle switch
 2. bannersService.toggleActive() called
 3. Flip active boolean
@@ -1103,6 +1222,7 @@ HeroSettings {
 7. Toast success notification
 
 **Reorder (Drag & Drop)**:
+
 1. User drags banner row
 2. @dnd-kit handles UI state
 3. On drop, bannersService.reorder() called
@@ -1115,6 +1235,7 @@ HeroSettings {
 ### Hero Settings Operations
 
 **Update Display Mode**:
+
 1. User selects radio option (Image/Video/Carousel)
 2. heroSettingsService.update() called immediately (auto-save)
 3. Update displayMode field
@@ -1123,6 +1244,7 @@ HeroSettings {
 6. Toast success notification
 
 **Update Carousel Settings**:
+
 1. User adjusts interval slider or toggles
 2. Debounced update (500ms delay)
 3. heroSettingsService.update() called
@@ -1132,6 +1254,7 @@ HeroSettings {
 ## Monitoring & Observability
 
 ### Error Handling
+
 **Pattern**: Try-catch with user-friendly messages
 
 ```typescript
@@ -1145,16 +1268,19 @@ try {
 ```
 
 **Logging**:
+
 - `console.error()` for errors
 - `console.warn()` for warnings
 - Production: Replace with error tracking service (Sentry, LogRocket)
 
 ### Performance Metrics (Development)
+
 - React DevTools Profiler
 - Lighthouse audit
 - Bundle size analysis (`npm run build -- --analyze`)
 
 ### User Feedback
+
 - Toast notifications (Sonner)
 - Loading states (spinners, skeleton loaders)
 - Error messages (inline, toast)
@@ -1165,22 +1291,26 @@ try {
 ### Planned Enhancements
 
 **API Integration**:
+
 - Replace mock mode with real backend
 - WebSocket for real-time updates
 - Offline support with service workers
 
 **State Management**:
+
 - Expand Zustand store for complex state
 - Add React Query for server state management
 - Optimistic updates
 
 **Performance**:
+
 - Code splitting by route
 - Image optimization (next-gen formats)
 - Virtual scrolling for large lists
 - Memoization with React.memo
 
 **Features**:
+
 - Multi-language support (i18n)
 - Advanced filtering and search
 - Export functionality (CSV, PDF)
@@ -1188,6 +1318,7 @@ try {
 - Role-based access control (RBAC)
 
 **Testing**:
+
 - Unit tests (Vitest)
 - Integration tests (React Testing Library)
 - E2E tests (Playwright)
@@ -1196,11 +1327,13 @@ try {
 ## References
 
 ### Internal Documentation
+
 - [Codebase Summary](./codebase-summary.md)
 - [Project Overview PDR](./project-overview-pdr.md)
 - [Code Standards](./code-standards.md)
 
 ### External Resources
+
 - [React 19 Documentation](https://react.dev)
 - [TypeScript Handbook](https://www.typescriptlang.org/docs/)
 - [Tailwind CSS v4 Docs](https://tailwindcss.com/docs)

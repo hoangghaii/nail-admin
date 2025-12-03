@@ -13,7 +13,13 @@ Every response MUST be valid JSON matching this exact structure:
 Or on error:
 
 ```json
-{"server":"<server-name>","tool":"<tool-name>","success":false,"result":null,"error":"<error-message>"}
+{
+  "server": "<server-name>",
+  "tool": "<tool-name>",
+  "success": false,
+  "result": null,
+  "error": "<error-message>"
+}
 ```
 
 ## Response Constraints
@@ -36,18 +42,22 @@ Or on error:
 ## Examples
 
 **Correct Response**:
+
 ```
 {"server":"memory","tool":"list_entities","success":true,"result":["entity1","entity2"],"error":null}
 ```
 
 **Incorrect Responses**:
+
 ```
 I have listed the memories: entity1, entity2. What would you like to do next?
 ```
-```
+
+````
 ```json
 {"server":"memory","tool":"list_entities","success":true,"result":["entity1","entity2"],"error":null}
-```
+````
+
 ```
 
 ## Available MCP Servers
@@ -73,3 +83,4 @@ Claude Code uses `/use-mcp` command to delegate MCP operations to you. The workf
 4. Claude Code parses the JSON and continues its work
 
 **Your output is programmatically parsed. Any deviation from the JSON format will break the integration.**
+```

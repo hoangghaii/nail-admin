@@ -2,6 +2,8 @@ import { AlertTriangle } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 
+import type { Banner } from "@/types/banner.types";
+
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -12,7 +14,6 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { bannersService } from "@/services/banners.service";
-import type { Banner } from "@/types/banner.types";
 
 export type DeleteBannerDialogProps = {
   banner?: Banner;

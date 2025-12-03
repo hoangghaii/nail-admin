@@ -129,6 +129,7 @@ src/
 ## Implementation Sequence
 
 ### Phase 1: Foundation (2-3 hours)
+
 - Update Banner type with new fields
 - Create banners.service.ts with dual-mode CRUD
 - Create heroSettings.service.ts
@@ -136,11 +137,13 @@ src/
 - **Deliverable**: Type-safe service layer ready
 
 ### Phase 2: Components (4-5 hours)
+
 - Create Dialog, DataTable, StatusBadge components
 - Create ImageUpload and VideoUpload components
 - **Deliverable**: Reusable UI components ready
 
 ### Phase 3: CRUD Page (5-6 hours)
+
 - Create BannersPage with data table
 - Create BannerFormModal for create/edit
 - Create DeleteBannerDialog
@@ -148,12 +151,14 @@ src/
 - **Deliverable**: Full banner management UI
 
 ### Phase 4: Hero Settings (2-3 hours)
+
 - Create HeroSettingsCard component
 - Integrate into BannersPage
 - Add primary banner preview
 - **Deliverable**: Display mode configuration
 
 ### Phase 5: Testing (2-3 hours)
+
 - Type checking (verbatimModuleSyntax)
 - Manual testing (CRUD, uploads, validation)
 - Mock data seeding
@@ -164,6 +169,7 @@ src/
 ## Success Metrics
 
 **Functional**:
+
 - ✅ All CRUD operations work in mock mode
 - ✅ Image + video uploads to Firebase Storage
 - ✅ Drag-drop reordering persists correctly
@@ -171,12 +177,14 @@ src/
 - ✅ Primary banner logic enforced
 
 **Technical**:
+
 - ✅ 0 TypeScript errors (verbatimModuleSyntax compliant)
 - ✅ Forms validate with Zod (file types, sizes)
 - ✅ API-ready (dual-mode pattern)
 - ✅ Responsive UI (mobile/tablet/desktop)
 
 **Quality**:
+
 - ✅ Error handling with user-friendly messages
 - ✅ Loading states (progress, skeletons)
 - ✅ Empty states for first-time users
@@ -186,23 +194,25 @@ src/
 
 ## Risk Mitigation
 
-| Risk | Severity | Mitigation |
-|------|----------|------------|
-| Video upload file size (50MB) | High | Document Firebase quota limits, add compression guide |
-| Drag-drop mobile UX | High | Test on real devices, provide alternative reorder UI |
-| Type compatibility with client | Medium | Coordinate Banner type sync, document changes |
-| Primary banner auto-selection | Medium | Add edge case tests, fallback logic |
-| Mock data persistence | Low | localStorage stable, add clear data debug tool |
+| Risk                           | Severity | Mitigation                                            |
+| ------------------------------ | -------- | ----------------------------------------------------- |
+| Video upload file size (50MB)  | High     | Document Firebase quota limits, add compression guide |
+| Drag-drop mobile UX            | High     | Test on real devices, provide alternative reorder UI  |
+| Type compatibility with client | Medium   | Coordinate Banner type sync, document changes         |
+| Primary banner auto-selection  | Medium   | Add edge case tests, fallback logic                   |
+| Mock data persistence          | Low      | localStorage stable, add clear data debug tool        |
 
 ---
 
 ## API Migration Readiness
 
 **Mock Mode** (`VITE_USE_MOCK_API=true`):
+
 - Data in localStorage with `nail_admin_` prefix
 - Simulates network operations
 
 **Real API Mode** (`VITE_USE_MOCK_API=false`):
+
 - Expected endpoints:
   - `GET /api/banners` - List all banners
   - `POST /api/banners` - Create banner
@@ -220,15 +230,18 @@ src/
 ## Dependencies
 
 **Existing**:
+
 - ✅ Firebase Storage configured
 - ✅ shadcn/ui components (button, input, card)
 - ✅ Dual-mode service pattern established
 
 **New** (from plan):
+
 - TanStack Table: `@tanstack/react-table`
 - Radix Dialog: `@radix-ui/react-dialog`
 
 Install:
+
 ```bash
 npm install @tanstack/react-table @radix-ui/react-dialog
 ```
@@ -238,9 +251,11 @@ npm install @tanstack/react-table @radix-ui/react-dialog
 ## Client Project Integration
 
 **Shared Types** (must sync):
+
 - `Banner` type with new fields (videoUrl, ctaText, ctaLink, sortIndex, isPrimary)
 
 **Client Needs**:
+
 1. Fetch hero settings: `GET /api/hero-settings`
 2. Fetch banners: `GET /api/banners?active=true`
 3. Render hero based on mode:
@@ -265,12 +280,14 @@ npm install @tanstack/react-table @radix-ui/react-dialog
 ## Questions & Clarifications
 
 **Unresolved Questions**:
+
 1. Firebase Storage quota limits for video uploads?
 2. Should we add video compression on upload?
 3. Client project timeline for hero settings integration?
 4. Need drag-drop library or HTML5 API sufficient?
 
 **Assumptions**:
+
 - Mock data is sufficient for MVP (no real backend yet)
 - Firebase credentials are configured in `.env`
 - Client project will fetch banner data via API (future)
@@ -280,15 +297,18 @@ npm install @tanstack/react-table @radix-ui/react-dialog
 ## Documentation
 
 **For Developers**:
+
 - Each phase file has detailed code examples
 - All components follow shadcn/ui patterns
 - Service layer uses established dual-mode pattern
 
 **For Testers**:
+
 - Phase 5 includes comprehensive testing checklist
 - Mock data seed for realistic testing scenarios
 
 **For Stakeholders**:
+
 - Feature demo available after Phase 3
 - Production deployment after Phase 5
 

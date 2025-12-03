@@ -14,22 +14,22 @@ This admin dashboard uses the **shadcn/ui blue theme design system** with a prof
 ### Light Mode
 
 ```css
---primary: oklch(0.488 0.243 264.376);           /* Professional blue */
+--primary: oklch(0.488 0.243 264.376); /* Professional blue */
 --primary-foreground: oklch(0.97 0.014 254.604); /* Light text on blue */
---secondary: oklch(0.967 0.001 286.375);         /* Light gray */
+--secondary: oklch(0.967 0.001 286.375); /* Light gray */
 --secondary-foreground: oklch(0.21 0.006 285.885); /* Dark text on gray */
---background: oklch(1 0 0);                      /* White */
---foreground: oklch(0.141 0.005 285.823);        /* Dark blue-gray text */
---card: oklch(1 0 0);                            /* White card background */
---card-foreground: oklch(0.141 0.005 285.823);   /* Dark text on cards */
---muted: oklch(0.967 0.001 286.375);             /* Light gray background */
---muted-foreground: oklch(0.552 0.016 285.938);  /* Muted text */
---accent: oklch(0.967 0.001 286.375);            /* Accent background */
---accent-foreground: oklch(0.21 0.006 285.885);  /* Text on accent */
---destructive: oklch(0.577 0.245 27.325);        /* Red for errors */
---border: oklch(0.92 0.004 286.32);              /* Border gray */
---input: oklch(0.92 0.004 286.32);               /* Input border */
---ring: oklch(0.708 0 0);                        /* Focus ring */
+--background: oklch(1 0 0); /* White */
+--foreground: oklch(0.141 0.005 285.823); /* Dark blue-gray text */
+--card: oklch(1 0 0); /* White card background */
+--card-foreground: oklch(0.141 0.005 285.823); /* Dark text on cards */
+--muted: oklch(0.967 0.001 286.375); /* Light gray background */
+--muted-foreground: oklch(0.552 0.016 285.938); /* Muted text */
+--accent: oklch(0.967 0.001 286.375); /* Accent background */
+--accent-foreground: oklch(0.21 0.006 285.885); /* Text on accent */
+--destructive: oklch(0.577 0.245 27.325); /* Red for errors */
+--border: oklch(0.92 0.004 286.32); /* Border gray */
+--input: oklch(0.92 0.004 286.32); /* Input border */
+--ring: oklch(0.708 0 0); /* Focus ring */
 ```
 
 ### Semantic Colors (Custom)
@@ -51,11 +51,13 @@ This admin dashboard uses the **shadcn/ui blue theme design system** with a prof
 ### Font Families
 
 ```css
---font-sans: "Montserrat", "Be Vietnam Pro", ui-sans-serif, system-ui, sans-serif;
+--font-sans:
+  "Montserrat", "Be Vietnam Pro", ui-sans-serif, system-ui, sans-serif;
 --font-serif: "Playfair", ui-serif, Georgia, serif;
 ```
 
 **Usage Guidelines**:
+
 - **Body text**: Use `font-sans` (Montserrat/Be Vietnam Pro)
 - **Headings**: Use `font-serif` (Playfair) for elegant headers
 - All fonts support Vietnamese diacritical marks
@@ -95,9 +97,7 @@ import {
   <DialogContent>
     <DialogHeader>
       <DialogTitle>Dialog Title</DialogTitle>
-      <DialogDescription>
-        Dialog description text here.
-      </DialogDescription>
+      <DialogDescription>Dialog description text here.</DialogDescription>
     </DialogHeader>
     <div>{/* Dialog content */}</div>
     <DialogFooter>
@@ -105,10 +105,11 @@ import {
       <Button>Confirm</Button>
     </DialogFooter>
   </DialogContent>
-</Dialog>
+</Dialog>;
 ```
 
 **Features**:
+
 - Blur backdrop (`backdrop-blur-sm`)
 - Keyboard navigation (Esc to close)
 - Focus trap inside dialog
@@ -117,6 +118,7 @@ import {
 - Accessible (ARIA labels, roles)
 
 **Styling**:
+
 - Max width: `max-w-lg` (512px)
 - Border: `border-border`
 - Background: `bg-card`
@@ -152,13 +154,14 @@ import { StatusBadge } from "@/components/shared/StatusBadge";
 
 **Variants**:
 
-| Status | Icon | Color (default) | Color (outline) |
-|--------|------|----------------|-----------------|
-| `active` | Check | Green bg, green text | Green border, green text |
-| `inactive` | X | Gray bg, gray text | Gray border, gray text |
-| `isPrimary` | Star | Blue bg, white text | Blue border, blue text |
+| Status      | Icon  | Color (default)      | Color (outline)          |
+| ----------- | ----- | -------------------- | ------------------------ |
+| `active`    | Check | Green bg, green text | Green border, green text |
+| `inactive`  | X     | Gray bg, gray text   | Gray border, gray text   |
+| `isPrimary` | Star  | Blue bg, white text  | Blue border, blue text   |
 
 **Styling**:
+
 - Rounded: `rounded-full`
 - Padding: `px-3 py-1`
 - Text: `text-xs font-medium`
@@ -190,10 +193,11 @@ import { ImageUpload } from "@/components/shared/ImageUpload";
   value={imageUrl}
   onChange={(url) => setValue("imageUrl", url)}
   folder="banners"
-/>
+/>;
 ```
 
 **Features**:
+
 - Drag-and-drop zone
 - File input click to upload
 - Image preview with thumbnail
@@ -204,11 +208,13 @@ import { ImageUpload } from "@/components/shared/ImageUpload";
 - Toast notifications (sonner)
 
 **States**:
+
 - Empty: Shows upload zone with icon
 - Uploading: Shows spinner + progress bar
 - Uploaded: Shows image preview + action buttons
 
 **Styling**:
+
 - Upload zone: `border-2 border-dashed border-border bg-muted/50`
 - Dragging state: `border-primary bg-primary/10`
 - Preview: `h-48 w-full object-cover`
@@ -240,10 +246,11 @@ import { VideoUpload } from "@/components/shared/VideoUpload";
   value={videoUrl}
   onChange={(url) => setValue("videoUrl", url)}
   folder="banners"
-/>
+/>;
 ```
 
 **Features**:
+
 - Drag-and-drop zone
 - File input click to upload
 - Video preview with controls
@@ -254,11 +261,13 @@ import { VideoUpload } from "@/components/shared/VideoUpload";
 - Toast notifications (sonner)
 
 **States**:
+
 - Empty: Shows upload zone with video icon
 - Uploading: Shows spinner + progress bar
 - Uploaded: Shows video player + action buttons
 
 **Styling**:
+
 - Upload zone: Same as ImageUpload
 - Preview: `h-64 w-full object-cover`
 - Video controls: Native browser controls
@@ -279,14 +288,15 @@ import { VideoUpload } from "@/components/shared/VideoUpload";
 ### Border Radius
 
 ```css
---radius: 0.65rem;           /* Base radius */
---radius-sm: 0.45rem;        /* Small radius */
---radius-md: 0.5rem;         /* Medium radius */
---radius-lg: 0.65rem;        /* Large radius */
---radius-xl: 0.85rem;        /* Extra large radius */
+--radius: 0.65rem; /* Base radius */
+--radius-sm: 0.45rem; /* Small radius */
+--radius-md: 0.5rem; /* Medium radius */
+--radius-lg: 0.65rem; /* Large radius */
+--radius-xl: 0.85rem; /* Extra large radius */
 ```
 
 **Usage**:
+
 - Buttons: `rounded-md`
 - Cards: `rounded-lg`
 - Badges: `rounded-full`
@@ -334,9 +344,7 @@ All components are designed mobile-first:
 
 ```tsx
 // Mobile base styles, then scale up
-<div className="text-sm md:text-base lg:text-lg">
-  Content
-</div>
+<div className="text-sm md:text-base lg:text-lg">Content</div>
 ```
 
 ### Touch Targets
@@ -400,12 +408,8 @@ data-[state=open]:zoom-in-95
     <CardTitle>Card Title</CardTitle>
     <CardDescription>Card description text</CardDescription>
   </CardHeader>
-  <CardContent>
-    {/* Card content */}
-  </CardContent>
-  <CardFooter>
-    {/* Actions */}
-  </CardFooter>
+  <CardContent>{/* Card content */}</CardContent>
+  <CardFooter>{/* Actions */}</CardFooter>
 </Card>
 ```
 

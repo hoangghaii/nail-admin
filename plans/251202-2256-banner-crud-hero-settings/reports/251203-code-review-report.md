@@ -25,39 +25,47 @@ Comprehensive review of Banner CRUD implementation reveals **production-ready co
 ### Files Reviewed (20 files)
 
 **Types** (2):
+
 - `src/types/banner.types.ts`
 - `src/types/heroSettings.types.ts`
 
 **Services** (3):
+
 - `src/services/banners.service.ts`
 - `src/services/heroSettings.service.ts`
 - `src/services/imageUpload.service.ts`
 
 **UI Components** (4):
+
 - `src/components/ui/dialog.tsx`
 - `src/components/ui/radio-group.tsx`
 - `src/components/ui/switch.tsx`
 - `src/components/ui/textarea.tsx`
 
 **Shared Components** (4):
+
 - `src/components/shared/DataTable.tsx`
 - `src/components/shared/ImageUpload.tsx`
 - `src/components/shared/VideoUpload.tsx`
 - `src/components/shared/StatusBadge.tsx`
 
 **Banner Components** (3):
+
 - `src/components/banners/BannerFormModal.tsx`
 - `src/components/banners/DeleteBannerDialog.tsx`
 - `src/components/banners/HeroSettingsCard.tsx`
 
 **Pages** (1):
+
 - `src/pages/BannersPage.tsx`
 
 **Data** (2):
+
 - `src/data/mockBanners.ts`
 - `src/data/initializeMockData.ts`
 
 **Entry Point** (1):
+
 - `src/main.tsx`
 
 ### Review Metrics
@@ -83,6 +91,7 @@ Comprehensive review of Banner CRUD implementation reveals **production-ready co
 - Security best practices (file validation, XSS prevention)
 
 **Implementation aligns with project requirements:**
+
 - ✅ Dual-mode architecture (mock + API-ready)
 - ✅ shadcn/ui blue theme compliance
 - ✅ TypeScript strict mode
@@ -114,6 +123,7 @@ Comprehensive review of Banner CRUD implementation reveals **production-ready co
 **Issue**: File validation only on client-side. Malicious users can bypass client validation.
 
 **Current Code**:
+
 ```typescript
 const validateFile = (file: File): string | null => {
   if (!ACCEPTED_IMAGE_TYPES.includes(file.type)) {
@@ -127,6 +137,7 @@ const validateFile = (file: File): string | null => {
 ```
 
 **Recommendation**: Document need for server-side validation in API migration notes. Firebase Storage Rules should enforce:
+
 ```javascript
 // firestore.rules example
 rules_version = '2';
@@ -155,6 +166,7 @@ service firebase.storage {
 **Issue**: If user uploads file then navigates away, upload continues in background. No cleanup on unmount.
 
 **Current Code**:
+
 ```typescript
 const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
   const file = e.target.files?.[0];
@@ -165,6 +177,7 @@ const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 ```
 
 **Recommendation**: Store upload task reference and cancel on unmount:
+
 ```typescript
 const uploadTaskRef = React.useRef<UploadTask | null>(null);
 
@@ -195,6 +208,7 @@ const handleUpload = async (file: File) => {
 **Current Code**: Renders all rows at once (line 64-80)
 
 **Recommendation**: Add TanStack Table pagination:
+
 ```typescript
 import { getPaginationRowModel } from "@tanstack/react-table";
 
@@ -220,6 +234,7 @@ const table = useReactTable({
 **Issue**: Auto-save triggers on every form change. Rapid changes may cause multiple concurrent saves.
 
 **Current Code**:
+
 ```typescript
 useEffect(() => {
   if (!isLoading) {
@@ -232,12 +247,13 @@ useEffect(() => {
 ```
 
 **Recommendation**: Debounce auto-save:
+
 ```typescript
-import { useDebouncedCallback } from 'use-debounce'; // or implement custom
+import { useDebouncedCallback } from "use-debounce"; // or implement custom
 
 const debouncedSave = useDebouncedCallback(
   (data: HeroSettingsFormData) => saveSettings(data),
-  500
+  500,
 );
 
 useEffect(() => {
@@ -263,6 +279,7 @@ useEffect(() => {
 **Issue**: Dates hardcoded to 2025-11. Will look outdated in future.
 
 **Suggestion**: Use relative dates:
+
 ```typescript
 createdAt: new Date(Date.now() - 18 * 24 * 60 * 60 * 1000), // 18 days ago
 updatedAt: new Date(Date.now() - 18 * 24 * 60 * 60 * 1000),
@@ -279,6 +296,7 @@ updatedAt: new Date(Date.now() - 18 * 24 * 60 * 60 * 1000),
 **Issue**: Delete button shows "Deleting..." but no spinner icon.
 
 **Suggestion**: Add spinner for visual consistency:
+
 ```tsx
 <Button variant="destructive" disabled={isDeleting}>
   {isDeleting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
@@ -297,6 +315,7 @@ updatedAt: new Date(Date.now() - 18 * 24 * 60 * 60 * 1000),
 **Issue**: `column: any` loses type safety.
 
 **Current Code**:
+
 ```typescript
 export function DataTableColumnHeader({
   column,
@@ -310,6 +329,7 @@ export function DataTableColumnHeader({
 ```
 
 **Suggestion**: Use proper typing:
+
 ```typescript
 import type { Column } from "@tanstack/react-table";
 
@@ -347,18 +367,20 @@ export function DataTableColumnHeader<TData>({
 **Issue**: Alt text hardcoded as "Uploaded". Should be contextual.
 
 **Current Code**:
+
 ```tsx
 <img src={value} alt="Uploaded" className="..." />
 ```
 
 **Suggestion**: Accept alt prop from parent:
+
 ```tsx
 export type ImageUploadProps = {
   // ...
   altText?: string;
 };
 
-<img src={value} alt={altText || "Uploaded image"} className="..." />
+<img src={value} alt={altText || "Uploaded image"} className="..." />;
 ```
 
 **Impact**: Low (accessibility enhancement)
@@ -372,6 +394,7 @@ export type ImageUploadProps = {
 **Issue**: Carousel interval limited to 2-10 seconds. May want slower rotation.
 
 **Current Code**:
+
 ```tsx
 <input type="range" min={2} max={10} step={0.5} />
 ```
@@ -389,6 +412,7 @@ export type ImageUploadProps = {
 **Issue**: Assumes primary banner exists after filter. Theoretical edge case.
 
 **Current Code**:
+
 ```typescript
 const primaryBanner = updatedBanners.find((b) => b.id === id);
 if (!primaryBanner) throw new Error("Banner not found");
@@ -491,6 +515,7 @@ return primaryBanner;
 **Warning**: Vite warns about chunk size > 500 kB.
 
 **Recommendation**: Code-split routes:
+
 ```typescript
 // src/App.tsx
 const BannersPage = lazy(() => import("./pages/BannersPage"));
@@ -519,12 +544,14 @@ const BannersPage = lazy(() => import("./pages/BannersPage"));
 **Plan**: `/Users/hainguyen/Documents/nail-project/nail-admin/plans/251202-2256-banner-crud-hero-settings/plan.md`
 
 #### Phase 1: Types and Service Layer ✅
+
 - ✅ Banner type with `videoUrl`, `ctaText`, `ctaLink`, `sortIndex`, `isPrimary`
 - ✅ `banners.service.ts` with dual-mode CRUD
 - ✅ `heroSettings.service.ts`
 - ✅ Zod schemas in components
 
 #### Phase 2: Shared Components ✅
+
 - ✅ DataTable component (TanStack Table v8)
 - ✅ Dialog/Modal component (Radix UI)
 - ✅ ImageUpload component with Firebase
@@ -532,6 +559,7 @@ const BannersPage = lazy(() => import("./pages/BannersPage"));
 - ✅ StatusBadge component
 
 #### Phase 3: Banner CRUD Page ✅
+
 - ✅ BannersPage with data table
 - ✅ Create/Edit banner modals
 - ✅ Delete confirmation dialog
@@ -539,12 +567,14 @@ const BannersPage = lazy(() => import("./pages/BannersPage"));
 - ✅ Active/Primary toggles
 
 #### Phase 4: Hero Settings Component ✅
+
 - ✅ Hero Settings card with radio buttons
 - ✅ Display mode logic (Image/Video/Carousel)
 - ✅ Primary banner preview
 - ✅ Settings persistence
 
 #### Phase 5: Testing & Validation 🟡 (In Progress - This Review)
+
 - ✅ Type checking (0 errors)
 - ✅ Build verification (passes)
 - ⏳ Manual testing (pending user testing session)
@@ -602,6 +632,7 @@ const BannersPage = lazy(() => import("./pages/BannersPage"));
 **Banner CRUD implementation demonstrates production-grade quality.** Code is well-architected, type-safe, accessible, and follows project standards. Zero critical issues found.
 
 **Recommendations**:
+
 - Address medium-priority items (M1-M4) before production deployment.
 - Complete manual testing checklist (Phase 5).
 - Document API migration path for backend team.
@@ -613,6 +644,7 @@ const BannersPage = lazy(() => import("./pages/BannersPage"));
 ---
 
 **Next Steps**:
+
 1. Execute manual testing checklist (`phase-05-testing-validation.md`).
 2. Fix M2 (upload cleanup) and M4 (debounce auto-save).
 3. Document M1 (Firebase Storage rules) in deployment guide.

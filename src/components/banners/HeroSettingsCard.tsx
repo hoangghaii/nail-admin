@@ -12,6 +12,8 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 
+import type { Banner } from "@/types/banner.types";
+
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -25,15 +27,14 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Switch } from "@/components/ui/switch";
 import { bannersService } from "@/services/banners.service";
 import { heroSettingsService } from "@/services/heroSettings.service";
-import type { Banner } from "@/types/banner.types";
 import { HERO_DISPLAY_MODES } from "@/types/heroSettings.types";
 
 const heroSettingsSchema = z.object({
-  displayMode: z.enum(["image", "video", "carousel"]),
   carouselInterval: z
     .number()
     .min(2, "Interval must be at least 2 seconds")
     .max(10, "Interval must be at most 10 seconds"),
+  displayMode: z.enum(["image", "video", "carousel"]),
   showControls: z.boolean(),
 });
 
@@ -56,8 +57,8 @@ export function HeroSettingsCard({ onSettingsChange }: HeroSettingsCardProps) {
     watch,
   } = useForm<HeroSettingsFormData>({
     defaultValues: {
-      displayMode: "carousel",
       carouselInterval: 5,
+      displayMode: "carousel",
       showControls: true,
     },
     resolver: zodResolver(heroSettingsSchema),
@@ -90,6 +91,7 @@ export function HeroSettingsCard({ onSettingsChange }: HeroSettingsCardProps) {
 
   useEffect(() => {
     loadData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Auto-save on change
@@ -97,8 +99,8 @@ export function HeroSettingsCard({ onSettingsChange }: HeroSettingsCardProps) {
     setIsSaving(true);
     try {
       await heroSettingsService.updateSettings({
-        displayMode: data.displayMode,
         carouselInterval: data.carouselInterval * 1000, // Convert seconds to ms
+        displayMode: data.displayMode,
         showControls: data.showControls,
       });
       toast.success("Hero settings updated successfully!");
@@ -119,6 +121,7 @@ export function HeroSettingsCard({ onSettingsChange }: HeroSettingsCardProps) {
       });
       return () => subscription.unsubscribe();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoading, watch, handleSubmit]);
 
   const handleReset = async () => {
@@ -211,7 +214,10 @@ export function HeroSettingsCard({ onSettingsChange }: HeroSettingsCardProps) {
                   }
                 >
                   <div className="flex items-center space-x-2 rounded-lg border border-border p-3 transition-colors hover:bg-accent">
-                    <RadioGroupItem value={HERO_DISPLAY_MODES.IMAGE} id="image" />
+                    <RadioGroupItem
+                      value={HERO_DISPLAY_MODES.IMAGE}
+                      id="image"
+                    />
                     <Label
                       htmlFor="image"
                       className="flex flex-1 cursor-pointer items-center gap-2"
@@ -226,7 +232,10 @@ export function HeroSettingsCard({ onSettingsChange }: HeroSettingsCardProps) {
                     </Label>
                   </div>
                   <div className="flex items-center space-x-2 rounded-lg border border-border p-3 transition-colors hover:bg-accent">
-                    <RadioGroupItem value={HERO_DISPLAY_MODES.VIDEO} id="video" />
+                    <RadioGroupItem
+                      value={HERO_DISPLAY_MODES.VIDEO}
+                      id="video"
+                    />
                     <Label
                       htmlFor="video"
                       className="flex flex-1 cursor-pointer items-center gap-2"
@@ -276,8 +285,8 @@ export function HeroSettingsCard({ onSettingsChange }: HeroSettingsCardProps) {
                     </p>
                     <p className="text-xs text-warning-foreground/80">
                       Please set a banner as primary to use Image or Video mode.
-                      Go to the banners table below and click "Set as Primary" on
-                      a banner.
+                      Go to the banners table below and click "Set as Primary"
+                      on a banner.
                     </p>
                   </div>
                 </div>
@@ -357,7 +366,6 @@ export function HeroSettingsCard({ onSettingsChange }: HeroSettingsCardProps) {
                   </div>
                 </div>
               )}
-
             </>
           )}
         </CardContent>

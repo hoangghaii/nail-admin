@@ -11,18 +11,21 @@ This document defines coding standards, file organization patterns, naming conve
 ## Core Development Principles
 
 ### YANGI (You Aren't Gonna Need It)
+
 - Avoid over-engineering and premature optimization
 - Implement features only when needed
 - Don't build infrastructure for hypothetical future requirements
 - Start simple, refactor when necessary
 
 ### KISS (Keep It Simple, Stupid)
+
 - Prefer simple, straightforward solutions
 - Avoid unnecessary complexity
 - Write code that's easy to understand and modify
 - Choose clarity over cleverness
 
 ### DRY (Don't Repeat Yourself)
+
 - Eliminate code duplication
 - Extract common logic into reusable functions/modules
 - Use composition and abstraction appropriately
@@ -69,12 +72,14 @@ project-root/
 ### File Naming Conventions
 
 **Agent Definitions** (`.claude/agents/`, `.opencode/agent/`):
+
 - Format: `[agent-name].md`
 - Use kebab-case: `code-reviewer.md`, `docs-manager.md`
 - Descriptive, role-based names
 - Examples: `planner.md`, `tester.md`, `git-manager.md`
 
 **Commands** (`.claude/commands/`, `.opencode/command/`):
+
 - Format: `[command-name].md` or `[category]/[command-name].md`
 - Use kebab-case for names
 - Group related commands in subdirectories
@@ -85,6 +90,7 @@ project-root/
   - `git/cm.md`
 
 **Skills** (`.claude/skills/`):
+
 - Format: `[skill-name]/SKILL.md`
 - Use kebab-case for directory names
 - Main file always named `SKILL.md`
@@ -95,6 +101,7 @@ project-root/
   - `mongodb/SKILL.md`
 
 **Documentation** (`docs/`):
+
 - Format: `[document-purpose].md`
 - Use kebab-case with descriptive names
 - Examples:
@@ -104,6 +111,7 @@ project-root/
   - `system-architecture.md`
 
 **Reports** (`plans/<plan-name>/reports/`):
+
 - Format: `YYMMDD-from-[agent]-to-[agent]-[task]-report.md`
 - Use date prefix for chronological sorting
 - Clear source and destination agents
@@ -112,6 +120,7 @@ project-root/
   - `251026-from-tester-to-debugger-test-failures-report.md`
 
 **Plans** (`plans/`):
+
 - Format: `YYMMDD-[feature-name]-plan.md`
 - Use date prefix for version tracking
 - Descriptive feature names in kebab-case
@@ -120,6 +129,7 @@ project-root/
   - `251026-database-migration-plan.md`
 
 **Research Reports** (`plans/<plan-name>/research/`):
+
 - Format: `YYMMDD-[research-topic].md`
 - Date prefix for tracking
 - Clear topic description
@@ -130,6 +140,7 @@ project-root/
 ## File Size Management
 
 ### Hard Limits
+
 - **Maximum file size**: 500 lines of code
 - Files exceeding 500 lines MUST be refactored
 - Exception: Auto-generated files (with clear marking)
@@ -137,12 +148,14 @@ project-root/
 ### Refactoring Strategies
 
 **When file exceeds 500 lines**:
+
 1. **Extract Utility Functions**: Move to separate `utils/` directory
 2. **Component Splitting**: Break into smaller, focused components
 3. **Service Classes**: Extract business logic to dedicated services
 4. **Module Organization**: Group related functionality into modules
 
 **Example Refactoring**:
+
 ```
 Before:
 user-service.js (750 lines)
@@ -161,42 +174,49 @@ utils/
 ### Variables & Functions
 
 **JavaScript/TypeScript**:
+
 - **Variables**: camelCase
+
   ```javascript
-  const userName = 'John Doe';
+  const userName = "John Doe";
   const isAuthenticated = true;
   ```
 
 - **Functions**: camelCase
+
   ```javascript
-  function calculateTotal(items) { }
-  const getUserById = (id) => { };
+  function calculateTotal(items) {}
+  const getUserById = (id) => {};
   ```
 
 - **Classes**: PascalCase
+
   ```javascript
-  class UserService { }
-  class AuthenticationManager { }
+  class UserService {}
+  class AuthenticationManager {}
   ```
 
 - **Constants**: UPPER_SNAKE_CASE
+
   ```javascript
   const MAX_RETRY_COUNT = 3;
-  const API_BASE_URL = 'https://api.example.com';
+  const API_BASE_URL = "https://api.example.com";
   ```
 
 - **Private Members**: Prefix with underscore
   ```javascript
   class Database {
     _connectionPool = null;
-    _connect() { }
+    _connect() {}
   }
   ```
 
 ### Files & Directories
 
 **Source Files**:
+
 - **JavaScript/TypeScript**: kebab-case
+
   ```
   user-service.js
   authentication-manager.ts
@@ -204,6 +224,7 @@ utils/
   ```
 
 - **React Components**: PascalCase
+
   ```
   UserProfile.jsx
   AuthenticationForm.tsx
@@ -217,6 +238,7 @@ utils/
   ```
 
 **Directories**: kebab-case
+
 ```
 src/
 ├── components/
@@ -229,6 +251,7 @@ src/
 ### API Design
 
 **REST Endpoints**:
+
 - Use kebab-case for URLs
 - Plural nouns for collections
 - Resource IDs in path parameters
@@ -243,7 +266,9 @@ GET    /api/users/:userId/posts
 ```
 
 **Request/Response Fields**:
+
 - Use camelCase for JSON properties
+
 ```json
 {
   "userId": 123,
@@ -259,16 +284,19 @@ GET    /api/users/:userId/posts
 ### General Formatting
 
 **Indentation**:
+
 - Use 2 spaces (not tabs)
 - Consistent indentation throughout file
 - No trailing whitespace
 
 **Line Length**:
+
 - Preferred: 80-100 characters
 - Hard limit: 120 characters
 - Break long lines logically
 
 **Whitespace**:
+
 - One blank line between functions/methods
 - Two blank lines between classes
 - Space after keywords: `if (`, `for (`, `while (`
@@ -277,6 +305,7 @@ GET    /api/users/:userId/posts
 ### Comments & Documentation
 
 **File Headers** (Optional but recommended):
+
 ```javascript
 /**
  * User Service
@@ -290,6 +319,7 @@ GET    /api/users/:userId/posts
 ```
 
 **Function Documentation**:
+
 ```javascript
 /**
  * Authenticates a user with email and password
@@ -305,12 +335,14 @@ async function authenticateUser(email, password) {
 ```
 
 **Inline Comments**:
+
 - Explain WHY, not WHAT
 - Complex logic requires explanation
 - TODO comments include assignee and date
+
 ```javascript
 // TODO(john, 2025-10-26): Optimize this query for large datasets
-const users = await db.query('SELECT * FROM users');
+const users = await db.query("SELECT * FROM users");
 
 // Cache miss - fetch from database
 const user = await fetchUserFromDB(userId);
@@ -319,21 +351,23 @@ const user = await fetchUserFromDB(userId);
 ### Error Handling
 
 **Always Use Try-Catch**:
+
 ```javascript
 async function processPayment(orderId) {
   try {
     const order = await getOrder(orderId);
     const payment = await chargeCard(order.total);
-    await updateOrderStatus(orderId, 'paid');
+    await updateOrderStatus(orderId, "paid");
     return payment;
   } catch (error) {
-    logger.error('Payment processing failed', { orderId, error });
-    throw new PaymentError('Failed to process payment', { cause: error });
+    logger.error("Payment processing failed", { orderId, error });
+    throw new PaymentError("Failed to process payment", { cause: error });
   }
 }
 ```
 
 **Error Types**:
+
 - Create custom error classes for domain errors
 - Include context and cause
 - Provide actionable error messages
@@ -342,22 +376,23 @@ async function processPayment(orderId) {
 class ValidationError extends Error {
   constructor(message, field) {
     super(message);
-    this.name = 'ValidationError';
+    this.name = "ValidationError";
     this.field = field;
   }
 }
 ```
 
 **Error Logging**:
+
 - Log errors with context
 - Use appropriate log levels
 - Never expose sensitive data in logs
 
 ```javascript
-logger.error('Database query failed', {
+logger.error("Database query failed", {
   query: sanitizeQuery(query),
   params: sanitizeParams(params),
-  error: error.message
+  error: error.message,
 });
 ```
 
@@ -366,11 +401,12 @@ logger.error('Database query failed', {
 ### Input Validation
 
 **Validate All Inputs**:
+
 ```javascript
 function createUser(userData) {
   // Validate required fields
   if (!userData.email || !userData.password) {
-    throw new ValidationError('Email and password required');
+    throw new ValidationError("Email and password required");
   }
 
   // Sanitize inputs
@@ -379,11 +415,11 @@ function createUser(userData) {
 
   // Validate formats
   if (!isValidEmail(email)) {
-    throw new ValidationError('Invalid email format');
+    throw new ValidationError("Invalid email format");
   }
 
   if (password.length < 8) {
-    throw new ValidationError('Password must be at least 8 characters');
+    throw new ValidationError("Password must be at least 8 characters");
   }
 }
 ```
@@ -391,26 +427,26 @@ function createUser(userData) {
 ### Sensitive Data Handling
 
 **Never Commit Secrets**:
+
 - Use environment variables for API keys, credentials
 - Add `.env*` to `.gitignore`
 - Use secret management systems in production
 
 **Never Log Sensitive Data**:
+
 ```javascript
 // BAD
-logger.info('User login', { email, password }); // Never log passwords
+logger.info("User login", { email, password }); // Never log passwords
 
 // GOOD
-logger.info('User login', { email }); // OK to log email
+logger.info("User login", { email }); // OK to log email
 ```
 
 **Sanitize Database Queries**:
+
 ```javascript
 // Use parameterized queries
-const user = await db.query(
-  'SELECT * FROM users WHERE email = $1',
-  [email]
-);
+const user = await db.query("SELECT * FROM users WHERE email = $1", [email]);
 
 // Never concatenate user input
 // BAD: const user = await db.query(`SELECT * FROM users WHERE email = '${email}'`);
@@ -434,17 +470,17 @@ tests/
 ### Test Naming
 
 ```javascript
-describe('UserService', () => {
-  describe('authenticateUser', () => {
-    it('should return user when credentials are valid', async () => {
+describe("UserService", () => {
+  describe("authenticateUser", () => {
+    it("should return user when credentials are valid", async () => {
       // Test implementation
     });
 
-    it('should throw AuthenticationError when password is incorrect', async () => {
+    it("should throw AuthenticationError when password is incorrect", async () => {
       // Test implementation
     });
 
-    it('should throw ValidationError when email is missing', async () => {
+    it("should throw ValidationError when email is missing", async () => {
       // Test implementation
     });
   });
@@ -472,6 +508,7 @@ describe('UserService', () => {
 ### Commit Messages
 
 **Format**: Conventional Commits
+
 ```
 type(scope): description
 
@@ -481,6 +518,7 @@ type(scope): description
 ```
 
 **Types**:
+
 - `feat`: New feature (minor version bump)
 - `fix`: Bug fix (patch version bump)
 - `docs`: Documentation changes
@@ -492,6 +530,7 @@ type(scope): description
 - `style`: Code style changes
 
 **Examples**:
+
 ```
 feat(auth): add OAuth2 authentication support
 
@@ -512,6 +551,7 @@ docs: update installation guide with Docker setup
 ```
 
 **Rules**:
+
 - Subject line: imperative mood, lowercase, no period
 - Max 72 characters for subject
 - Blank line between subject and body
@@ -524,6 +564,7 @@ docs: update installation guide with Docker setup
 **Format**: `type/description`
 
 **Types**:
+
 - `feature/` - New features
 - `fix/` - Bug fixes
 - `refactor/` - Code refactoring
@@ -531,6 +572,7 @@ docs: update installation guide with Docker setup
 - `test/` - Test improvements
 
 **Examples**:
+
 ```
 feature/oauth-authentication
 fix/database-connection-timeout
@@ -554,11 +596,13 @@ test/integration-test-suite
 ### Code Documentation
 
 **Self-Documenting Code**:
+
 - Clear variable and function names
 - Logical code organization
 - Minimal comments needed
 
 **When to Comment**:
+
 - Complex algorithms or business logic
 - Non-obvious optimizations
 - Workarounds for bugs/limitations
@@ -568,6 +612,7 @@ test/integration-test-suite
 ### Markdown Documentation
 
 **Structure**:
+
 ```markdown
 # Document Title
 
@@ -587,6 +632,7 @@ More content
 ```
 
 **Formatting**:
+
 - Use ATX-style headers (`#`, `##`, `###`)
 - Code blocks with language specification
 - Tables for structured data
@@ -594,10 +640,11 @@ More content
 - Links for cross-references
 
 **Code Blocks**:
+
 ````markdown
 ```javascript
 function example() {
-  return 'example';
+  return "example";
 }
 ```
 ````
@@ -607,6 +654,7 @@ function example() {
 ### Agent Definition Files
 
 **Frontmatter**:
+
 ```yaml
 ---
 name: agent-name
@@ -618,6 +666,7 @@ temperature: 0.1
 ```
 
 **Required Sections**:
+
 1. Agent role and responsibilities
 2. Core capabilities
 3. Workflow process
@@ -628,6 +677,7 @@ temperature: 0.1
 ### Command Definition Files
 
 **Frontmatter**:
+
 ```yaml
 ---
 name: command-name
@@ -636,10 +686,12 @@ description: What this command does
 ```
 
 **Argument Handling**:
+
 - `$ARGUMENTS` - All arguments as single string
 - `$1`, `$2`, `$3` - Individual positional arguments
 
 **Example**:
+
 ```markdown
 ---
 name: plan
@@ -654,6 +706,7 @@ Using planner agent to research and create comprehensive plan for: $1
 ### Skill Definition Files
 
 **Structure**:
+
 ```markdown
 # Skill Name
 
@@ -696,11 +749,13 @@ Mistakes to avoid
 ### Scout Block Hook Architecture
 
 **Cross-Platform Design Pattern**:
+
 - **Dispatcher Pattern**: Single Node.js entry point delegates to platform-specific implementations
 - **Platform Detection**: Use `process.platform` for automatic selection
 - **Security-First**: Input validation, sanitized errors, safe execution
 
 **File Organization**:
+
 ```
 .claude/hooks/
 ├── scout-block.js        # Node.js dispatcher (cross-platform entry)
@@ -711,6 +766,7 @@ Mistakes to avoid
 ```
 
 **Implementation Requirements**:
+
 - **Node.js Dispatcher**:
   - Read stdin synchronously
   - Validate JSON structure before parsing
@@ -726,22 +782,24 @@ Mistakes to avoid
   - Provide clear error messages
 
 **Security Standards**:
+
 ```javascript
 // Input validation
 if (!hookInput || hookInput.trim().length === 0) {
-  console.error('ERROR: Empty input');
+  console.error("ERROR: Empty input");
   process.exit(2);
 }
 
 // JSON structure validation
 const data = JSON.parse(hookInput);
-if (!data.tool_input || typeof data.tool_input.command !== 'string') {
-  console.error('ERROR: Invalid JSON structure');
+if (!data.tool_input || typeof data.tool_input.command !== "string") {
+  console.error("ERROR: Invalid JSON structure");
   process.exit(2);
 }
 ```
 
 **Testing Standards**:
+
 - Test both allowed and blocked patterns
 - Validate error handling (invalid JSON, empty input, missing fields)
 - Cross-platform test coverage
@@ -752,6 +810,7 @@ if (!data.tool_input || typeof data.tool_input.command !== 'string') {
 ### package.json
 
 **Required Fields**:
+
 - name, version, description
 - repository (with URL)
 - author, license
@@ -759,6 +818,7 @@ if (!data.tool_input || typeof data.tool_input.command !== 'string') {
 - scripts (test, lint, etc.)
 
 **Best Practices**:
+
 - Use semantic versioning
 - Specify exact dependency versions for stability
 - Include keywords for discoverability
@@ -768,6 +828,7 @@ if (!data.tool_input || typeof data.tool_input.command !== 'string') {
 ### .gitignore
 
 **Standard Exclusions**:
+
 ```
 # Dependencies
 node_modules/
@@ -807,11 +868,13 @@ temp/
 ### Code Performance
 
 **Optimization Priorities**:
+
 1. Correctness first
 2. Readability second
 3. Performance third (when needed)
 
 **Common Optimizations**:
+
 - Use appropriate data structures
 - Avoid unnecessary loops
 - Cache expensive computations
@@ -819,6 +882,7 @@ temp/
 - Debounce/throttle frequent operations
 
 **Example**:
+
 ```javascript
 // Cache expensive operations
 const memoize = (fn) => {
@@ -850,12 +914,14 @@ const expensiveCalculation = memoize((n) => {
 ### Code Review Checklist
 
 **Functionality**:
+
 - ✅ Implements required features
 - ✅ Handles edge cases
 - ✅ Error handling complete
 - ✅ Input validation present
 
 **Code Quality**:
+
 - ✅ Follows naming conventions
 - ✅ Adheres to file size limits
 - ✅ DRY principle applied
@@ -863,18 +929,21 @@ const expensiveCalculation = memoize((n) => {
 - ✅ Well-structured and organized
 
 **Security**:
+
 - ✅ No hardcoded secrets
 - ✅ Input sanitization
 - ✅ Proper authentication/authorization
 - ✅ Secure dependencies
 
 **Testing**:
+
 - ✅ Unit tests included
 - ✅ Integration tests for flows
 - ✅ Edge cases tested
 - ✅ Error paths covered
 
 **Documentation**:
+
 - ✅ Code comments where needed
 - ✅ API documentation updated
 - ✅ README updated if needed
@@ -885,16 +954,19 @@ const expensiveCalculation = memoize((n) => {
 ### Automated Checks
 
 **Pre-Commit**:
+
 - Commitlint (conventional commits)
 - Secret scanning
 - File size validation
 
 **Pre-Push**:
+
 - Linting (ESLint, Prettier)
 - Unit tests
 - Type checking
 
 **CI/CD**:
+
 - All tests
 - Build verification
 - Coverage reports
@@ -903,6 +975,7 @@ const expensiveCalculation = memoize((n) => {
 ### Manual Review
 
 **Code Review Focus**:
+
 - Architecture and design decisions
 - Complex logic correctness
 - Security implications
@@ -912,12 +985,14 @@ const expensiveCalculation = memoize((n) => {
 ## Exceptions
 
 **When to Deviate**:
+
 - Performance-critical code (document reasons)
 - External library constraints
 - Generated code (mark clearly)
 - Legacy code (plan refactoring)
 
 **Documentation Required**:
+
 ```javascript
 /**
  * EXCEPTION: File exceeds 500 lines
@@ -930,17 +1005,20 @@ const expensiveCalculation = memoize((n) => {
 ## References
 
 ### Internal Documentation
+
 - [Project Overview PDR](./project-overview-pdr.md)
 - [Codebase Summary](./codebase-summary.md)
 - [System Architecture](./system-architecture.md)
 
 ### External Standards
+
 - [Conventional Commits](https://conventionalcommits.org/)
 - [Semantic Versioning](https://semver.org/)
 - [Keep a Changelog](https://keepachangelog.com/)
 - [OWASP Top 10](https://owasp.org/www-project-top-ten/)
 
 ### Related Projects
+
 - [Claude Code Documentation](https://docs.claude.com/)
 - [Open Code Documentation](https://opencode.ai/docs)
 

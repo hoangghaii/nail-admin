@@ -24,9 +24,9 @@ export class HeroSettingsService {
     }
 
     const response = await fetch("/api/hero-settings", {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
+      headers: { "Content-Type": "application/json" },
+      method: "PUT",
     });
     if (!response.ok) throw new Error("Failed to update hero settings");
     return response.json();
@@ -39,8 +39,8 @@ export class HeroSettingsService {
     }
 
     return this.updateSettings({
-      displayMode: "carousel",
       carouselInterval: 5000,
+      displayMode: "carousel",
       showControls: true,
     });
   }
