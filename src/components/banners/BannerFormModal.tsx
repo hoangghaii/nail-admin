@@ -6,8 +6,8 @@ import { z } from "zod";
 
 import type { Banner, BannerType } from "@/types/banner.types";
 
-import { ImageUpload } from "@/components/shared/ImageUpload";
-import { VideoUpload } from "@/components/shared/VideoUpload";
+import { ImageUpload } from "@/components/layout/shared/ImageUpload";
+import { VideoUpload } from "@/components/layout/shared/VideoUpload";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -27,6 +27,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
+import { cn } from "@/lib/utils";
 import { bannersService } from "@/services/banners.service";
 
 const bannerSchema = z.object({
@@ -171,6 +172,7 @@ export function BannerFormModal({
               <Input
                 id="title"
                 placeholder="Enter banner title..."
+                className={cn(errors.title && "border-destructive")}
                 {...register("title")}
               />
               {errors.title && (

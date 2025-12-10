@@ -1,6 +1,8 @@
 import { cva, type VariantProps } from "class-variance-authority";
-import { Check, Star, X } from "lucide-react";
+import { Check, CheckCircle2, Clock, Star, X, XCircle } from "lucide-react";
 import * as React from "react";
+
+import type { BookingStatus } from "@/types/booking.types";
 
 import { cn } from "@/lib/utils";
 
@@ -14,10 +16,15 @@ const statusBadgeVariants = cva(
     variants: {
       status: {
         active: "",
+        cancelled: "",
+        completed: "",
+        confirmed: "",
         inactive: "",
+        pending: "",
         primary: "",
       },
       variant: {
+        booking: "",
         default: "",
         outline: "border",
       },
@@ -28,8 +35,8 @@ const statusBadgeVariants = cva(
 export type StatusBadgeProps = {
   className?: string;
   isPrimary?: boolean;
-  status?: "active" | "inactive";
-  variant?: "default" | "outline";
+  status?: "active" | "inactive" | BookingStatus;
+  variant?: "default" | "outline" | "booking";
 } & React.HTMLAttributes<HTMLSpanElement> &
   VariantProps<typeof statusBadgeVariants>;
 
@@ -45,6 +52,23 @@ const StatusBadge = React.forwardRef<HTMLSpanElement, StatusBadgeProps>(
     ref,
   ) => {
     const getStatusStyles = () => {
+      // Booking status variants
+      if (variant === "booking") {
+        if (status === "pending") {
+          return "bg-yellow-100 dark:bg-yellow-950 text-yellow-700 dark:text-yellow-400 border-yellow-300 dark:border-yellow-700";
+        }
+        if (status === "confirmed") {
+          return "bg-blue-100 dark:bg-blue-950 text-blue-700 dark:text-blue-400 border-blue-300 dark:border-blue-700";
+        }
+        if (status === "completed") {
+          return "bg-green-100 dark:bg-green-950 text-green-700 dark:text-green-400 border-green-300 dark:border-green-700";
+        }
+        if (status === "cancelled") {
+          return "bg-red-100 dark:bg-red-950 text-red-700 dark:text-red-400 border-red-300 dark:border-red-700";
+        }
+      }
+
+      // Banner status variants
       if (isPrimary) {
         return variant === "outline"
           ? "border-primary text-primary bg-primary/10"
@@ -63,6 +87,14 @@ const StatusBadge = React.forwardRef<HTMLSpanElement, StatusBadgeProps>(
     };
 
     const getIcon = () => {
+      if (variant === "booking") {
+        if (status === "pending") return <Clock className="h-3 w-3" />;
+        if (status === "confirmed") return <CheckCircle2 className="h-3 w-3" />;
+        if (status === "completed")
+          return <CheckCircle2 className="h-3 w-3 fill-current" />;
+        if (status === "cancelled") return <XCircle className="h-3 w-3" />;
+      }
+
       if (isPrimary) {
         return <Star className="h-3 w-3" />;
       }
@@ -73,6 +105,13 @@ const StatusBadge = React.forwardRef<HTMLSpanElement, StatusBadgeProps>(
     };
 
     const getLabel = () => {
+      if (variant === "booking") {
+        if (status === "pending") return "Pending";
+        if (status === "confirmed") return "Confirmed";
+        if (status === "completed") return "Completed";
+        if (status === "cancelled") return "Cancelled";
+      }
+
       if (isPrimary) return "Primary";
       return status === "active" ? "Active" : "Inactive";
     };

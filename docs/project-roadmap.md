@@ -1,15 +1,15 @@
 # Pink Nail Admin Dashboard - Project Roadmap
 
-**Last Updated:** 2025-12-03
-**Current Version:** 0.1.0
+**Last Updated:** 2025-12-10
+**Current Version:** 0.3.0
 **Repository:** `/Users/hainguyen/Documents/nail-project/nail-admin`
 
 ## Executive Summary
 
 Pink Nail Admin Dashboard is a professional React-based admin panel for managing nail salon business operations. Built with shadcn/ui's blue theme, the dashboard provides comprehensive management for banners, services, gallery, bookings, and customer contacts with type-safe dual-mode architecture supporting both mock data and real API integration.
 
-**Project Status:** 🟢 Foundation + First CRUD Feature Complete
-**Overall Progress:** 25% (Core infrastructure + Banner CRUD done, Services/Gallery/Bookings/Contacts pending)
+**Project Status:** 🟢 Foundation + Two CRUD Features + Bookings Management 85%
+**Overall Progress:** 60% (Core infrastructure + Banner CRUD + Gallery CRUD + Bookings 85% done, Services/Contacts/Advanced Features pending)
 
 ---
 
@@ -47,25 +47,28 @@ Established core project infrastructure, type system, design system, and authent
 
 ---
 
-### Phase 2: Banner CRUD with Hero Settings (COMPLETE)
+### Phase 2: Banner CRUD with Hero Settings + Zustand Migration (COMPLETE)
 
-**Status:** ✅ Complete | **Completion Date:** 2025-12-03
+**Status:** ✅ Complete | **Completion Date:** 2025-12-04
 **Progress:** 100% | **Code Quality:** 8.5/10
 
-Implemented first complete CRUD feature with hero display settings, image/video uploads, drag-drop reordering, and dual-mode service architecture.
+Implemented first complete CRUD feature with hero display settings, image/video uploads, drag-drop reordering, Zustand state management migration, and dual-mode service architecture.
 
 **Key Achievements:**
 
-- ✅ Banner type extension with video, CTA, and sort support
-- ✅ Type-safe service layer (mock + API-ready)
+- ✅ Zustand state management migration (bannersStore, heroSettingsStore)
+- ✅ In-memory state for banners and hero settings (performance improvement)
+- ✅ Banner type extension with video, type field, CTA, and sort support
+- ✅ Type-safe service layer with Zustand integration (mock + API-ready)
 - ✅ DataTable component with TanStack Table v8
 - ✅ Image and Video upload components with Firebase
 - ✅ Dialog/Modal components with Radix UI
 - ✅ Banner CRUD page with full create/read/update/delete
 - ✅ Hero Settings component with display mode selection
-- ✅ Drag-and-drop reordering (HTML5 API)
+- ✅ Drag-and-drop reordering (HTML5 native API)
 - ✅ Primary banner selection logic
-- ✅ Mock data initialization
+- ✅ Type-based filtering (image/video) by display mode
+- ✅ Mock data initialization with Zustand stores
 
 **Technical Details:**
 
@@ -86,21 +89,61 @@ Implemented first complete CRUD feature with hero display settings, image/video 
 
 **Deliverables:**
 
-- ✅ Types: `banner.types.ts`, `heroSettings.types.ts`
-- ✅ Services: `banners.service.ts`, `heroSettings.service.ts`, `imageUpload.service.ts`
+- ✅ Zustand Stores: `bannersStore.ts`, `heroSettingsStore.ts` (in-memory state)
+- ✅ Types: `banner.types.ts`, `heroSettings.types.ts` (with type field)
+- ✅ Services: `banners.service.ts`, `heroSettings.service.ts`, `imageUpload.service.ts` (Zustand integrated)
 - ✅ UI Components: `dialog.tsx`, `radio-group.tsx`, `switch.tsx`, `textarea.tsx`
 - ✅ Shared Components: `DataTable.tsx`, `ImageUpload.tsx`, `VideoUpload.tsx`, `StatusBadge.tsx`
 - ✅ Banner Components: `BannerFormModal.tsx`, `DeleteBannerDialog.tsx`, `HeroSettingsCard.tsx`
-- ✅ Pages: `BannersPage.tsx`
-- ✅ Data: Mock data with initialization
+- ✅ Pages: `BannersPage.tsx` (with type filtering)
+- ✅ Data: Mock data with Zustand store initialization
+
+**Status:** Ready for staging deployment
+**Implementation Plan:** Archived to `plans/251202-2256-banner-crud-hero-settings/ARCHIVED-COMPLETED-20251204.md`
+
+---
+
+### Phase 3: Gallery CRUD (COMPLETE)
+
+**Status:** ✅ Complete | **Completion Date:** 2025-12-05
+**Progress:** 100% | **Code Quality:** 8.5/10
+
+Implemented portfolio gallery management with category filtering, featured toggle, and bulk operations.
+
+**Key Achievements:**
+
+- ✅ Zustand state management (galleryStore with 8 operations)
+- ✅ Gallery CRUD operations (create/read/update/delete)
+- ✅ Category filtering (all, extensions, manicure, nail-art, pedicure, seasonal)
+- ✅ Featured item toggle
+- ✅ Bulk selection and delete operations
+- ✅ Grid view with image preview
+- ✅ Image upload to Firebase Storage
+- ✅ Mock data initialization with 20 sample items
+- ✅ Type-safe service layer with dual-mode support
+
+**Technical Details:**
+
+- **Files Created:** 7 new files (store, service, 4 components, mock data)
+- **Code Size:** ~855 lines
+- **TypeScript Compliance:** 100% (verbatimModuleSyntax pass)
+- **Build Status:** PASS
+
+**Deliverables:**
+
+- ✅ Zustand Store: `galleryStore.ts` (in-memory state with bulk operations)
+- ✅ Service: `gallery.service.ts` (10 methods including bulk operations)
+- ✅ Gallery Components: `GalleryFormModal.tsx`, `DeleteGalleryDialog.tsx`, `CategoryFilter.tsx`, `FeaturedBadge.tsx`
+- ✅ Page: `GalleryPage.tsx` (grid layout with category filtering)
+- ✅ Mock Data: `mockGallery.ts` (20 items across 5 categories)
 
 **Status:** Ready for staging deployment
 
 ---
 
-### Phase 3: Services CRUD (PLANNED)
+### Phase 4: Services CRUD (PLANNED)
 
-**Status:** 📋 Planned | **Estimated Start:** 2025-12-04
+**Status:** 📋 Planned | **Estimated Start:** 2025-12-06
 **Progress:** 0%
 
 Implement comprehensive service management system with category filtering, pricing, and duration configuration.
@@ -120,50 +163,45 @@ Implement comprehensive service management system with category filtering, prici
 - ✅ DataTable component (from Phase 2)
 - ✅ ImageUpload component (from Phase 2)
 - ✅ Dialog component (from Phase 2)
+- ✅ CategoryFilter pattern (from Phase 3)
 
 ---
 
-### Phase 4: Gallery CRUD (PLANNED)
+### Phase 5: Bookings Management (IN PROGRESS)
 
-**Status:** 📋 Planned | **Estimated Start:** 2025-12-09
-**Progress:** 0%
+**Status:** 🔄 In Progress | **Start Date:** 2025-12-06
+**Progress:** 85%
 
-Implement portfolio gallery management with bulk upload, category organization, and featured image selection.
+Implement booking view and status management system with customer communication features. UI consistency fix completed (Dialog modal pattern).
 
-**Planned Features:**
+**Completed:**
 
-- Gallery CRUD operations
-- Category filtering (all, extensions, manicure, nail-art, pedicure, seasonal)
-- Bulk image upload
-- Image preview with title and description
-- Featured image selection
-- Gallery DataTable with advanced filtering
-- Drag-drop reordering for gallery sequence
+- ✅ BookingDetailsModal component (Dialog pattern - consistent with Banner/Gallery)
+- ✅ BookingsPage with DataTable, filtering, and search
+- ✅ Status filter component with badge counts
+- ✅ StatusUpdateDialog for status management
+- ✅ Zustand bookingsStore with state management
+- ✅ Mock bookings data initialization
+- ✅ Customer information display with contact links
+- ✅ Appointment details with formatted dates/times
+- ✅ Notes display in modal
+- ✅ Search by customer name, email, phone
+- ✅ UI consistency: All modals use Dialog pattern (BannerFormModal, GalleryFormModal, BookingDetailsModal)
 
-**Dependencies:**
+**Remaining:**
 
-- ✅ DataTable component (from Phase 2)
-- ✅ ImageUpload component (from Phase 2)
-- ✅ Dialog component (from Phase 2)
-
----
-
-### Phase 5: Bookings Management (PLANNED)
-
-**Status:** 📋 Planned | **Estimated Start:** 2025-12-16
-**Progress:** 0%
-
-Implement booking view and status management system with customer communication features.
-
-**Planned Features:**
-
-- Bookings DataTable with filtering by date/status/service
-- Status update (pending -> confirmed -> completed/cancelled)
-- Customer information display
-- Booking notes and special requests
-- Calendar view option (future enhancement)
 - Email notification triggers (API integration)
+- Calendar view option (future enhancement)
 - Booking export functionality
+
+**Technical Details:**
+
+- Modal pattern: Radix UI Dialog (matching BannerFormModal, GalleryFormModal)
+- DataTable: TanStack Table v8 with sortable columns
+- State: Zustand bookingsStore with in-memory management
+- Search: Debounced search across customer fields
+- TypeScript: 100% compliance
+- Build: PASS (zero errors)
 
 **Note:** No create button (bookings originate from client website)
 
@@ -171,7 +209,7 @@ Implement booking view and status management system with customer communication 
 
 ### Phase 6: Contacts Management (PLANNED)
 
-**Status:** 📋 Planned | **Estimated Start:** 2025-12-23
+**Status:** 📋 Planned | **Estimated Start:** 2025-12-20
 **Progress:** 0%
 
 Implement customer inquiry management system with admin notes and follow-up tracking.
@@ -190,7 +228,7 @@ Implement customer inquiry management system with admin notes and follow-up trac
 
 ### Phase 7: Advanced Features & Polish (PLANNED)
 
-**Status:** 📋 Planned | **Estimated Start:** 2026-01-06
+**Status:** 📋 Planned | **Estimated Start:** 2026-01-03
 **Progress:** 0%
 
 Implement advanced features, optimizations, and production hardening.
@@ -210,23 +248,24 @@ Implement advanced features, optimizations, and production hardening.
 
 ## Current Development Focus
 
-### 1. Services CRUD Implementation
+### 1. Services CRUD Implementation (Next Priority)
 
 - Design service form with category dropdown
 - Implement service creation and editing
 - Add service deletion with confirmation
 - Build services DataTable with filtering
+- Zustand store for service state management
 
 ### 2. Client Project Type Sync
 
 - Verify Service type compatibility between projects
 - Document any type changes for migration
 
-### 3. Code Quality Improvements (From Phase 2 Review)
+### 3. Gallery Enhancements (Optional)
 
-- Implement medium-priority suggestions (upload cleanup, pagination)
-- Add auto-save debouncing for hero settings
-- Plan server-side validation for Phase 3+
+- Implement bulk upload UI (multiple images at once)
+- Add drag-drop reordering for gallery items
+- Consider pagination for large galleries
 
 ---
 
@@ -234,12 +273,13 @@ Implement advanced features, optimizations, and production hardening.
 
 ### Q4 2025 Milestones
 
-| Milestone             | Status      | Target Date | Progress |
-| --------------------- | ----------- | ----------- | -------- |
-| Foundation Phase      | ✅ Complete | 2025-11-30  | 100%     |
-| Banner CRUD Feature   | ✅ Complete | 2025-12-03  | 100%     |
-| Services CRUD Feature | 📋 Planned  | 2025-12-13  | 0%       |
-| Gallery CRUD Feature  | 📋 Planned  | 2025-12-23  | 0%       |
+| Milestone             | Status         | Target Date | Progress |
+| --------------------- | -------------- | ----------- | -------- |
+| Foundation Phase      | ✅ Complete    | 2025-11-30  | 100%     |
+| Banner CRUD Feature   | ✅ Complete    | 2025-12-04  | 100%     |
+| Gallery CRUD Feature  | ✅ Complete    | 2025-12-05  | 100%     |
+| Bookings Management   | 🔄 In Progress | 2025-12-10  | 85%      |
+| Services CRUD Feature | 📋 Planned     | 2025-12-13  | 0%       |
 
 ### Q1 2026 Milestones
 
@@ -263,16 +303,17 @@ Implement advanced features, optimizations, and production hardening.
 - ✅ Mock API with dual-mode services
 - ✅ Firebase Storage integration
 - ✅ Banner CRUD with hero settings
+- ✅ Gallery CRUD with category filtering and bulk operations
 - ✅ Image/Video upload components
+- ✅ Zustand state management (banners, gallery, hero settings)
 
 ### In Development
 
+- 🔄 Bookings Management (85% complete - UI consistency fix applied)
 - 🔄 Services CRUD (estimated 2025-12-13)
-- 🔄 Gallery CRUD (estimated 2025-12-23)
 
 ### Planned
 
-- 📋 Bookings management
 - 📋 Contacts management
 - 📋 Search and filtering
 - 📋 Dashboard analytics
@@ -292,8 +333,8 @@ Implement advanced features, optimizations, and production hardening.
 
 ### Feature Completeness
 
-- CRUD Features: Banner 100%, Services 0%, Gallery 0%, Bookings 0%, Contacts 0%
-- Overall Project: 25% (1 of 4 CRUD features complete)
+- CRUD Features: Banner 100%, Gallery 100%, Services 0%, Bookings 0%, Contacts 0%
+- Overall Project: 50% (2 of 4 CRUD features complete)
 
 ### User Experience
 
@@ -422,17 +463,92 @@ Implement advanced features, optimizations, and production hardening.
 
 ## Changelog
 
-### Version 0.1.0 (Current - 2025-12-03)
+### Version 0.3.0 (Current - 2025-12-10)
 
 #### Features Added
 
+- **Bookings Management:** 85% complete (core features done, advanced features pending)
+  - View all customer bookings with DataTable (TanStack Table v8)
+  - Filter by booking status (pending, confirmed, completed, cancelled)
+  - Search by customer name, email, or phone with debouncing
+  - Booking detail modal with full customer and appointment information
+  - Status update dialog for changing booking status
+  - Contact links in modal (email, phone)
+  - Appointment details with formatted dates and times
+
+#### Components Added
+
+- BookingDetailsModal (Dialog pattern - UI consistency)
+- StatusFilter (status badge filter component)
+- StatusUpdateDialog (status change confirmation)
+
+#### UI/UX Improvements
+
+- **UI Consistency Fix:** Replaced BookingDetailsDrawer (Sheet) with BookingDetailsModal (Dialog)
+  - All detail modals now use consistent Dialog pattern
+  - Standardized modal appearance across BannerFormModal, GalleryFormModal, BookingDetailsModal
+  - Improved visual hierarchy and component consistency
+- Consistent modal header/footer structure across all pages
+
+#### Code Quality
+
+- 0 critical issues (TypeScript compliance 100%)
+- Production build successful
+- Pattern consistency verified
+
+---
+
+### Version 0.2.0 (2025-12-05)
+
+#### Features Added
+
+- **Gallery CRUD Feature:** Complete portfolio gallery management system
+  - Create, read, update, delete operations
+  - Category filtering (all, extensions, manicure, nail-art, pedicure, seasonal)
+  - Featured item toggle
+  - Bulk selection and delete operations
+  - Grid view with image preview
+  - Image upload to Firebase Storage
+  - Type-safe dual-mode architecture with Zustand integration
+- **Zustand State Management:** galleryStore for gallery state
+  - In-memory state with 8 operations
+  - Bulk operations support (addMultipleItems, deleteMultipleItems)
+  - Auto-initialization with 20 mock items
+
+#### Components Added
+
+- GalleryFormModal (create/edit gallery items)
+- DeleteGalleryDialog (single and bulk delete)
+- CategoryFilter (category filtering tabs)
+- FeaturedBadge (visual indicator)
+- GalleryPage (grid layout with filtering)
+
+#### Code Quality
+
+- 0 critical issues
+- TypeScript compliance: 100%
+- Build status: PASS
+- 8.5/10 overall quality rating
+
+---
+
+### Version 0.1.0 (2025-12-04)
+
+#### Features Added
+
+- **Zustand State Management Migration:** In-memory state for better performance
+  - bannersStore for banner management
+  - heroSettingsStore for hero display settings
+  - Auth remains in localStorage for session persistence
 - **Banner CRUD Feature:** Complete hero banner management system
   - Create, read, update, delete operations
   - Image and video upload support
-  - Drag-and-drop reordering
+  - Type field (image/video) for filtering
+  - Drag-and-drop reordering (HTML5 native API)
   - Hero display settings (image/video/carousel modes)
   - Primary banner selection
-  - Type-safe dual-mode architecture
+  - Type-based filtering by display mode
+  - Type-safe dual-mode architecture with Zustand integration
 
 #### Components Added
 
@@ -493,23 +609,23 @@ Implement advanced features, optimizations, and production hardening.
 
 ### Immediate (Next Sprint)
 
-1. **Deploy to Staging:** Transfer Banner CRUD to staging environment
-2. **Begin Services CRUD:** Start Phase 3 with service management
-3. **Fix Medium-Priority Items:** Address code review suggestions (M2, M4)
-4. **Type Sync Check:** Verify Service type compatibility with client project
+1. **Deploy to Staging:** Transfer Banner and Gallery CRUD to staging environment
+2. **Begin Services CRUD:** Start Phase 4 with service management
+3. **Type Sync Check:** Verify Service type compatibility with client project
+4. **Optional Enhancements:** Gallery bulk upload UI, drag-drop reordering
 
 ### Short-term (2 Weeks)
 
 1. Complete Services CRUD implementation
-2. Begin Gallery CRUD planning and development
+2. Begin Bookings management planning
 3. Document API endpoint specifications for backend team
 4. Conduct comprehensive responsive design testing
 
 ### Medium-term (1 Month)
 
-1. Complete Gallery CRUD
-2. Implement Bookings management
-3. Implement Contacts management
+1. Complete Bookings management
+2. Implement Contacts management
+3. Dashboard analytics and metrics
 4. Performance optimization
 
 ### Long-term (2+ Months)
@@ -528,6 +644,6 @@ Implement advanced features, optimizations, and production hardening.
 ---
 
 **Maintained By:** Development Team
-**Last Review:** 2025-12-03
-**Next Review Target:** 2025-12-10 (After Services CRUD begins)
+**Last Review:** 2025-12-10
+**Next Review Target:** 2025-12-13 (After Services CRUD completion)
 **Project Repository:** `/Users/hainguyen/Documents/nail-project/nail-admin`

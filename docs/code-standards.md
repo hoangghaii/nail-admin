@@ -1,1027 +1,522 @@
-# Code Standards & Codebase Structure
+# Code Standards & Best Practices
 
-**Last Updated**: 2025-10-26
-**Version**: 1.8.0
-**Applies To**: All code within ClaudeKit Engineer project
+**Project**: Pink Nail Admin Dashboard
+**Version**: 0.1.0
+**Last Updated**: 2025-12-04
 
 ## Overview
 
-This document defines coding standards, file organization patterns, naming conventions, and best practices for ClaudeKit Engineer. All code must adhere to these standards to ensure consistency, maintainability, and quality.
+This document defines coding standards, patterns, and best practices for the Pink Nail Admin Dashboard project.
 
-## Core Development Principles
-
-### YANGI (You Aren't Gonna Need It)
-
-- Avoid over-engineering and premature optimization
-- Implement features only when needed
-- Don't build infrastructure for hypothetical future requirements
-- Start simple, refactor when necessary
+## Core Principles
 
 ### KISS (Keep It Simple, Stupid)
 
 - Prefer simple, straightforward solutions
 - Avoid unnecessary complexity
-- Write code that's easy to understand and modify
-- Choose clarity over cleverness
+- Write code that's easy to understand
 
 ### DRY (Don't Repeat Yourself)
 
-- Eliminate code duplication
-- Extract common logic into reusable functions/modules
-- Use composition and abstraction appropriately
+- Extract common logic into reusable functions
+- Use shared components for repeated UI patterns
 - Maintain single source of truth
 
-## File Organization Standards
+### Type Safety First
 
-### Directory Structure
+- No `any` types (100% type coverage)
+- Use `import type` for type-only imports (verbatimModuleSyntax)
+- Zod schemas for runtime validation
 
-```
-project-root/
-├── .claude/                    # Claude Code configuration
-│   ├── agents/                # Agent definitions (*.md)
-│   ├── commands/              # Slash commands (*.md)
-│   │   ├── [category]/       # Nested command categories
-│   │   └── [command].md      # Individual commands
-│   ├── hooks/                # Git hooks and scripts
-│   ├── skills/               # Reusable knowledge modules
-│   │   └── [skill-name]/     # Individual skill directories
-│   │       ├── SKILL.md      # Skill definition
-│   │       └── references/   # Supporting materials
-│   └── workflows/            # Workflow definitions
-├── .opencode/                 # OpenCode configuration
-│   ├── agent/                # OpenCode agent definitions
-│   └── command/              # OpenCode commands
-├── .github/                   # GitHub-specific files
-│   └── workflows/            # CI/CD workflows
-├── docs/                      # Project documentation
-│   ├── research/             # Research reports
-│   └── *.md                  # Core documentation files
-├── guide/                     # User guides
-├── plans/                     # Implementation plans
-│   ├── reports/              # Agent communication reports
-│   └── templates/            # Plan templates
-├── src/                       # Source code (if applicable)
-├── tests/                     # Test suites (if applicable)
-├── .gitignore                # Git ignore patterns
-├── CLAUDE.md                 # Claude-specific instructions
-├── README.md                 # Project overview
-├── package.json              # Node.js dependencies
-└── LICENSE                   # License file
-```
-
-### File Naming Conventions
-
-**Agent Definitions** (`.claude/agents/`, `.opencode/agent/`):
-
-- Format: `[agent-name].md`
-- Use kebab-case: `code-reviewer.md`, `docs-manager.md`
-- Descriptive, role-based names
-- Examples: `planner.md`, `tester.md`, `git-manager.md`
-
-**Commands** (`.claude/commands/`, `.opencode/command/`):
-
-- Format: `[command-name].md` or `[category]/[command-name].md`
-- Use kebab-case for names
-- Group related commands in subdirectories
-- Examples:
-  - `plan.md`
-  - `fix/ci.md`
-  - `design/screenshot.md`
-  - `git/cm.md`
-
-**Skills** (`.claude/skills/`):
-
-- Format: `[skill-name]/SKILL.md`
-- Use kebab-case for directory names
-- Main file always named `SKILL.md`
-- Supporting files in `references/` or `scripts/`
-- Examples:
-  - `better-auth/SKILL.md`
-  - `cloudflare-workers/SKILL.md`
-  - `mongodb/SKILL.md`
-
-**Documentation** (`docs/`):
-
-- Format: `[document-purpose].md`
-- Use kebab-case with descriptive names
-- Examples:
-  - `project-overview-pdr.md`
-  - `codebase-summary.md`
-  - `code-standards.md`
-  - `system-architecture.md`
-
-**Reports** (`plans/<plan-name>/reports/`):
-
-- Format: `YYMMDD-from-[agent]-to-[agent]-[task]-report.md`
-- Use date prefix for chronological sorting
-- Clear source and destination agents
-- Examples:
-  - `251026-from-planner-to-main-auth-implementation-report.md`
-  - `251026-from-tester-to-debugger-test-failures-report.md`
-
-**Plans** (`plans/`):
-
-- Format: `YYMMDD-[feature-name]-plan.md`
-- Use date prefix for version tracking
-- Descriptive feature names in kebab-case
-- Examples:
-  - `251026-user-authentication-plan.md`
-  - `251026-database-migration-plan.md`
-
-**Research Reports** (`plans/<plan-name>/research/`):
-
-- Format: `YYMMDD-[research-topic].md`
-- Date prefix for tracking
-- Clear topic description
-- Examples:
-  - `251026-oauth2-implementation-strategies.md`
-  - `251026-performance-optimization-techniques.md`
-
-## File Size Management
-
-### Hard Limits
-
-- **Maximum file size**: 500 lines of code
-- Files exceeding 500 lines MUST be refactored
-- Exception: Auto-generated files (with clear marking)
-
-### Refactoring Strategies
-
-**When file exceeds 500 lines**:
-
-1. **Extract Utility Functions**: Move to separate `utils/` directory
-2. **Component Splitting**: Break into smaller, focused components
-3. **Service Classes**: Extract business logic to dedicated services
-4. **Module Organization**: Group related functionality into modules
-
-**Example Refactoring**:
-
-```
-Before:
-user-service.js (750 lines)
-
-After:
-services/
-├── user-service.js (200 lines)      # Core service
-├── user-validation.js (150 lines)   # Validation logic
-└── user-repository.js (180 lines)   # Database operations
-utils/
-└── password-hasher.js (80 lines)    # Utility functions
-```
-
-## Naming Conventions
-
-### Variables & Functions
-
-**JavaScript/TypeScript**:
-
-- **Variables**: camelCase
-
-  ```javascript
-  const userName = "John Doe";
-  const isAuthenticated = true;
-  ```
-
-- **Functions**: camelCase
-
-  ```javascript
-  function calculateTotal(items) {}
-  const getUserById = (id) => {};
-  ```
-
-- **Classes**: PascalCase
-
-  ```javascript
-  class UserService {}
-  class AuthenticationManager {}
-  ```
-
-- **Constants**: UPPER_SNAKE_CASE
-
-  ```javascript
-  const MAX_RETRY_COUNT = 3;
-  const API_BASE_URL = "https://api.example.com";
-  ```
-
-- **Private Members**: Prefix with underscore
-  ```javascript
-  class Database {
-    _connectionPool = null;
-    _connect() {}
-  }
-  ```
-
-### Files & Directories
-
-**Source Files**:
-
-- **JavaScript/TypeScript**: kebab-case
-
-  ```
-  user-service.js
-  authentication-manager.ts
-  api-client.js
-  ```
-
-- **React Components**: PascalCase
-
-  ```
-  UserProfile.jsx
-  AuthenticationForm.tsx
-  NavigationBar.jsx
-  ```
-
-- **Test Files**: Match source file name + `.test` or `.spec`
-  ```
-  user-service.test.js
-  authentication-manager.spec.ts
-  ```
-
-**Directories**: kebab-case
+## File Organization
 
 ```
 src/
 ├── components/
-├── services/
-├── utils/
-├── api-clients/
-└── test-helpers/
+│   ├── auth/              # Authentication components
+│   ├── banners/           # Banner-specific components
+│   ├── layout/            # Layout components (Sidebar, Topbar)
+│   ├── shared/            # Reusable cross-feature components
+│   └── ui/                # Base UI primitives (shadcn/ui)
+├── pages/                 # Page-level components
+├── services/              # API service layer
+├── store/                 # Zustand stores
+├── types/                 # TypeScript type definitions
+├── data/                  # Mock data and initialization
+├── lib/                   # Utilities and Firebase config
+└── App.tsx                # Main app with routing
 ```
 
-### API Design
+## Naming Conventions
 
-**REST Endpoints**:
+### Files
 
-- Use kebab-case for URLs
-- Plural nouns for collections
-- Resource IDs in path parameters
+- **Components**: PascalCase (e.g., `BannersPage.tsx`, `HeroSettingsCard.tsx`)
+- **Services**: camelCase + `.service.ts` (e.g., `banners.service.ts`)
+- **Stores**: camelCase + `Store.ts` (e.g., `bannersStore.ts`)
+- **Types**: camelCase + `.types.ts` (e.g., `banner.types.ts`)
+- **Utilities**: camelCase (e.g., `utils.ts`)
 
+### Code
+
+- **Variables**: camelCase
+- **Functions**: camelCase
+- **Classes**: PascalCase
+- **Constants**: UPPER_SNAKE_CASE
+- **Types/Interfaces**: PascalCase
+
+## TypeScript Standards
+
+### verbatimModuleSyntax Compliance
+
+**CRITICAL**: Always use `import type` for type-only imports:
+
+```typescript
+// ✅ Correct
+import type { Banner } from "@/types/banner.types";
+import type { User } from "@/types/auth.types";
+
+// ❌ Wrong (causes build error)
+import { Banner } from "@/types/banner.types";
 ```
-GET    /api/users
-GET    /api/users/:id
-POST   /api/users
-PUT    /api/users/:id
-DELETE /api/users/:id
-GET    /api/users/:userId/posts
-```
 
-**Request/Response Fields**:
+### Strict Mode
 
-- Use camelCase for JSON properties
+- No `any` types (use `unknown` if type is truly unknown)
+- Enable all strict checks
+- No implicit any
+- No unchecked indexed access
 
-```json
-{
-  "userId": 123,
-  "userName": "john_doe",
-  "emailAddress": "john@example.com",
-  "isVerified": true,
-  "createdAt": "2025-10-26T00:00:00Z"
+### Type Definitions
+
+```typescript
+// Prefer interfaces for object shapes
+interface Banner {
+  id: string;
+  title: string;
+  active: boolean;
 }
+
+// Use type for unions, intersections, utilities
+type HeroDisplayMode = "image" | "video" | "carousel";
+type BannerUpdate = Partial<Omit<Banner, "id">>;
 ```
 
-## Code Style Guidelines
+## Component Patterns
 
-### General Formatting
+### Functional Components with TypeScript
 
-**Indentation**:
+```typescript
+import type { FC } from "react";
 
-- Use 2 spaces (not tabs)
-- Consistent indentation throughout file
-- No trailing whitespace
-
-**Line Length**:
-
-- Preferred: 80-100 characters
-- Hard limit: 120 characters
-- Break long lines logically
-
-**Whitespace**:
-
-- One blank line between functions/methods
-- Two blank lines between classes
-- Space after keywords: `if (`, `for (`, `while (`
-- No space before function parentheses: `function name(`
-
-### Comments & Documentation
-
-**File Headers** (Optional but recommended):
-
-```javascript
-/**
- * User Service
- *
- * Handles user authentication, registration, and profile management.
- *
- * @module services/user-service
- * @author ClaudeKit
- * @version 1.0.0
- */
-```
-
-**Function Documentation**:
-
-```javascript
-/**
- * Authenticates a user with email and password
- *
- * @param {string} email - User's email address
- * @param {string} password - User's password
- * @returns {Promise<User>} Authenticated user object
- * @throws {AuthenticationError} If credentials are invalid
- */
-async function authenticateUser(email, password) {
-  // Implementation
+interface Props {
+  title: string;
+  onSave: () => void;
 }
+
+export const Component: FC<Props> = ({ title, onSave }) => {
+  return <div>{title}</div>;
+};
 ```
 
-**Inline Comments**:
+### Hooks Usage
 
-- Explain WHY, not WHAT
-- Complex logic requires explanation
-- TODO comments include assignee and date
+```typescript
+// State
+const [isOpen, setIsOpen] = useState(false);
 
-```javascript
-// TODO(john, 2025-10-26): Optimize this query for large datasets
-const users = await db.query("SELECT * FROM users");
+// Effects
+useEffect(() => {
+  // Side effect
+  return () => {
+    // Cleanup
+  };
+}, [dependencies]);
 
-// Cache miss - fetch from database
-const user = await fetchUserFromDB(userId);
+// Zustand store
+const banners = useBannersStore((state) => state.banners);
+const addBanner = useBannersStore((state) => state.addBanner);
 ```
 
-### Error Handling
+## Zustand Store Pattern
 
-**Always Use Try-Catch**:
+### Store Structure
 
-```javascript
-async function processPayment(orderId) {
-  try {
-    const order = await getOrder(orderId);
-    const payment = await chargeCard(order.total);
-    await updateOrderStatus(orderId, "paid");
-    return payment;
-  } catch (error) {
-    logger.error("Payment processing failed", { orderId, error });
-    throw new PaymentError("Failed to process payment", { cause: error });
+```typescript
+import { create } from "zustand";
+
+import type { Banner } from "@/types/banner.types";
+
+type BannersState = {
+  banners: Banner[];
+  isInitialized: boolean;
+  initializeBanners: () => void;
+  addBanner: (banner: Banner) => void;
+  updateBanner: (id: string, data: Partial<Banner>) => void;
+  deleteBanner: (id: string) => void;
+};
+
+export const useBannersStore = create<BannersState>((set, get) => ({
+  banners: [],
+  isInitialized: false,
+
+  initializeBanners: () => {
+    if (!get().isInitialized) {
+      set({ banners: MOCK_BANNERS, isInitialized: true });
+    }
+  },
+
+  addBanner: (banner) => {
+    set((state) => ({ banners: [...state.banners, banner] }));
+  },
+
+  updateBanner: (id, data) => {
+    set((state) => ({
+      banners: state.banners.map((b) =>
+        b.id === id ? { ...b, ...data, updatedAt: new Date() } : b,
+      ),
+    }));
+  },
+
+  deleteBanner: (id) => {
+    set((state) => ({
+      banners: state.banners.filter((b) => b.id !== id),
+    }));
+  },
+}));
+```
+
+### Usage in Components
+
+```typescript
+// Select specific state
+const banners = useBannersStore((state) => state.banners);
+const addBanner = useBannersStore((state) => state.addBanner);
+
+// Initialize on mount
+useEffect(() => {
+  initializeBanners();
+}, [initializeBanners]);
+```
+
+## Service Layer Pattern
+
+### Dual-Mode Architecture
+
+```typescript
+import type { Banner } from "@/types/banner.types";
+import { useBannersStore } from "@/store/bannersStore";
+
+export class BannersService {
+  private useMockApi = import.meta.env.VITE_USE_MOCK_API === "true";
+
+  async getAll(): Promise<Banner[]> {
+    if (this.useMockApi) {
+      // Mock mode: Get from Zustand store
+      return useBannersStore.getState().banners;
+    }
+
+    // Real API mode: Fetch from backend
+    const response = await fetch("/api/banners");
+    if (!response.ok) throw new Error("Failed to fetch banners");
+    return response.json();
+  }
+
+  async create(
+    data: Omit<Banner, "id" | "createdAt" | "updatedAt">,
+  ): Promise<Banner> {
+    if (this.useMockApi) {
+      const newBanner: Banner = {
+        ...data,
+        id: `banner_${Date.now()}`,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      };
+      useBannersStore.getState().addBanner(newBanner);
+      return newBanner;
+    }
+
+    const response = await fetch("/api/banners", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+    if (!response.ok) throw new Error("Failed to create banner");
+    return response.json();
   }
 }
+
+export const bannersService = new BannersService();
 ```
 
-**Error Types**:
+## Form Validation Pattern
 
-- Create custom error classes for domain errors
-- Include context and cause
-- Provide actionable error messages
+### React Hook Form + Zod
 
-```javascript
-class ValidationError extends Error {
-  constructor(message, field) {
-    super(message);
-    this.name = "ValidationError";
-    this.field = field;
-  }
-}
-```
+```typescript
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
-**Error Logging**:
-
-- Log errors with context
-- Use appropriate log levels
-- Never expose sensitive data in logs
-
-```javascript
-logger.error("Database query failed", {
-  query: sanitizeQuery(query),
-  params: sanitizeParams(params),
-  error: error.message,
+const bannerSchema = z.object({
+  title: z.string().min(3, "Title must be at least 3 characters"),
+  description: z.string().max(500).optional(),
+  imageUrl: z.string().min(1, "Image is required"),
+  ctaText: z.string().max(30).optional(),
+  ctaLink: z.string().url("Invalid URL").optional().or(z.literal("")),
+  active: z.boolean().default(true),
 });
+
+type BannerFormData = z.infer<typeof bannerSchema>;
+
+const {
+  register,
+  handleSubmit,
+  formState: { errors },
+} = useForm<BannerFormData>({
+  resolver: zodResolver(bannerSchema),
+  defaultValues: {
+    active: true,
+  },
+});
+
+const onSubmit = async (data: BannerFormData) => {
+  try {
+    await bannersService.create(data);
+    toast.success("Banner created successfully!");
+  } catch (error) {
+    console.error("Error creating banner:", error);
+    toast.error("Failed to create banner");
+  }
+};
+```
+
+## Error Handling
+
+### Try-Catch with User Feedback
+
+```typescript
+const handleDelete = async (id: string) => {
+  try {
+    await bannersService.delete(id);
+    toast.success("Banner deleted successfully!");
+    loadBanners(); // Refresh data
+  } catch (error) {
+    console.error("Error deleting banner:", error);
+    toast.error("Failed to delete banner. Please try again.");
+  }
+};
+```
+
+### Service Layer Errors
+
+```typescript
+async delete(id: string): Promise<void> {
+  if (this.useMockApi) {
+    const banner = await this.getById(id);
+    if (!banner) {
+      throw new Error("Banner not found");
+    }
+    useBannersStore.getState().deleteBanner(id);
+    return;
+  }
+
+  const response = await fetch(`/api/banners/${id}`, {
+    method: "DELETE",
+  });
+
+  if (response.status === 404) {
+    throw new Error("Banner not found");
+  }
+
+  if (!response.ok) {
+    throw new Error("Failed to delete banner");
+  }
+}
+```
+
+## Styling Standards
+
+### Tailwind CSS Usage
+
+```typescript
+// ✅ Good: Semantic, consistent classes
+<Card className="border-border bg-card">
+  <CardHeader>
+    <CardTitle>Title</CardTitle>
+    <CardDescription className="text-muted-foreground">
+      Description
+    </CardDescription>
+  </CardHeader>
+</Card>
+
+// ❌ Avoid: Arbitrary values, inline styles
+<div className="bg-[#f0f0f0]" style={{ padding: "12px" }}>
+```
+
+### Component Variants
+
+```typescript
+// Use cn() utility for className merging
+import { cn } from "@/lib/utils";
+
+export const Button = ({ className, variant = "default", ...props }) => {
+  return (
+    <button
+      className={cn(
+        "inline-flex items-center justify-center rounded-md",
+        variant === "default" && "bg-primary text-primary-foreground",
+        variant === "destructive" && "bg-destructive text-destructive-foreground",
+        className
+      )}
+      {...props}
+    />
+  );
+};
+```
+
+## Shared Type Compatibility
+
+### CRITICAL: Client Project Sync
+
+Types shared with `/Users/hainguyen/Documents/nail-project/nail-client`:
+
+- `Service`, `ServiceCategory`
+- `GalleryItem`, `GalleryCategory`
+- `Booking`, `BookingStatus`, `CustomerInfo`
+
+**Rule**: Never modify shared types without updating both projects.
+
+### Admin-Only Types
+
+- `Banner` - Admin-specific hero banners
+- `HeroSettings` - Display mode configuration
+- `Contact` - Customer inquiries with admin notes
+- `User`, `Auth` - Authentication types
+
+## Testing Standards
+
+### Manual Testing Checklist
+
+- ✅ TypeScript compilation (`npx tsc --noEmit`)
+- ✅ Build succeeds (`npm run build`)
+- ✅ No console errors in development
+- ✅ Forms validate correctly
+- ✅ CRUD operations work in mock mode
+- ✅ Responsive on mobile/tablet/desktop
+- ✅ Keyboard navigation works
+- ✅ Toast notifications appear correctly
+
+## Git Standards
+
+### Commit Messages
+
+```
+feat(banners): add drag-and-drop reordering
+fix(hero-settings): correct carousel interval validation
+docs: update README with Zustand migration
+refactor(services): simplify dual-mode pattern
+```
+
+### Pre-Commit Checklist
+
+- ✅ No TypeScript errors
+- ✅ Code formatted with Prettier
+- ✅ No console.log statements (use toast for user feedback)
+- ✅ Types imported correctly (import type)
+- ✅ Meaningful commit message
+
+## Performance Best Practices
+
+### Component Optimization
+
+```typescript
+// Memoize expensive operations
+const sortedBanners = useMemo(() => {
+  return banners.sort((a, b) => a.sortIndex - b.sortIndex);
+}, [banners]);
+
+// Memoize callbacks
+const handleDelete = useCallback(
+  (id: string) => {
+    deleteBanner(id);
+  },
+  [deleteBanner],
+);
+```
+
+### Lazy Loading
+
+```typescript
+// Lazy load route components
+const BannersPage = lazy(() => import("@/pages/BannersPage"));
+const ServicesPage = lazy(() => import("@/pages/ServicesPage"));
 ```
 
 ## Security Standards
 
 ### Input Validation
 
-**Validate All Inputs**:
+- Validate all user inputs with Zod schemas
+- Sanitize file uploads (type, size checks)
+- Never expose sensitive data in client-side code
+- Use environment variables for API keys
 
-```javascript
-function createUser(userData) {
-  // Validate required fields
-  if (!userData.email || !userData.password) {
-    throw new ValidationError("Email and password required");
-  }
+### Firebase Storage
 
-  // Sanitize inputs
-  const email = sanitizeEmail(userData.email);
-  const password = userData.password; // Never log passwords
+```typescript
+// File type validation
+const ALLOWED_IMAGE_TYPES = [
+  "image/jpeg",
+  "image/png",
+  "image/gif",
+  "image/webp",
+];
+const MAX_IMAGE_SIZE = 5 * 1024 * 1024; // 5MB
 
-  // Validate formats
-  if (!isValidEmail(email)) {
-    throw new ValidationError("Invalid email format");
-  }
+if (!ALLOWED_IMAGE_TYPES.includes(file.type)) {
+  throw new Error("Invalid file type");
+}
 
-  if (password.length < 8) {
-    throw new ValidationError("Password must be at least 8 characters");
-  }
+if (file.size > MAX_IMAGE_SIZE) {
+  throw new Error("File too large");
 }
 ```
 
-### Sensitive Data Handling
+## Accessibility Standards
 
-**Never Commit Secrets**:
+### Radix UI Compliance
 
-- Use environment variables for API keys, credentials
-- Add `.env*` to `.gitignore`
-- Use secret management systems in production
+- Use Radix UI primitives for accessible components
+- Provide ARIA labels where needed
+- Ensure keyboard navigation works
+- Maintain color contrast ratios
 
-**Never Log Sensitive Data**:
+### Example
 
-```javascript
-// BAD
-logger.info("User login", { email, password }); // Never log passwords
-
-// GOOD
-logger.info("User login", { email }); // OK to log email
+```typescript
+<Dialog>
+  <DialogTrigger asChild>
+    <Button>
+      <Plus className="mr-2 h-4 w-4" />
+      Add Banner
+    </Button>
+  </DialogTrigger>
+  <DialogContent>
+    <DialogHeader>
+      <DialogTitle>Create Banner</DialogTitle>
+      <DialogDescription>
+        Add a new hero banner to your website.
+      </DialogDescription>
+    </DialogHeader>
+    {/* Form content */}
+  </DialogContent>
+</Dialog>
 ```
 
-**Sanitize Database Queries**:
-
-```javascript
-// Use parameterized queries
-const user = await db.query("SELECT * FROM users WHERE email = $1", [email]);
-
-// Never concatenate user input
-// BAD: const user = await db.query(`SELECT * FROM users WHERE email = '${email}'`);
-```
-
-## Testing Standards
-
-### Test File Organization
-
-```
-tests/
-├── unit/              # Unit tests
-│   ├── services/
-│   └── utils/
-├── integration/       # Integration tests
-│   └── api/
-├── e2e/              # End-to-end tests
-└── fixtures/         # Test data
-```
-
-### Test Naming
-
-```javascript
-describe("UserService", () => {
-  describe("authenticateUser", () => {
-    it("should return user when credentials are valid", async () => {
-      // Test implementation
-    });
-
-    it("should throw AuthenticationError when password is incorrect", async () => {
-      // Test implementation
-    });
-
-    it("should throw ValidationError when email is missing", async () => {
-      // Test implementation
-    });
-  });
-});
-```
-
-### Test Coverage Requirements
-
-- **Unit tests**: > 80% code coverage
-- **Integration tests**: Critical user flows
-- **E2E tests**: Happy paths and edge cases
-- **Error scenarios**: All error paths tested
-
-### Test Best Practices
-
-- **Arrange-Act-Assert** pattern
-- **Independent tests** (no test dependencies)
-- **Descriptive test names** (behavior, not implementation)
-- **Test one thing** per test
-- **Use fixtures** for complex test data
-- **Mock external dependencies**
-
-## Git Standards
-
-### Commit Messages
-
-**Format**: Conventional Commits
-
-```
-type(scope): description
-
-[optional body]
-
-[optional footer]
-```
-
-**Types**:
-
-- `feat`: New feature (minor version bump)
-- `fix`: Bug fix (patch version bump)
-- `docs`: Documentation changes
-- `refactor`: Code refactoring
-- `test`: Test additions/changes
-- `ci`: CI/CD changes
-- `chore`: Maintenance tasks
-- `perf`: Performance improvements
-- `style`: Code style changes
-
-**Examples**:
-
-```
-feat(auth): add OAuth2 authentication support
-
-Implements OAuth2 flow with Google and GitHub providers.
-Includes token refresh and revocation.
-
-Closes #123
-
----
-
-fix(api): resolve timeout in database queries
-
-Optimized slow queries and added connection pooling.
-
----
-
-docs: update installation guide with Docker setup
-```
-
-**Rules**:
-
-- Subject line: imperative mood, lowercase, no period
-- Max 72 characters for subject
-- Blank line between subject and body
-- Body: explain WHY, not WHAT
-- Footer: reference issues, breaking changes
-- No AI attribution or signatures
-
-### Branch Naming
-
-**Format**: `type/description`
-
-**Types**:
-
-- `feature/` - New features
-- `fix/` - Bug fixes
-- `refactor/` - Code refactoring
-- `docs/` - Documentation updates
-- `test/` - Test improvements
-
-**Examples**:
-
-```
-feature/oauth-authentication
-fix/database-connection-timeout
-refactor/user-service-cleanup
-docs/api-reference-update
-test/integration-test-suite
-```
-
-### Pre-Commit Checklist
-
-- ✅ No secrets or credentials
-- ✅ No debug code or console.logs
-- ✅ All tests pass locally
-- ✅ Code follows style guidelines
-- ✅ No linting errors
-- ✅ Files under 500 lines
-- ✅ Conventional commit message
-
-## Documentation Standards
-
-### Code Documentation
-
-**Self-Documenting Code**:
-
-- Clear variable and function names
-- Logical code organization
-- Minimal comments needed
-
-**When to Comment**:
-
-- Complex algorithms or business logic
-- Non-obvious optimizations
-- Workarounds for bugs/limitations
-- Public API functions
-- Configuration options
-
-### Markdown Documentation
-
-**Structure**:
-
-```markdown
-# Document Title
-
-Brief overview paragraph
-
-## Section 1
-
-Content with examples
-
-## Section 2
-
-More content
-
-## See Also
-
-- [Related Doc](./related.md)
-```
-
-**Formatting**:
-
-- Use ATX-style headers (`#`, `##`, `###`)
-- Code blocks with language specification
-- Tables for structured data
-- Lists for sequential items
-- Links for cross-references
-
-**Code Blocks**:
-
-````markdown
-```javascript
-function example() {
-  return "example";
-}
-```
-````
-
-## Agent-Specific Standards
-
-### Agent Definition Files
-
-**Frontmatter**:
-
-```yaml
----
-name: agent-name
-description: Brief description of agent purpose and when to use it
-mode: subagent | all
-model: anthropic/claude-sonnet-4-20250514
-temperature: 0.1
----
-```
-
-**Required Sections**:
-
-1. Agent role and responsibilities
-2. Core capabilities
-3. Workflow process
-4. Output requirements
-5. Quality standards
-6. Communication protocols
-
-### Command Definition Files
-
-**Frontmatter**:
-
-```yaml
----
-name: command-name
-description: What this command does
----
-```
-
-**Argument Handling**:
-
-- `$ARGUMENTS` - All arguments as single string
-- `$1`, `$2`, `$3` - Individual positional arguments
-
-**Example**:
-
-```markdown
----
-name: plan
-description: Create implementation plan for given task
----
-
-Planning task: $ARGUMENTS
-
-Using planner agent to research and create comprehensive plan for: $1
-```
-
-### Skill Definition Files
-
-**Structure**:
-
-```markdown
-# Skill Name
-
-Guide for using [Technology] - brief description
-
-## When to Use
-
-- List of use cases
-- Scenarios where skill applies
-
-## Core Concepts
-
-Key concepts and terminology
-
-## Implementation Guide
-
-Step-by-step instructions
-
-## Examples
-
-Practical examples
-
-## Best Practices
-
-Recommendations and tips
-
-## Common Pitfalls
-
-Mistakes to avoid
-
-## Resources
-
-- Official docs
-- Tutorials
-- References
-```
-
-## Hook Implementation Standards
-
-### Scout Block Hook Architecture
-
-**Cross-Platform Design Pattern**:
-
-- **Dispatcher Pattern**: Single Node.js entry point delegates to platform-specific implementations
-- **Platform Detection**: Use `process.platform` for automatic selection
-- **Security-First**: Input validation, sanitized errors, safe execution
-
-**File Organization**:
-
-```
-.claude/hooks/
-├── scout-block.js        # Node.js dispatcher (cross-platform entry)
-├── scout-block.sh        # Bash implementation (Unix)
-├── scout-block.ps1       # PowerShell implementation (Windows)
-├── test-scout-block.sh   # Unix test suite
-└── test-scout-block.ps1  # Windows test suite
-```
-
-**Implementation Requirements**:
-
-- **Node.js Dispatcher**:
-  - Read stdin synchronously
-  - Validate JSON structure before parsing
-  - Check platform via `process.platform`
-  - Execute platform-specific script with piped input
-  - Handle errors with exit codes (0 = success, 2 = error)
-
-- **Platform-Specific Scripts**:
-  - Parse JSON input (use Node.js for consistency, avoid jq dependency)
-  - Validate command structure and content
-  - Apply pattern matching for blocked paths
-  - Return appropriate exit codes
-  - Provide clear error messages
-
-**Security Standards**:
-
-```javascript
-// Input validation
-if (!hookInput || hookInput.trim().length === 0) {
-  console.error("ERROR: Empty input");
-  process.exit(2);
-}
-
-// JSON structure validation
-const data = JSON.parse(hookInput);
-if (!data.tool_input || typeof data.tool_input.command !== "string") {
-  console.error("ERROR: Invalid JSON structure");
-  process.exit(2);
-}
-```
-
-**Testing Standards**:
-
-- Test both allowed and blocked patterns
-- Validate error handling (invalid JSON, empty input, missing fields)
-- Cross-platform test coverage
-- Clear pass/fail indicators
-
-## Configuration File Standards
-
-### package.json
-
-**Required Fields**:
-
-- name, version, description
-- repository (with URL)
-- author, license
-- engines (Node version >= 18.0.0)
-- scripts (test, lint, etc.)
-
-**Best Practices**:
-
-- Use semantic versioning
-- Specify exact dependency versions for stability
-- Include keywords for discoverability
-- Use `files` field to control published content
-- Specify minimum Node.js version (18.0.0+)
-
-### .gitignore
-
-**Standard Exclusions**:
-
-```
-# Dependencies
-node_modules/
-package-lock.json (for libraries)
-
-# Environment
-.env
-.env.*
-!.env.example
-
-# Build outputs
-dist/
-build/
-*.log
-
-# IDE
-.vscode/
-.idea/
-*.swp
-
-# OS
-.DS_Store
-Thumbs.db
-
-# Testing
-coverage/
-*.test.js.snap
-
-# Temporary
-tmp/
-temp/
-*.tmp
-```
-
-## Performance Standards
-
-### Code Performance
-
-**Optimization Priorities**:
-
-1. Correctness first
-2. Readability second
-3. Performance third (when needed)
-
-**Common Optimizations**:
-
-- Use appropriate data structures
-- Avoid unnecessary loops
-- Cache expensive computations
-- Lazy load when possible
-- Debounce/throttle frequent operations
-
-**Example**:
-
-```javascript
-// Cache expensive operations
-const memoize = (fn) => {
-  const cache = new Map();
-  return (...args) => {
-    const key = JSON.stringify(args);
-    if (cache.has(key)) return cache.get(key);
-    const result = fn(...args);
-    cache.set(key, result);
-    return result;
-  };
-};
-
-const expensiveCalculation = memoize((n) => {
-  // Complex calculation
-  return result;
-});
-```
-
-### File I/O
-
-- Use async operations
-- Stream large files
-- Batch writes when possible
-- Clean up file handles
-
-## Quality Assurance
-
-### Code Review Checklist
-
-**Functionality**:
-
-- ✅ Implements required features
-- ✅ Handles edge cases
-- ✅ Error handling complete
-- ✅ Input validation present
-
-**Code Quality**:
-
-- ✅ Follows naming conventions
-- ✅ Adheres to file size limits
-- ✅ DRY principle applied
-- ✅ KISS principle followed
-- ✅ Well-structured and organized
-
-**Security**:
-
-- ✅ No hardcoded secrets
-- ✅ Input sanitization
-- ✅ Proper authentication/authorization
-- ✅ Secure dependencies
-
-**Testing**:
-
-- ✅ Unit tests included
-- ✅ Integration tests for flows
-- ✅ Edge cases tested
-- ✅ Error paths covered
-
-**Documentation**:
-
-- ✅ Code comments where needed
-- ✅ API documentation updated
-- ✅ README updated if needed
-- ✅ Changelog entry added
-
-## Enforcement
-
-### Automated Checks
-
-**Pre-Commit**:
-
-- Commitlint (conventional commits)
-- Secret scanning
-- File size validation
-
-**Pre-Push**:
-
-- Linting (ESLint, Prettier)
-- Unit tests
-- Type checking
-
-**CI/CD**:
-
-- All tests
-- Build verification
-- Coverage reports
-- Security scans
-
-### Manual Review
-
-**Code Review Focus**:
-
-- Architecture and design decisions
-- Complex logic correctness
-- Security implications
-- Performance considerations
-- Maintainability and readability
-
-## Exceptions
-
-**When to Deviate**:
-
-- Performance-critical code (document reasons)
-- External library constraints
-- Generated code (mark clearly)
-- Legacy code (plan refactoring)
-
-**Documentation Required**:
-
-```javascript
-/**
- * EXCEPTION: File exceeds 500 lines
- * REASON: Critical performance optimization requires monolithic structure
- * TODO: Refactor when performance is no longer critical
- * DATE: 2025-10-26
- */
-```
-
-## References
-
-### Internal Documentation
+## Related Documentation
 
 - [Project Overview PDR](./project-overview-pdr.md)
-- [Codebase Summary](./codebase-summary.md)
 - [System Architecture](./system-architecture.md)
-
-### External Standards
-
-- [Conventional Commits](https://conventionalcommits.org/)
-- [Semantic Versioning](https://semver.org/)
-- [Keep a Changelog](https://keepachangelog.com/)
-- [OWASP Top 10](https://owasp.org/www-project-top-ten/)
-
-### Related Projects
-
-- [Claude Code Documentation](https://docs.claude.com/)
-- [Open Code Documentation](https://opencode.ai/docs)
-
-## Unresolved Questions
-
-None. All code standards are well-defined and documented.
+- [Codebase Summary](./codebase-summary.md)
+- [Project Roadmap](./project-roadmap.md)

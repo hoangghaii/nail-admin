@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { cn } from "@/lib/utils";
 import { authService } from "@/services/auth.service";
 import { useAuthStore } from "@/store/authStore";
 
@@ -67,6 +68,7 @@ export function LoginPage() {
                 id="email"
                 type="email"
                 placeholder="admin@pinknail.com"
+                className={cn(errors.email && "border-destructive")}
                 {...register("email")}
               />
               {errors.email && (
@@ -82,6 +84,7 @@ export function LoginPage() {
                 id="password"
                 type="password"
                 placeholder="••••••••"
+                className={cn(errors.password && "border-destructive")}
                 {...register("password")}
               />
               {errors.password && (

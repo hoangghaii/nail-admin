@@ -73,7 +73,7 @@ This admin dashboard uses the **shadcn/ui blue theme design system** with a prof
 
 ## Component Patterns
 
-### 1. Dialog Component
+### 1. Dialog Component ✨ STANDARD MODAL PATTERN
 
 **Location**: `/src/components/ui/dialog.tsx`
 
@@ -119,11 +119,22 @@ import {
 
 **Styling**:
 
-- Max width: `max-w-lg` (512px)
+- Max width: `max-w-lg` (512px) or `max-w-2xl` (672px) for detail modals
+- Max height: `max-h-[90vh]` for scrollable content
 - Border: `border-border`
 - Background: `bg-card`
 - Shadow: `shadow-lg`
 - Rounded corners: `rounded-lg`
+
+**IMPORTANT - Consistent Modal Pattern**:
+
+All modals across the application use Dialog (centered popup), NOT Sheet (side drawer):
+
+- **BannersPage**: BannerFormModal (Dialog)
+- **GalleryPage**: GalleryFormModal (Dialog)
+- **BookingsPage**: BookingDetailsModal (Dialog) ✨ Migrated from Sheet to Dialog
+- Form/detail modals: `max-w-2xl` + `max-h-[90vh]` + `overflow-y-auto`
+- Confirmation dialogs: `max-w-lg`
 
 ---
 

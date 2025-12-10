@@ -18,8 +18,8 @@ import {
   DeleteBannerDialog,
   HeroSettingsCard,
 } from "@/components/banners";
-import { DataTable } from "@/components/shared/DataTable";
-import { StatusBadge } from "@/components/shared/StatusBadge";
+import { DataTable } from "@/components/layout/shared/DataTable";
+import { StatusBadge } from "@/components/layout/shared/StatusBadge";
 import { Button } from "@/components/ui/button";
 import {
   Card,

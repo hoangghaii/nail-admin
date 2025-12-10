@@ -1,12 +1,12 @@
 # System Architecture
 
-**Last Updated**: 2025-12-03
-**Version**: 0.1.0
+**Last Updated**: 2025-12-05
+**Version**: 0.2.0
 **Project**: Pink Nail Admin Dashboard
 
 ## Overview
 
-Pink Nail Admin Dashboard implements a modern client-side React architecture with a dual-mode service layer pattern. The system is designed for managing a nail salon business through a professional admin interface with shadcn/ui blue theme components, featuring both mock data (localStorage) and real API integration capabilities.
+Pink Nail Admin Dashboard implements a modern client-side React architecture with Zustand state management and a dual-mode service layer pattern. The system is designed for managing a nail salon business through a professional admin interface with shadcn/ui blue theme components, featuring both mock data (Zustand in-memory stores) and real API integration capabilities.
 
 ## Architectural Pattern
 
@@ -42,10 +42,10 @@ Pink Nail Admin Dashboard implements a modern client-side React architecture wit
 
 - `LoginPage.tsx` - Authentication UI
 - `DashboardPage.tsx` - Overview dashboard with stats
-- `BannersPage.tsx` - Banner management (CRUD complete)
+- `BannersPage.tsx` - Banner management (CRUD complete) - Uses Dialog modals
+- `GalleryPage.tsx` - Gallery management (CRUD complete) - Uses Dialog modals
+- `BookingsPage.tsx` - Booking management (view/update status) ✨ Uses Dialog modals
 - `ServicesPage.tsx` - Service management (placeholder)
-- `GalleryPage.tsx` - Gallery management (placeholder)
-- `BookingsPage.tsx` - Booking management (placeholder)
 - `ContactsPage.tsx` - Contact management (placeholder)
 
 **Technology**: React 19.2 functional components with hooks
@@ -87,6 +87,7 @@ Pink Nail Admin Dashboard implements a modern client-side React architecture wit
   - CTA text/link
   - Active toggle
   - Form validation and error display
+  - **Dialog component** (centered popup)
 - `DeleteBannerDialog.tsx` - Confirmation dialog with AlertTriangle icon
 - `HeroSettingsCard.tsx` - Hero display mode configuration
   - Radio group for display modes (Image/Video/Carousel)
@@ -95,12 +96,42 @@ Pink Nail Admin Dashboard implements a modern client-side React architecture wit
   - Auto-save on change
 - `index.ts` - Barrel export
 
+**Gallery Components** (`src/components/gallery/`) ✨ NEW v0.2.0:
+
+- `GalleryFormModal.tsx` - Create/edit modal with React Hook Form + Zod validation
+  - Title, description fields
+  - Image upload to Firebase Storage
+  - Category selection (extensions, manicure, nail-art, pedicure, seasonal)
+  - Featured toggle
+  - Form validation and error display
+  - **Dialog component** (centered popup)
+- `DeleteGalleryDialog.tsx` - Confirmation dialog for single/bulk delete
+  - Item count display
+  - Preview of items to be deleted
+- `CategoryFilter.tsx` - Category filtering tabs
+  - Item counts per category
+  - Active category highlighting
+- `FeaturedBadge.tsx` - Visual indicator for featured items
+- `index.ts` - Barrel export
+
+**Booking Components** (`src/components/bookings/`) ✨ NEW v0.2.0:
+
+- `BookingDetailsModal.tsx` - View booking details modal
+  - Customer information (name, email, phone)
+  - Appointment details (date, time, service)
+  - Status badge
+  - Update status action
+  - Notes display
+  - **Dialog component** (centered popup) - Migrated from Sheet for UI consistency
+- `index.ts` - Barrel export
+
 **Implementation**:
 
 - React Hook Form for form state
 - Zod for validation schemas
 - Sonner for toast notifications
 - Firebase Storage integration
+- Bulk operations support
 
 #### 1.4 Shared Components
 
@@ -154,12 +185,15 @@ Pink Nail Admin Dashboard implements a modern client-side React architecture wit
 - `button.tsx` - Button variants (default, destructive, outline, ghost, link, secondary)
 - `card.tsx` - Card layout (Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter)
 - `dialog.tsx` - Modal dialogs (Dialog, DialogTrigger, DialogContent, DialogHeader, DialogFooter)
+  - **STANDARD MODAL PATTERN**: All modals use Dialog (centered popup), NOT Sheet (side drawer)
+  - Consistent styling: `max-w-2xl` + `max-h-[90vh]` + `overflow-y-auto` for detail modals
 - `dropdown-menu.tsx` - Dropdown menus with Radix UI
 - `input.tsx` - Text input with focus ring
 - `label.tsx` - Form labels
 - `radio-group.tsx` - Radio button groups
 - `switch.tsx` - Toggle switches
 - `textarea.tsx` - Multi-line text input
+- `sheet.tsx` - Side drawer (NOT used for modals to maintain UI consistency)
 
 **Design System**:
 
@@ -267,27 +301,79 @@ class ServiceName {
 **Technology**: Zustand 5.0.2
 **Responsibility**: Global application state
 
-**authStore.ts** - Authentication state:
+**authStore.ts** - Authentication state with localStorage persistence:
 
 ```typescript
 {
   user: User | null
   isAuthenticated: boolean
   token: string | null
-  login: (response: AuthResponse) => void
+  login: (user: User, token: string) => void
   logout: () => void
   initializeAuth: () => void  // Called on app mount
 }
 ```
 
+**bannersStore.ts** - Banner management with in-memory state:
+
+```typescript
+{
+  banners: Banner[]
+  isInitialized: boolean
+  initializeBanners: () => void          // Auto-load mock data
+  addBanner: (banner: Banner) => void
+  updateBanner: (id: string, data: Partial<Banner>) => void
+  deleteBanner: (id: string) => void
+  setBanners: (banners: Banner[]) => void
+  setPrimaryBanner: (id: string) => void
+  toggleBannerActive: (id: string) => void
+  reorderBanners: (bannerIds: string[]) => void
+}
+```
+
+**heroSettingsStore.ts** - Hero display settings with in-memory state:
+
+```typescript
+{
+  settings: HeroSettings
+  isInitialized: boolean
+  initializeSettings: () => void                        // Load defaults
+  setDisplayMode: (mode: HeroDisplayMode) => void
+  setCarouselInterval: (interval: number) => void
+  setShowControls: (show: boolean) => void
+  updateSettings: (settings: Partial<HeroSettings>) => void
+  resetSettings: () => void
+}
+```
+
+**galleryStore.ts** - Gallery management with in-memory state ✨ NEW v0.2.0:
+
+```typescript
+{
+  galleryItems: GalleryItem[]
+  isInitialized: boolean
+  initializeGallery: () => void                    // Auto-load mock data
+  addGalleryItem: (item: GalleryItem) => void
+  addMultipleItems: (items: GalleryItem[]) => void // Bulk add
+  updateGalleryItem: (id: string, data: Partial<GalleryItem>) => void
+  deleteGalleryItem: (id: string) => void
+  deleteMultipleItems: (ids: string[]) => void     // Bulk delete
+  toggleFeatured: (id: string) => void
+  setGalleryItems: (items: GalleryItem[]) => void
+}
+```
+
 **Features**:
 
-- Automatic persistence to localStorage
-- Session initialization on mount
+- In-memory state for banners, gallery, and hero settings (faster, reactive)
+- localStorage persistence only for authentication (session management)
+- Auto-initialization with mock data on first load
+- Bulk operations support (gallery)
 - Token expiry handling
 - Type-safe state updates
+- Optimistic UI updates
 
-**Pattern**: Zustand slice pattern for potential expansion
+**Pattern**: Zustand stores with initialization guards
 
 #### 2.3 Data Initialization
 
@@ -297,9 +383,10 @@ class ServiceName {
 **initializeMockData.ts** - Auto-initialization logic:
 
 - Runs on app mount in `main.tsx`
-- Checks if data exists in localStorage
-- Seeds banners if empty
-- Seeds hero settings if empty
+- Initializes Zustand stores on first load
+- Seeds banners if not initialized
+- Seeds gallery if not initialized
+- Seeds hero settings if not initialized
 - Idempotent (safe to run multiple times)
 
 **mockBanners.ts** - Sample banner data:
@@ -308,6 +395,14 @@ class ServiceName {
 - Various display types (image, video)
 - Realistic content for testing
 - Proper sortIndex ordering
+
+**mockGallery.ts** - Sample gallery data ✨ NEW v0.2.0:
+
+- 20 pre-configured gallery items
+- 5 categories (extensions, manicure, nail-art, pedicure, seasonal)
+- Mix of featured/non-featured items
+- Realistic titles and descriptions
+- Placeholder images
 
 ### 3. Data Layer
 
@@ -354,13 +449,27 @@ class ServiceName {
 
 #### 3.2 Data Storage
 
-**localStorage Structure** (Mock Mode):
+**Zustand Stores** (In-Memory State - Mock Mode):
 
 ```
-nail_admin_token          → JWT token string
-nail_admin_user           → User object
-nail_admin_banners        → Banner[] array
-nail_admin_heroSettings   → HeroSettings object
+bannersStore:
+  - banners: Banner[]          # In-memory array, initialized from MOCK_BANNERS
+  - isInitialized: boolean     # Prevents re-initialization
+
+galleryStore:                  # ✨ NEW v0.2.0
+  - galleryItems: GalleryItem[] # In-memory array, initialized from MOCK_GALLERY
+  - isInitialized: boolean     # Prevents re-initialization
+
+heroSettingsStore:
+  - settings: HeroSettings     # In-memory object with defaults
+  - isInitialized: boolean     # Prevents re-initialization
+```
+
+**localStorage Structure** (Authentication Only):
+
+```
+nail_admin_auth_token    → JWT token string
+nail_admin_auth_user     → User object
 ```
 
 **Firebase Storage Structure**:
@@ -375,20 +484,27 @@ nail_admin_heroSettings   → HeroSettings object
   └── {timestamp}-{filename}.jpg
 ```
 
-**Data Flow**:
+**Data Flow** (Zustand Migration):
 
 ```
 User Action (Component)
     ↓
 Service Layer
     ↓
-├─→ Mock: localStorage
-└─→ Real: REST API
+├─→ Mock: Zustand Store (in-memory)
+└─→ Real: REST API + Store Sync
     ↓
-State Update (Zustand)
+Zustand Store Update
     ↓
 UI Re-render (React)
 ```
+
+**Key Changes**:
+
+- Banners: localStorage → Zustand store (v0.1.0 - better performance, reactive updates)
+- Gallery: localStorage → Zustand store (v0.2.0 - bulk operations support)
+- Hero Settings: localStorage → Zustand store (v0.1.0 - simpler state management)
+- Auth: Remains in localStorage (session persistence required)
 
 ### 4. Integration Layer
 
@@ -1346,4 +1462,4 @@ try {
 
 ## Unresolved Questions
 
-None identified. Banner CRUD module architecture is complete and documented.
+None identified. Banner and Gallery CRUD module architectures are complete and documented.

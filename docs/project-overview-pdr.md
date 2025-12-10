@@ -1,689 +1,381 @@
 # Project Overview & Product Development Requirements (PDR)
 
-**Project Name**: ClaudeKit Engineer
-**Version**: 1.8.0
-**Last Updated**: 2025-10-26
-**Status**: Active Development
-**Repository**: https://github.com/claudekit/claudekit-engineer
+**Project Name**: Pink Nail Admin Dashboard
+**Version**: 0.1.0
+**Last Updated**: 2025-12-04
+**Status**: Active Development - Foundation + Banner CRUD Complete
+**Repository**: /Users/hainguyen/Documents/nail-project/nail-admin
 
 ## Executive Summary
 
-ClaudeKit Engineer is a comprehensive boilerplate template that revolutionizes software development by integrating AI-powered CLI coding agents (Claude Code and Open Code) into the development workflow. It provides a complete orchestration framework where specialized AI agents collaborate to handle planning, implementation, testing, code review, documentation, and project management.
+Pink Nail Admin Dashboard is a modern React-based admin panel for managing nail salon business operations. Built with shadcn/ui's professional blue theme and Zustand state management, it provides comprehensive CRUD operations for banners, services, gallery, bookings, and customer contacts. The system features a dual-mode architecture supporting both mock data (for development) and real API integration (for production).
 
 ## Project Purpose
 
 ### Vision
 
-Enable developers to build professional software projects faster and with higher quality by leveraging AI agent orchestration, automated workflows, and intelligent project management.
+Provide nail salon businesses with a professional, easy-to-use admin dashboard that streamlines business operations and enhances customer service management.
 
 ### Mission
 
-Provide a production-ready template that:
+Deliver a type-safe, performant, and maintainable admin panel that:
 
-- Accelerates development velocity through AI-powered agent collaboration
-- Enforces best practices and coding standards automatically
-- Maintains comprehensive documentation that evolves with code
-- Ensures code quality through automated testing and review
-- Streamlines git workflows with professional commit standards
+- Simplifies content management (banners, services, gallery)
+- Streamlines booking and customer inquiry handling
+- Provides seamless integration with client-facing website
+- Supports rapid development with mock data
+- Enables smooth transition to production API
 
 ### Value Proposition
 
-- **10x Faster Planning**: Parallel researcher agents explore solutions simultaneously
-- **Consistent Quality**: Automated code review and testing on every change
-- **Zero Documentation Debt**: Docs update automatically with code changes
-- **Professional Git History**: Clean, conventional commits without AI attribution
-- **Reduced Context Switching**: Specialized agents handle specific concerns
+- **Professional Design**: shadcn/ui blue theme with consistent, modern aesthetics
+- **Type Safety**: Full TypeScript coverage with shared types from client project
+- **Developer Experience**: Zustand state management, React Hook Form, Zod validation
+- **Flexible Architecture**: Dual-mode service layer (mock/real API)
+- **Production Ready**: Firebase Storage, authentication, protected routes
 
 ## Target Users
 
-### Primary Users
+### Primary User
 
-1. **Solo Developers**: Building projects faster with AI assistance
-2. **Small Development Teams**: Standardizing workflows and practices
-3. **Open Source Maintainers**: Managing contributions and documentation
-4. **Startups**: Rapid prototyping and MVP development
-5. **Enterprise Teams**: Enforcing architectural standards
+**Nail Salon Admin/Manager**
 
-### User Personas
+- Manages business content (banners, services, gallery)
+- Handles customer bookings and inquiries
+- Updates pricing and service offerings
+- Monitors business operations
 
-**Persona 1: Solo Full-Stack Developer**
+## Key Features
 
-- **Needs**: Fast iteration, quality code, minimal documentation overhead
-- **Pain Points**: Context switching, documentation maintenance, testing gaps
-- **Solution**: AI agents handle planning, testing, docs while dev focuses on features
+### 1. Authentication System ✅
 
-**Persona 2: Technical Lead**
+- JWT-based authentication with mock login
+- Protected routes with automatic redirect
+- Session persistence with localStorage
+- Demo credentials for development
+- Zustand store for auth state management
 
-- **Needs**: Enforce standards, review code, maintain architecture docs
-- **Pain Points**: Code review bottleneck, inconsistent patterns, outdated docs
-- **Solution**: Automated reviews, standardized workflows, living documentation
-
-**Persona 3: Open Source Maintainer**
-
-- **Needs**: Scale contributions, maintain quality, clear documentation
-- **Pain Points**: Limited time, varying contribution quality, doc rot
-- **Solution**: Consistent review process, automated standards enforcement
-
-## Key Features & Capabilities
-
-### 1. Multi-Agent Orchestration System
-
-**Agent Types**:
-
-- **Planning Agents**: Research, architecture, technical decisions
-- **Implementation Agents**: Code generation, feature development
-- **Quality Agents**: Testing, code review, security analysis
-- **Documentation Agents**: Auto-updating docs, API references
-- **Management Agents**: Project tracking, progress monitoring, git operations
-
-**Orchestration Patterns**:
-
-- **Sequential Chaining**: Planning → Implementation → Testing → Review → Deploy
-- **Parallel Execution**: Multiple researchers exploring different approaches
-- **Query Fan-Out**: Simultaneous investigation of technical solutions
-
-**Performance Optimization**:
-
-- **Scout Block Hook**: Cross-platform hook system blocking heavy directories
-  - Automatic platform detection (Windows/Unix/WSL)
-  - Zero-configuration setup
-  - Blocks: node_modules, **pycache**, .git/, dist/, build/
-  - Improves AI agent response time and token efficiency
-
-### 2. Comprehensive Slash Commands (50+)
-
-**Core Development**:
-
-- `/plan [task]` - Research and create implementation plans
-- `/cook [tasks]` - Implement features with full workflow
-- `/test` - Run comprehensive test suites
-- `/ask [question]` - Expert technical consultation
-- `/bootstrap` - Initialize new projects end-to-end
-- `/brainstorm [question]` - Solution ideation and evaluation
-
-**Debugging & Fixing**:
-
-- `/debug [issues]` - Deep issue analysis
-- `/fix:fast [issues]` - Quick bug fixes
-- `/fix:hard [issues]` - Complex problem solving with subagents
-- `/fix:ci [url]` - GitHub Actions log analysis
-- `/fix:test [issues]` - Test suite debugging
-- `/fix:types` - Type error resolution
-- `/fix:logs [issue]` - Log analysis and fixes
-- `/fix:ui [issue]` - UI/UX problem solving
-
-**Design & Content**:
-
-- `/design:fast [tasks]` - Quick design creation
-- `/design:good [tasks]` - Immersive design development
-- `/design:3d [tasks]` - Interactive 3D designs with Three.js
-- `/design:screenshot [image]` - Design from screenshots
-- `/design:video [video]` - Design from video references
-- `/content:fast [request]` - Quick copywriting
-- `/content:good [request]` - High-quality content creation
-- `/content:enhance [issues]` - Copy improvement
-- `/content:cro [issues]` - Conversion optimization
-
-**Documentation**:
-
-- `/docs:init` - Create initial documentation
-- `/docs:update` - Update existing documentation
-- `/docs:summarize` - Generate codebase summaries
-
-**Git Operations**:
-
-- `/git:cm` - Stage and commit changes
-- `/git:cp` - Stage, commit, and push
-- `/git:pr [branch]` - Create pull requests
-
-**Project Management**:
-
-- `/watzup` - Review recent changes and status
-- `/journal` - Development journal entries
-- `/scout [prompt] [scale]` - Parallel codebase exploration
-
-### 3. Extensive Skills Library (20+ Skills)
-
-**Categories**:
-
-- **Authentication**: better-auth integration
-- **Cloud**: Cloudflare (Workers, R2, Browser Rendering), Google Cloud
-- **Databases**: MongoDB, PostgreSQL
-- **Design**: Canvas-based design generation
-- **Debugging**: Systematic debugging, root-cause tracing, defense-in-depth
-- **Development**: Next.js, Turborepo, Claude Code workflows
-- **Documentation**: Repomix, docs-seeker
-- **Documents**: PDF, DOCX, PPTX, XLSX processing
-- **Infrastructure**: Docker containerization
-- **Media**: FFmpeg, ImageMagick
-- **MCP**: Model Context Protocol server building
-- **Problem Solving**: Meta-pattern recognition, collision-zone thinking
-- **UI**: shadcn/ui, Tailwind CSS, Remix Icon
-- **Ecommerce**: Shopify integrations
-
-### 4. Automated Release Management
+### 2. Banner Management (Complete CRUD) ✅
 
 **Features**:
 
-- Semantic versioning (MAJOR.MINOR.PATCH)
-- Conventional commit enforcement
-- Automated changelog generation
-- GitHub releases with assets
-- Optional NPM publishing
-- Git hooks for commit validation
+- Create/edit/delete hero section banners
+- Image and video upload to Firebase Storage
+- Drag-and-drop reordering (HTML5 native API)
+- Primary banner selection
+- Active/inactive toggle
+- Type field (image/video) for filtering
+- Hero display mode settings (Image/Video/Carousel)
+- Auto-save settings
+- Mock data initialization
 
-**Commit Types**:
+**Technical Details**:
 
-- `feat:` → Minor version bump
-- `fix:` → Patch version bump
-- `BREAKING CHANGE:` → Major version bump
-- `docs:`, `refactor:`, `test:`, `ci:` → Patch bump
+- Zustand store (`bannersStore`) for state management
+- TanStack Table for data display
+- React Hook Form + Zod for validation
+- Firebase Storage integration
+- Type-safe service layer with dual-mode support
 
-### 5. Development Workflow Automation
+### 3. Hero Settings Component ✅
 
-**Pre-Commit**:
+**Features**:
 
-- Commit message linting (conventional commits)
-- Optional test execution
+- Display mode selection (Image/Video/Carousel)
+- Carousel interval configuration (2-10 seconds)
+- Navigation controls toggle
+- Auto-save on changes
+- Primary banner preview
+- Warning for missing primary banner
+- Filtering by banner type
 
-**Pre-Push**:
+**Technical Details**:
 
-- Linting validation
-- Test suite execution
-- Build verification
+- Zustand store (`heroSettingsStore`) for settings
+- RadioGroup for mode selection
+- Slider for interval control
+- Real-time validation and save
 
-**CI/CD**:
+### 4. Shared Component Library ✅
 
-- GitHub Actions integration
-- Automated releases on main branch
-- Test automation
-- Build validation
+- **DataTable**: TanStack Table v8 with sorting, pagination
+- **ImageUpload**: Firebase Storage with drag-drop, preview, validation
+- **VideoUpload**: Firebase Storage for video files
+- **StatusBadge**: Variant-based status indicators
+- **Form Components**: Dialog, Input, Label, Textarea, Switch, RadioGroup
+
+### 5. Gallery CRUD (Complete) ✅
+
+**Features**:
+
+- Create/edit/delete gallery items
+- Image upload to Firebase Storage
+- Category filtering (all, extensions, manicure, nail-art, pedicure, seasonal)
+- Featured item toggle
+- Bulk selection and delete operations
+- Grid view with image preview
+- Mock data initialization with 20 sample items
+
+**Technical Details**:
+
+- Zustand store (`galleryStore`) for state management
+- Grid layout for gallery display
+- React Hook Form + Zod for validation
+- Type-safe service layer with dual-mode support
+
+### 6. Services CRUD (Planned)
+
+- Manage nail services with categories
+- Pricing and duration configuration
+- Image uploads for service previews
+- Featured service toggle
+- Category filtering
+
+### 7. Bookings Management (Planned)
+
+- View customer bookings
+- Status updates (pending/confirmed/completed/cancelled)
+- Customer information display
+- Booking notes and special requests
+- Date and service filtering
+
+### 8. Contacts Management (Planned)
+
+- Customer inquiry management
+- Admin notes and follow-up status
+- Response functionality
+- Contact archival
 
 ## Technical Requirements
 
 ### Functional Requirements
 
-**FR1: Agent Orchestration**
+**FR1: Authentication**
 
-- Support sequential and parallel agent execution
-- Enable agent-to-agent communication via file system
-- Maintain context across agent handoffs
-- Track agent task completion
+- Secure login with JWT tokens
+- Protected routes requiring authentication
+- Session persistence across page reloads
+- Automatic logout on token expiry
 
-**FR2: Command System**
+**FR2: Banner Management**
 
-- Parse slash commands with arguments
-- Route to appropriate agent workflows
-- Support nested commands (e.g., `/fix:ci`)
-- Provide command discovery and help
+- Full CRUD operations (create, read, update, delete)
+- Image/video upload to Firebase Storage
+- Drag-and-drop reordering
+- Primary banner selection (only one primary)
+- Active/inactive status toggle
+- Hero display mode configuration
 
-**FR3: Documentation Management**
+**FR3: State Management**
 
-- Auto-generate codebase summaries with repomix
-- Keep docs synchronized with code changes
-- Maintain project roadmap and changelog
-- Update API documentation automatically
+- Zustand stores for global state
+- In-memory state for banners and hero settings
+- localStorage persistence for authentication
+- Auto-initialization with mock data
 
-**FR4: Quality Assurance**
+**FR4: Type Safety**
 
-- Run tests before commits
-- Perform code review automatically
-- Check type safety and compilation
-- Validate security best practices
+- TypeScript strict mode compliance
+- Shared types with client project
+- Type-safe service layer
+- Zod schema validation for forms
 
-**FR5: Git Workflow**
+**FR5: Dual-Mode Architecture**
 
-- Enforce conventional commits
-- Scan for secrets before commits
-- Generate professional commit messages
-- Create clean PR descriptions
-
-**FR6: Project Bootstrapping**
-
-- Initialize git repository
-- Gather requirements through questions
-- Research tech stacks
-- Generate project structure
-- Create initial documentation
-- Set up CI/CD
+- Environment variable toggle (`VITE_USE_MOCK_API`)
+- Mock mode with in-memory state
+- API mode with REST endpoints
+- No code changes needed to switch modes
 
 ### Non-Functional Requirements
 
 **NFR1: Performance**
 
-- Command execution < 5 seconds for simple operations
-- Parallel agent spawning for independent tasks
-- Efficient file system operations
-- Optimized context loading
+- Page load time < 2 seconds
+- Smooth drag-drop interactions
+- Optimized bundle size
+- Lazy loading for images/videos
 
-**NFR2: Reliability**
+**NFR2: Usability**
 
-- Handle agent failures gracefully
-- Provide rollback mechanisms
-- Validate agent outputs
-- Error recovery and retry logic
+- Responsive design (mobile/tablet/desktop)
+- Intuitive UI with clear navigation
+- Toast notifications for user feedback
+- Loading states for async operations
 
-**NFR3: Usability**
+**NFR3: Maintainability**
 
-- Clear command syntax and documentation
-- Helpful error messages
-- Progress indicators for long operations
-- Comprehensive command help
-
-**NFR4: Maintainability**
-
-- Modular agent definitions
-- Reusable workflow templates
+- Modular component structure
+- Reusable shared components
 - Clear separation of concerns
-- Self-documenting code and configs
+- Comprehensive type definitions
 
-**NFR5: Security**
+**NFR4: Security**
 
-- Secret detection before commits
-- No AI attribution in public commits
-- Secure handling of credentials
-- Security best practice enforcement
+- JWT token authentication
+- Protected routes
+- File upload validation (type, size)
+- Firebase Storage security rules
 
-**NFR6: Scalability**
+**NFR5: Accessibility**
 
-- Support projects of any size
-- Handle large codebases efficiently
-- Scale agent parallelization
-- Manage complex dependency graphs
+- WCAG 2.1 AA compliance via Radix UI
+- Keyboard navigation support
+- Screen reader compatibility
+- Proper ARIA labels
+
+## Technology Stack
+
+### Frontend
+
+- **React**: 19.2 - UI library
+- **TypeScript**: 5.9 - Type safety
+- **Vite**: 7.2 - Build tool
+- **Tailwind CSS**: 4.0 - Styling
+
+### UI & Components
+
+- **Radix UI**: Accessible component primitives
+- **shadcn/ui**: Component patterns (blue theme)
+- **Lucide React**: Icon library
+- **Sonner**: Toast notifications
+
+### Forms & Validation
+
+- **React Hook Form**: 7.54 - Form management
+- **Zod**: 3.24 - Schema validation
+- **@hookform/resolvers**: React Hook Form + Zod integration
+
+### State & Data
+
+- **Zustand**: 5.0 - State management
+- **TanStack Table**: 8.21 - Data tables
+- **React Router**: 6.28 - Routing
+
+### Cloud Services
+
+- **Firebase**: 11.1 - Storage for images/videos
+
+### Development Tools
+
+- **ESLint**: 9.17 - Linting
+- **Prettier**: 3.4 - Code formatting
+- **Husky**: 9.1 - Git hooks
+
+## Implementation Status
+
+### Phase 1: Foundation (Complete - Nov 30, 2025) ✅
+
+- Project setup and dependencies
+- TypeScript configuration with strict mode
+- shadcn/ui blue theme design system
+- Layout components (Sidebar, Topbar, Layout)
+- Authentication system with Zustand store
+- Protected routes
+- Firebase Storage configuration
+
+### Phase 2: Banner CRUD (Complete - Dec 3, 2025) ✅
+
+- Banner types and hero settings types
+- Zustand stores (bannersStore, heroSettingsStore)
+- Service layer with dual-mode support
+- DataTable component with TanStack Table
+- ImageUpload and VideoUpload components
+- Banner CRUD page with full operations
+- HeroSettingsCard component
+- Drag-and-drop reordering
+- Mock data initialization
+
+### Phase 3: Gallery CRUD (Complete - Dec 4, 2025) ✅
+
+- Gallery image management
+- Category filtering and featured toggle
+- Bulk delete operations
+- Mock data initialization
+
+### Phase 4: Services CRUD (Planned)
+
+- Services management system
+- Category filtering
+- Pricing and duration configuration
+
+### Phase 5: Bookings & Contacts (Planned)
+
+- Bookings management (view-only with status updates)
+- Contacts management with admin notes
 
 ## Success Metrics
 
-### Adoption Metrics
+### Development Metrics
 
-- GitHub stars and forks
-- NPM package downloads
-- Active users and installations
-- Community engagement (issues, discussions, PRs)
+- **TypeScript Coverage**: 100% (no `any` types)
+- **Build Status**: 0 errors (warnings acceptable)
+- **Code Quality**: 8.0+/10 per feature
+- **Type Compliance**: verbatimModuleSyntax pass
 
-### Performance Metrics
+### Feature Completeness
 
-- Average time to bootstrap new project: < 10 minutes
-- Planning to implementation cycle time: 50% reduction
-- Documentation coverage: > 90%
-- Test coverage: > 80%
-- Code review time: 75% reduction
+- **Banner CRUD**: 100% ✅
+- **Gallery CRUD**: 100% ✅ (except bulk upload UI)
+- **Services CRUD**: 0% (planned)
+- **Bookings**: 0% (planned)
+- **Contacts**: 0% (planned)
+- **Overall Progress**: 50% (2 of 4 CRUD features)
 
-### Quality Metrics
+### User Experience
 
-- Conventional commit compliance: 100%
-- Zero secrets in commits: 100%
-- Automated test pass rate: > 95%
-- Documentation freshness: < 24 hours lag
-
-### Developer Experience Metrics
-
-- Time to first commit: < 5 minutes
-- Developer onboarding time: 50% reduction
-- Context switching overhead: 60% reduction
-- Satisfaction score: > 4.5/5.0
-
-## Technical Architecture
-
-### Core Components
-
-**1. Agent Framework**
-
-- Agent definition files (Markdown with frontmatter)
-- Agent orchestration engine
-- Context management system
-- Communication protocol (file-based reports)
-
-**2. Command System**
-
-- Command parser and router
-- Argument handling ($ARGUMENTS, $1, $2, etc.)
-- Command composition and nesting
-- Help and discovery system
-
-**3. Workflow Engine**
-
-- Sequential execution support
-- Parallel task scheduling
-- Dependency resolution
-- Error handling and recovery
-
-**4. Documentation System**
-
-- Repomix integration for codebase compaction
-- Template-based doc generation
-- Auto-update triggers
-- Version tracking
-
-**5. Quality System**
-
-- Test runner integration
-- Code review automation
-- Type checking and linting
-- Security scanning
-
-**6. Release System**
-
-- Semantic versioning engine
-- Changelog generation
-- GitHub release creation
-- Asset packaging
-
-### Technology Stack
-
-**Runtime**:
-
-- Node.js >= 18.0.0
-- Bash scripting (Unix hooks)
-- PowerShell scripting (Windows hooks)
-- Cross-platform hook dispatcher (Node.js)
-
-**AI Platforms**:
-
-- Anthropic Claude (Sonnet 4, Opus 4)
-- OpenRouter integration
-- Google Gemini (for docs-manager)
-- Grok Code (for git-manager)
-
-**Development Tools**:
-
-- Semantic Release
-- Commitlint
-- Husky (git hooks)
-- Repomix (codebase compaction)
-- Scout Block Hook (performance optimization)
-
-**CI/CD**:
-
-- GitHub Actions
-- Conventional Commits
-- Automated versioning
-
-### Integration Points
-
-**MCP Tools**:
-
-- **context7**: Read latest documentation
-- **sequential-thinking**: Structured problem solving
-- **SearchAPI**: Google and YouTube search
-- **review-website**: Web content extraction
-- **VidCap**: Video transcript analysis
-
-**External Services**:
-
-- GitHub (Actions, Releases, PRs)
-- Discord (notifications)
-- NPM (optional package publishing)
-
-## Use Cases
-
-### UC1: Bootstrap New Project
-
-**Actor**: Developer
-**Goal**: Create new project from scratch
-**Flow**:
-
-1. Run `/bootstrap` command
-2. Answer requirement questions
-3. AI researches tech stacks
-4. Review and approve recommendations
-5. AI generates project structure
-6. AI implements initial features
-7. AI creates tests and documentation
-8. Project ready for development
-
-**Outcome**: Fully functional project with tests, docs, CI/CD in < 10 minutes
-
-### UC2: Implement New Feature
-
-**Actor**: Developer
-**Goal**: Add feature with full workflow
-**Flow**:
-
-1. Run `/cook "add user authentication"`
-2. Planner creates implementation plan
-3. Researcher agents explore auth solutions
-4. Developer reviews and approves plan
-5. AI implements code
-6. AI writes comprehensive tests
-7. AI performs code review
-8. AI updates documentation
-9. AI commits with conventional message
-
-**Outcome**: Feature complete with tests, docs, and clean git history
-
-### UC3: Debug Production Issue
-
-**Actor**: Developer
-**Goal**: Identify and fix production bug
-**Flow**:
-
-1. Run `/fix:logs "API timeout errors"`
-2. Debugger agent analyzes logs
-3. Root cause identified
-4. Fix plan created
-5. AI implements solution
-6. Tests validate fix
-7. Code review confirms quality
-8. Commit and deploy
-
-**Outcome**: Bug fixed with comprehensive testing and documentation
-
-### UC4: Create Pull Request
-
-**Actor**: Developer
-**Goal**: Submit code for review
-**Flow**:
-
-1. Run `/git:pr feature/new-auth main`
-2. AI analyzes all commits in branch
-3. AI generates comprehensive PR description
-4. PR created with proper context
-5. Links to related issues added
-
-**Outcome**: Professional PR ready for review
-
-### UC5: Update Documentation
-
-**Actor**: Project Manager
-**Goal**: Ensure docs are current
-**Flow**:
-
-1. Run `/docs:update`
-2. Docs manager scans codebase
-3. Generates fresh summary with repomix
-4. Identifies outdated sections
-5. Updates API docs, guides, architecture
-6. Validates naming conventions
-7. Creates update report
-
-**Outcome**: Documentation synchronized with code
+- Responsive design on all devices
+- Accessible UI (WCAG 2.1 AA)
+- Fast page loads (< 2s)
+- Clear error messages
+- Smooth interactions
 
 ## Constraints & Limitations
 
 ### Technical Constraints
 
-- Requires Node.js >= 18.0.0
-- Depends on Claude Code or Open Code CLI
-- File-based communication has I/O overhead
-- Token limits on AI model context windows
-
-### Operational Constraints
-
-- Requires API keys for AI platforms
-- GitHub Actions minutes for CI/CD
-- Internet connection for MCP tools
-- Storage for repomix output files
+- Client-side only (no SSR)
+- Firebase Storage dependency
+- Single admin user (no multi-user roles yet)
+- Video uploads limited to 50MB
 
 ### Design Constraints
 
-- Agent definitions must be Markdown with frontmatter
-- Commands follow slash syntax
-- Reports use specific naming conventions
-- Conventional commits required
+- Light mode only (dark mode planned)
+- English language only (no i18n yet)
+- Desktop-first design (mobile responsive)
+
+### Operational Constraints
+
+- Requires Firebase project configuration
+- Demo credentials for development
+- No real backend API yet
 
 ## Risks & Mitigation
 
-### Risk 1: AI Model API Failures
+| Risk                             | Impact | Likelihood | Mitigation                        |
+| -------------------------------- | ------ | ---------- | --------------------------------- |
+| Type incompatibility with client | High   | Low        | Regular sync checks, shared types |
+| Firebase quota exhaustion        | Medium | Low        | Monitor usage, size limits        |
+| Build size growth                | Medium | Medium     | Code splitting, lazy loading      |
+| Performance regression           | Medium | Medium     | Performance monitoring            |
 
-**Impact**: High
-**Likelihood**: Medium
-**Mitigation**: Retry logic, fallback models, graceful degradation
+## Companion Project
 
-### Risk 2: Context Window Limits
+**Pink Nail Client Website**
 
-**Impact**: Medium
-**Likelihood**: High
-**Mitigation**: Repomix for code compaction, selective context loading, chunking
+- Location: `/Users/hainguyen/Documents/nail-project/nail-client`
+- Relationship: Shares type definitions (Service, Gallery, Booking)
+- **CRITICAL**: Types must remain compatible between projects
 
-### Risk 3: Agent Coordination Failures
-
-**Impact**: High
-**Likelihood**: Low
-**Mitigation**: Validation checks, error recovery, rollback mechanisms
-
-### Risk 4: Secret Exposure
-
-**Impact**: Critical
-**Likelihood**: Low
-**Mitigation**: Pre-commit scanning, .gitignore enforcement, security reviews
-
-### Risk 5: Documentation Drift
-
-**Impact**: Medium
-**Likelihood**: Medium
-**Mitigation**: Automated triggers, freshness checks, validation workflows
-
-## Future Roadmap
-
-### Phase 1: Foundation (Complete - v1.0-1.8)
-
-- ✅ Core agent framework
-- ✅ Slash command system
-- ✅ Automated releases
-- ✅ Skills library
-- ✅ Documentation system
-
-### Phase 2: Enhancement (Current)
-
-- 🔄 Additional skills (GCP, AWS, Azure)
-- 🔄 UI/UX improvements
-- 🔄 Performance optimization
-- 🔄 Enhanced error handling
-
-### Phase 3: Advanced Features (Planned)
-
-- 📋 Visual workflow builder
-- 📋 Custom agent creator UI
-- 📋 Team collaboration features
-- 📋 Analytics and insights dashboard
-- 📋 Multi-language support
-
-### Phase 4: Enterprise (Future)
-
-- 📋 Self-hosted deployment
-- 📋 Advanced security features
-- 📋 Compliance automation
-- 📋 Custom integrations
-- 📋 Enterprise support
-
-## Dependencies & Integration
-
-### Required Dependencies
-
-- Node.js runtime environment
-- Git version control
-- Claude Code or Open Code CLI
-- API keys for AI platforms
-
-### Optional Dependencies
-
-- Discord webhook for notifications
-- GitHub repository for CI/CD
-- NPM account for publishing
-
-### Integrations
-
-- GitHub Actions
-- Semantic Release
-- Commitlint
-- Husky
-- Repomix
-- Various MCP servers
-
-## Compliance & Standards
-
-### Coding Standards
-
-- YANGI (You Aren't Gonna Need It)
-- KISS (Keep It Simple, Stupid)
-- DRY (Don't Repeat Yourself)
-- Files < 500 lines
-- Comprehensive error handling
-- Security-first development
-
-### Git Standards
-
-- Conventional Commits
-- Clean commit history
-- No AI attribution
-- No secrets in commits
-- Professional PR descriptions
-
-### Documentation Standards
-
-- Markdown format
-- Up-to-date (< 24 hours)
-- Comprehensive coverage
-- Clear examples
-- Proper versioning
-
-### Testing Standards
-
-- Unit test coverage > 80%
-- Integration tests for workflows
-- Error scenario coverage
-- Performance validation
-- Security testing
-
-## Glossary
-
-- **Agent**: Specialized AI assistant with specific expertise and responsibilities
-- **Slash Command**: Shortcut that triggers agent workflows (e.g., `/plan`)
-- **Skill**: Reusable knowledge module for specific technologies or patterns
-- **MCP**: Model Context Protocol for AI tool integration
-- **Repomix**: Tool for compacting codebases into AI-friendly format
-- **Sequential Chaining**: Running agents one after another with dependencies
-- **Parallel Execution**: Running multiple agents simultaneously
-- **Query Fan-Out**: Spawning multiple researchers to explore different approaches
-- **Conventional Commits**: Structured commit message format (type(scope): description)
-
-## Appendix
-
-### Related Documentation
+## Related Documentation
 
 - [Codebase Summary](./codebase-summary.md)
 - [Code Standards](./code-standards.md)
 - [System Architecture](./system-architecture.md)
-- [Commands Reference](../guide/COMMANDS.md)
-
-### External Resources
-
-- [Claude Code Documentation](https://docs.claude.com/en/docs/claude-code/overview)
-- [Open Code Documentation](https://opencode.ai/docs)
-- [Conventional Commits](https://conventionalcommits.org/)
-- [Semantic Versioning](https://semver.org/)
-- [Keep a Changelog](https://keepachangelog.com/)
-
-### Support & Community
-
-- GitHub Issues: https://github.com/claudekit/claudekit-engineer/issues
-- Discussions: https://github.com/claudekit/claudekit-engineer/discussions
-- Repository: https://github.com/claudekit/claudekit-engineer
+- [Project Roadmap](./project-roadmap.md)
+- [Design Guidelines](./design-guidelines.md)
 
 ## Unresolved Questions
 
-1. **Performance Benchmarks**: Need to establish baseline metrics for agent execution times
-2. **Multi-Repository Support**: How to handle projects spanning multiple repositories?
-3. **Custom AI Model Support**: Should we support other AI platforms beyond Claude and OpenRouter?
-4. **Agent Marketplace**: Community-contributed agents and skills distribution mechanism?
-5. **Real-Time Collaboration**: How to handle multiple developers using agents simultaneously?
+None at this time. Banner and Gallery CRUD implementations are complete and documented.
