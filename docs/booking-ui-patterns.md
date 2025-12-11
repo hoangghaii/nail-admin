@@ -8,6 +8,7 @@
 ## 1. List/Table Views
 
 ### Recommended Column Layout
+
 - **Customer**: Name (searchable, link to contact)
 - **Service**: Service name + category badge
 - **Date/Time**: ISO format (2025-12-15 14:30), sortable
@@ -15,13 +16,15 @@
 - **Actions**: Quick-edit status + view details + delete
 
 ### Key UX Decisions
-| Pattern | Pro | Con | Recommendation |
-|---------|-----|-----|---|
-| **Table** | Compact, sortable, multiple filters | Mobile unfriendly | Primary for desktop |
-| **Cards** | Mobile-friendly, visual | Vertical scrolling | Use for <20 items |
-| **Hybrid** | Responsive table→cards | Complex CSS | Best for modern dashboards |
+
+| Pattern    | Pro                                 | Con                | Recommendation             |
+| ---------- | ----------------------------------- | ------------------ | -------------------------- |
+| **Table**  | Compact, sortable, multiple filters | Mobile unfriendly  | Primary for desktop        |
+| **Cards**  | Mobile-friendly, visual             | Vertical scrolling | Use for <20 items          |
+| **Hybrid** | Responsive table→cards              | Complex CSS        | Best for modern dashboards |
 
 **Implementation**: Use shadcn/ui DataTable with TanStack Table v8
+
 ```typescript
 // src/components/shared/DataTable.tsx pattern
 <Table>
@@ -49,6 +52,7 @@
 ### Multi-Level Filter Architecture (Recommended for nail salon)
 
 **Tier 1 - Status Filter** (Most critical)
+
 - Faceted filter: pending, confirmed, completed, cancelled
 - Use checkbox group, not dropdown (see multiple simultaneously)
 - Color-coded: pending=amber, confirmed=blue, completed=green, cancelled=gray
@@ -74,6 +78,7 @@ Object.entries(statusFilters).map(([status, config]) => (
 ```
 
 **Tier 2 - Date Range Filter**
+
 - Preset buttons: Today, Upcoming (7 days), Upcoming (30 days), Past
 - Advanced option: Custom date range picker
 - TanStack Table: Use `inDateRange` filter with accessor for date field
@@ -83,24 +88,26 @@ const dateFilters = {
   today: (date) => isToday(date),
   upcoming7: (date) => isWithinDays(date, 7),
   upcoming30: (date) => isWithinDays(date, 30),
-  past: (date) => isPast(date)
-}
+  past: (date) => isPast(date),
+};
 ```
 
 **Tier 3 - Customer Search**
+
 - Text search: Full-text across firstName, lastName, email, phone
 - Debounced (300ms) to avoid excessive re-renders
 - TanStack Table: Use `includesString` filter with custom accessor
 
 ```typescript
 const searchFilters = [
-  table.getColumn('firstName')?.setFilterValue(searchTerm),
-  table.getColumn('lastName')?.setFilterValue(searchTerm),
-  table.getColumn('email')?.setFilterValue(searchTerm)
-]
+  table.getColumn("firstName")?.setFilterValue(searchTerm),
+  table.getColumn("lastName")?.setFilterValue(searchTerm),
+  table.getColumn("email")?.setFilterValue(searchTerm),
+];
 ```
 
 ### Implementation via TanStack Table
+
 Reference: [TanStack Table Filtering Guide](https://tanstack.com/table/v8/docs/guide/column-filtering)
 
 ```typescript
@@ -110,8 +117,8 @@ const table = useReactTable({
   getCoreRowModel: getCoreRowModel(),
   getFilteredRowModel: getFilteredRowModel(),
   state: { columnFilters },
-  onColumnFiltersChange: setColumnFilters
-})
+  onColumnFiltersChange: setColumnFilters,
+});
 ```
 
 ---
@@ -121,6 +128,7 @@ const table = useReactTable({
 ### State Machine (Canonical Workflow)
 
 **Valid Transitions**:
+
 ```
 pending  → confirmed, cancelled
 confirmed → completed, cancelled
@@ -129,6 +137,7 @@ cancelled → (terminal)
 ```
 
 **Rules**:
+
 - Cannot transition from completed/cancelled
 - Pending→completed forbidden (must confirm first)
 - Cancellation always allowed (up to completed)
@@ -136,6 +145,7 @@ cancelled → (terminal)
 ### UI Implementation Strategy
 
 **Inline Status Update** (Recommended for confirmed→completed only)
+
 - Use dropdown menu in actions column
 - Show spinner during update
 - Optimistic update with rollback on error
@@ -164,6 +174,7 @@ cancelled → (terminal)
 ```
 
 **Confirmation Modal** (For destructive transitions)
+
 - pending→cancelled or confirmed→cancelled
 - Dialog title: "Cancel Booking?"
 - Body: Show customer name, service, date
@@ -191,6 +202,7 @@ cancelled → (terminal)
 ```
 
 ### Visual Feedback Hierarchy
+
 - **Loading**: Button spinner
 - **Success**: Toast (green, "Booking confirmed")
 - **Error**: Toast (red, "Failed to update booking")
@@ -205,6 +217,7 @@ Reference: [Confirmation Dialog Best Practices](https://www.designsystemscollect
 ### Modal/Drawer Layout (Right-side drawer recommended for desktop)
 
 **Section 1: Service Details** (Read-only)
+
 ```
 Service: [Service Name] → [Category Badge]
 Duration: 60 minutes | Price: $45
@@ -212,6 +225,7 @@ Description: [Service description]
 ```
 
 **Section 2: Customer Info** (Editable optional)
+
 ```
 Name: [First] [Last]
 Email: [email]
@@ -219,6 +233,7 @@ Phone: [phone]
 ```
 
 **Section 3: Booking DateTime** (Read-only)
+
 ```
 Date: 2025-12-15 (Monday)
 Time: 2:30 PM - 3:30 PM
@@ -226,17 +241,20 @@ Status: [Status Badge]
 ```
 
 **Section 4: Notes** (Editable)
+
 ```
 [Multiline textarea for admin notes]
 ```
 
 **Section 5: Actions**
+
 - Button: "Confirm" (pending only)
 - Button: "Complete" (confirmed only)
 - Button: "Cancel" (pending/confirmed)
 - Button: "Delete"
 
 ### Component Structure
+
 ```typescript
 // src/pages/BookingDetailsDrawer.tsx
 <Drawer open={isOpen} onOpenChange={onClose}>
@@ -264,11 +282,12 @@ Status: [Status Badge]
 ## 5. Performance Considerations
 
 ### Pagination Strategy
-| Option | When to Use | Setup |
-|--------|------------|-------|
-| **Server-side** | >1000 bookings/month | API: `?page=1&limit=20` |
-| **Client-side** | <500 bookings/month | TanStack: `getPaginationRowModel()` |
-| **Hybrid** | 500-5000/month | Fetch 500 at once, paginate client |
+
+| Option          | When to Use          | Setup                               |
+| --------------- | -------------------- | ----------------------------------- |
+| **Server-side** | >1000 bookings/month | API: `?page=1&limit=20`             |
+| **Client-side** | <500 bookings/month  | TanStack: `getPaginationRowModel()` |
+| **Hybrid**      | 500-5000/month       | Fetch 500 at once, paginate client  |
 
 **Current Project**: Start with client-side (mock data), upgrade to server-side when backend ready.
 
@@ -290,6 +309,7 @@ const table = useReactTable({
 ```
 
 ### Optimization Tips
+
 1. **Memoization**: Wrap columns definition with `useMemo`
 2. **Debounced Filters**: 300ms delay on search input (prevent table thrashing)
 3. **Virtual Scrolling**: Use `react-window` if >100 rows visible
@@ -300,34 +320,40 @@ const table = useReactTable({
 ## 6. Implementation Checklist (Nail Salon Context)
 
 **Foundation**
+
 - [ ] Create `Booking` interface matching shared types (id, serviceId, date, timeSlot, customerInfo, notes, status)
 - [ ] Create `bookingsService.ts` with dual-mode (mock/API)
 - [ ] Create `useBookingsStore.ts` (Zustand for CRUD state)
 
 **Table Features**
+
 - [ ] DataTable component with TanStack Table
 - [ ] Status column with color-coded badges
 - [ ] DateTime sorting (by date + time slot)
 - [ ] Customer name search (debounced)
 
 **Filters**
+
 - [ ] Status faceted filter (checkboxes)
 - [ ] Date range presets (Today, Upcoming 7/30d, Past)
 - [ ] Customer search box
 
 **Status Updates**
+
 - [ ] Inline dropdown for status changes
 - [ ] Confirmation modal for cancellations
 - [ ] Toast notifications (success/error)
 - [ ] Optimistic updates
 
 **Details View**
+
 - [ ] Right-side drawer for booking details
 - [ ] Editable customer notes field
 - [ ] Action buttons (Confirm, Complete, Cancel, Delete)
 - [ ] Service info display
 
 **Polish**
+
 - [ ] Empty state when no bookings
 - [ ] Loading skeleton for table
 - [ ] Mobile-responsive table (cards fallback)
@@ -338,6 +364,7 @@ const table = useReactTable({
 ## 7. Design System Integration
 
 ### shadcn/ui Components to Use
+
 - `<Table>` + `<TableHeader>` + `<TableBody>` - TanStack Table wrapper
 - `<Badge>` with variants for status (default, secondary, outline)
 - `<DropdownMenu>` for inline status updates
@@ -348,6 +375,7 @@ const table = useReactTable({
 - `<Textarea>` for admin notes
 
 ### Color Scheme (Blue Theme)
+
 ```css
 pending: bg-amber-50 text-amber-900 border-amber-200    /* Warning */
 confirmed: bg-blue-50 text-blue-900 border-blue-200     /* Primary */

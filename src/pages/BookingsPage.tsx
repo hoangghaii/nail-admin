@@ -5,12 +5,12 @@ import { Search } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 
-import type { Booking, BookingStatus as BookingStatusType } from "@/types/booking.types";
+import type {
+  Booking,
+  BookingStatus as BookingStatusType,
+} from "@/types/booking.types";
 
-import {
-  BookingDetailsModal,
-  StatusFilter,
-} from "@/components/bookings";
+import { BookingDetailsModal, StatusFilter } from "@/components/bookings";
 import {
   DataTable,
   DataTableColumnHeader,

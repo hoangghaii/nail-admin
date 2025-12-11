@@ -1,8 +1,20 @@
 import { cva, type VariantProps } from "class-variance-authority";
-import { Check, CheckCircle2, Clock, Star, X, XCircle } from "lucide-react";
+import {
+  Archive,
+  Check,
+  CheckCircle2,
+  Clock,
+  Mail,
+  MailCheck,
+  MailOpen,
+  Star,
+  X,
+  XCircle,
+} from "lucide-react";
 import * as React from "react";
 
 import type { BookingStatus } from "@/types/booking.types";
+import type { ContactStatus } from "@/types/contact.types";
 
 import { cn } from "@/lib/utils";
 
@@ -16,15 +28,20 @@ const statusBadgeVariants = cva(
     variants: {
       status: {
         active: "",
+        archived: "",
         cancelled: "",
         completed: "",
         confirmed: "",
         inactive: "",
+        new: "",
         pending: "",
         primary: "",
+        read: "",
+        responded: "",
       },
       variant: {
         booking: "",
+        contact: "",
         default: "",
         outline: "border",
       },
@@ -35,8 +52,8 @@ const statusBadgeVariants = cva(
 export type StatusBadgeProps = {
   className?: string;
   isPrimary?: boolean;
-  status?: "active" | "inactive" | BookingStatus;
-  variant?: "default" | "outline" | "booking";
+  status?: "active" | "inactive" | BookingStatus | ContactStatus;
+  variant?: "default" | "outline" | "booking" | "contact";
 } & React.HTMLAttributes<HTMLSpanElement> &
   VariantProps<typeof statusBadgeVariants>;
 
@@ -52,6 +69,22 @@ const StatusBadge = React.forwardRef<HTMLSpanElement, StatusBadgeProps>(
     ref,
   ) => {
     const getStatusStyles = () => {
+      // Contact status variants
+      if (variant === "contact") {
+        if (status === "new") {
+          return "bg-blue-100 dark:bg-blue-950 text-blue-700 dark:text-blue-400 border-blue-300 dark:border-blue-700";
+        }
+        if (status === "read") {
+          return "bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 border-gray-300 dark:border-gray-700";
+        }
+        if (status === "responded") {
+          return "bg-green-100 dark:bg-green-950 text-green-700 dark:text-green-400 border-green-300 dark:border-green-700";
+        }
+        if (status === "archived") {
+          return "bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-400 border-slate-300 dark:border-slate-700";
+        }
+      }
+
       // Booking status variants
       if (variant === "booking") {
         if (status === "pending") {
@@ -87,6 +120,13 @@ const StatusBadge = React.forwardRef<HTMLSpanElement, StatusBadgeProps>(
     };
 
     const getIcon = () => {
+      if (variant === "contact") {
+        if (status === "new") return <Mail className="h-3 w-3" />;
+        if (status === "read") return <MailOpen className="h-3 w-3" />;
+        if (status === "responded") return <MailCheck className="h-3 w-3" />;
+        if (status === "archived") return <Archive className="h-3 w-3" />;
+      }
+
       if (variant === "booking") {
         if (status === "pending") return <Clock className="h-3 w-3" />;
         if (status === "confirmed") return <CheckCircle2 className="h-3 w-3" />;
@@ -105,6 +145,13 @@ const StatusBadge = React.forwardRef<HTMLSpanElement, StatusBadgeProps>(
     };
 
     const getLabel = () => {
+      if (variant === "contact") {
+        if (status === "new") return "New";
+        if (status === "read") return "Read";
+        if (status === "responded") return "Responded";
+        if (status === "archived") return "Archived";
+      }
+
       if (variant === "booking") {
         if (status === "pending") return "Pending";
         if (status === "confirmed") return "Confirmed";
