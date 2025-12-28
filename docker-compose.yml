@@ -1,0 +1,28 @@
+# ==========================================
+# Docker Compose - Base Configuration
+# ==========================================
+# This file contains base service definitions
+# Override with docker-compose.override.yml for development
+# Or use -f docker-compose.prod.yml for production
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      # Default to development (overridden by compose.override.yml or compose.prod.yml)
+      target: development
+
+    image: nail-admin:latest
+
+    container_name: nail-admin
+
+    ports:
+      - "5174:5174"
+
+    environment:
+      - NODE_ENV=development
+
+networks:
+  default:
+    name: nail-admin
