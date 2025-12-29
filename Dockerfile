@@ -90,14 +90,7 @@ RUN NODE_ENV=production npm run build && \
   npm cache clean --force && \
   rm -rf \
   src \
-  node_modules \
-  .git \
-  .github \
-  tests \
-  *.md \
-  .prettierrc* \
-  .eslintrc* \
-  tsconfig.json \
+  tsconfig*.json \
   vite.config.ts
 
 # ==========================================
