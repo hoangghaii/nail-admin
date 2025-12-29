@@ -9,14 +9,12 @@ services:
       context: .
       dockerfile: Dockerfile
       target: production  # Use production stage (nginx)
-      args:
-        - NODE_VERSION=24.12.0
-        - VITE_USE_MOCK_API=true  # Override with .env.production
-        # Add other VITE_* args as needed
+
+    container_name: nail-admin-prod
 
     image: nail-admin:prod
 
-    container_name: nail-admin-prod
+    restart: always
 
     ports:
       - "8081:81"  # Map to host port 8081
@@ -24,11 +22,11 @@ services:
     # NO VOLUMES for code (code is immutable in image!)
     # Only add volumes for data persistence if needed in future
 
+    env_file:
+      - .env.production
+
     environment:
       - NODE_ENV=production
-
-    # Production restart policy (always restart on failure)
-    restart: always
 
     # Resource limits (prevent container from consuming too much)
     deploy:
@@ -36,6 +34,7 @@ services:
         limits:
           cpus: '1.0'       # Max 1 CPU core
           memory: 512M      # Max 512MB RAM
+
         reservations:
           cpus: '0.25'      # Reserve 25% of 1 core
           memory: 128M      # Reserve 128MB RAM
