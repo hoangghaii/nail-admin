@@ -57,9 +57,7 @@ FROM dependencies AS builder
 # Copy source code
 COPY . .
 
-COPY .env.production .env.production
-
-# Build application
+# Build application (env vars passed via build args)
 RUN NODE_ENV=production npm run build && \
   npm prune --production && \
   npm cache clean --force && \
@@ -72,13 +70,6 @@ RUN NODE_ENV=production npm run build && \
 # PRODUCTION LAYER (Nginx Runtime)
 # ==========================================
 FROM nginx:1.27-alpine AS production
-
-# Image metadata (OCI standard labels)
-LABEL org.opencontainers.image.title="Pink Nail Admin"
-LABEL org.opencontainers.image.description="Admin dashboard for Pink Nail salon"
-LABEL org.opencontainers.image.version="0.2.0"
-LABEL org.opencontainers.image.vendor="Pink Nail"
-LABEL org.opencontainers.image.created="2025-12-27"
 
 # Install dumb-init for proper signal handling in containers
 RUN apk add --no-cache dumb-init
